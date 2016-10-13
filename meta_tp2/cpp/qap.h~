@@ -38,8 +38,8 @@ private:
 
 class Metaheuristic{
 public:
-  Metaheuristic(Fitness *f,double lcoef=1.0);
-  Metaheuristic(std::string path,double lcoef=1.0);
+  Metaheuristic(Fitness *f,double lcoef=1.0,bool diversification=false);
+  Metaheuristic(std::string path,double lcoef=1.0, bool diversification=false);
   ~Metaheuristic();
   Solution * run(Solution * s, int n_iterations, int & best_fitness);
   std::vector<int> history_f();

@@ -285,3 +285,7 @@ double Metaheuristic::average(){
   return avg_/(double)all_history_f_.size();
   
 }
+
+int Metaheuristic::n(){
+  return this->n_;
+}

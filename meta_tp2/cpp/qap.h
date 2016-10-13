@@ -46,6 +46,7 @@ public:
   std::vector<int> history_t();
   std::vector<int> all_history_f();
   double average();
+  int n();
 
 private:
   Fitness * f_;
