@@ -69,9 +69,9 @@ int main(int argc, char* argv[]){
   for (int i = 0;i<ntest;i++){
     std::cout<<"\r\033[1mTest: "<<i<<"\033[0m/"<<ntest<<std::flush;
     int best_fitness =-1;
-    QAP::Solution * s= new QAP::Solution(f->n());
-    s= meta.run(s,N,best_fitness);
-    delete s;
+    QAP::Solution * s= new QAP::Solution(n);
+    delete meta.run(s,N,best_fitness);
+    //delete s;
     results.push_back(best_fitness);
     
   }
@@ -85,6 +85,9 @@ int main(int argc, char* argv[]){
   if (histo_on){
     std::vector<double> * xy = hh::histo(results);
     plt::plot(xy[0],xy[1]);
+    double my= *std::max_element(xy[1].begin(),xy[1].end());
+    plt::xlim(xy[0][0]-1,xy[0][xy[0].size()-1]+1);
+    plt::ylim(0.,my*1.1);
     plt::show();
   }
   #endif

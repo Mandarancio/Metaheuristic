@@ -40,7 +40,7 @@ Solution::Solution(int n){
 
 Solution::~Solution(){
   if (vec_!=NULL){
-    delete this->vec_;
+    delete[] this->vec_;
   }
 }
 
@@ -56,7 +56,7 @@ Solution * Solution::neighbor(int i, int j){
   v[i]=this->vec_[j];
   v[j]=this->vec_[i];
   Solution * s = new Solution(v,this->n_);
-  delete v;
+  delete[] v;
   return s;
 }
 
@@ -156,6 +156,7 @@ Metaheuristic::Metaheuristic(Fitness *f,double lcoef,bool diversification){
   this->diversification_=diversification;
   this->n_=f->n();
   this->div_len=n_*n_;
+  this->tabu_=NULL;
   this->t_len=round(lcoef*n_);
 }
 
@@ -164,17 +165,28 @@ Metaheuristic::Metaheuristic(std::string path,double lcoef,bool diversification)
   this->f_ = new Fitness(path);
   this->n_ = this->f_->n();
   this->div_len=n_*n_;
+  this->tabu_=NULL;
   this->t_len=round(lcoef*n_);
 }
 
 Metaheuristic::~Metaheuristic(){
   if (this->f_)
     delete this->f_;
-  if (this->tabu_)
-    delete[] this->tabu_;
+  if (this->tabu_){
+    for (int i=0;i<n_;i++){
+      delete[] tabu_[i];
+    }
+    delete[] tabu_;
+  }
 }
 
 void Metaheuristic::init_tabu(){
+  if (this->tabu_!=0){
+    for (int i=0;i<n_;i++){
+      delete[] tabu_[i];
+    }
+    delete[] this->tabu_;
+  } 
   this->tabu_= new int*[n_];
   for (int i=0;i<n_;i++){
     tabu_[i]=new int[n_];
@@ -230,9 +242,6 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
 }
 
 Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness){
-  if (tabu_){
-    delete tabu_;
-  } 
   init_tabu();
   Solution * best = s;
   best_fitness = f_->f(s);

@@ -16,12 +16,14 @@ namespace plt = matplotlibcpp;
 void display_help(){
   std::cout<<"statistic DAT_FILE N_TEST (options)\n"
   <<" -help show this help\n"
+  <<" -i INT number of iteration per Test\n"
   <<" -h show histogram\n"
   <<" -l FLOAT change l coefficent, tabu size is l*n\n"
   <<" -d enable diversification\n";
 }
 
 int main(int argc, char* argv[]){
+  srand(time(NULL));
   if (argc<3){
     display_help();
     return 0;
@@ -52,10 +54,12 @@ int main(int argc, char* argv[]){
   }
   
   std::cout<<"\033[1mData file: \033[0m"<<path<<std::endl;
-  std::cout<<"\033[1mIterations: \033[0m"<<ntest<<std::endl;
+  std::cout<<"\033[1mTests: \033[0m"<<ntest<<std::endl;
+  std::cout<<"\033[1mIterations: \033[0m"<<N<<std::endl;
   std::cout<<"\033[1mCoeff. L: \033[0m"<<l_coef<<std::endl;
   std::cout<<"\033[1mDiversification: \033[0m"<<(diversification_on ? "\033[32mtrue\033[0m":"\033[31mfalse\033[0m")<<std::endl;
-  QAP::Metaheuristic meta(path,l_coef,diversification_on);
+  QAP::Fitness * f = new QAP::Fitness(path);
+  QAP::Metaheuristic meta(f,l_coef,diversification_on);
   
   int n = meta.n();
   int tabu = n*l_coef;
@@ -63,11 +67,29 @@ int main(int argc, char* argv[]){
   std::cout<<"\033[1mTabu size: \033[0m"<<tabu<<std::endl;
   std::vector<int> results;
   for (int i = 0;i<ntest;i++){
+    std::cout<<"\r\033[1mTest: "<<i<<"\033[0m/"<<ntest<<std::flush;
     int best_fitness =-1;
     QAP::Solution * s= new QAP::Solution(n);
-    delete meta.run(s,N,best_fitness);
+    s= meta.run(s,N,best_fitness);
+    delete s;
     results.push_back(best_fitness);
+    
   }
-  int best = *std::min_element(results.begin(),results.end());
+  std::cout<<"\r\033[1mTest: \033[1;32m"<<ntest<<"\033[0m/"<<ntest<<"\n";
+  int distance = *std::max_element(results.begin(),results.end());
+  int best_fitness = *std::min_element(results.begin(),results.end());
+  distance= distance-best_fitness;
+  std::cout<<"\033[1mBest fitness: "<<best_fitness<<"\033[0m\n";
+  std::cout<<"\033[1mMaximum distance: \033[0m"<<distance<<std::endl;
+  #if PLOT
+  if (histo_on){
+    std::vector<double> * xy = hh::histo(results);
+    plt::plot(xy[0],xy[1]);
+    double my= *std::max_element(xy[1].begin(),xy[1].end());
+    plt::xlim(xy[0][0]-1,xy[0][xy[0].size()-1]+1);
+    plt::ylim(0.,my*1.1);
+    plt::show();
+  }
+  #endif
   return 0;
 }
