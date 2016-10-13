@@ -2,6 +2,7 @@
 #define QAP_H
 
 #include <string>
+#include <vector>
 
 namespace QAP{
 
@@ -41,16 +42,18 @@ public:
   Metaheuristic(std::string path,double lcoef=1.0);
   ~Metaheuristic();
   Solution * run(Solution * s, int n_iterations, int & best_fitness);
+  std::vector<int> history();
 private:
   Fitness * f_;
   int t_len;
   int n_;
   int **tabu_;
+  std::vector<int> history_;
+
   void init_tabu();
   bool is_tabu(int value,int pos,int t);
   bool set_tabu(int value, int pos, int t);
   int * step(Solution * s, int fitness, int best_fitness,int t);
-  
 };
 
 

@@ -216,11 +216,13 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
 Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness){
   Solution * best = s;
   best_fitness = f_->f(s);
+  history_.clear();
   int fitness = best_fitness;
   for (int i = 0; i < n_iterations;i++){
     int * res = this->step(s,fitness,best_fitness,i);
-  
+    
     if (res[1]>=0){
+      history_.push_back(res[0]);
       Solution * snext = s->neighbor(res[1],res[2]);
       set_tabu(s->at(res[1]),res[1],i);
       set_tabu(s->at(res[2]),res[2],i);
@@ -235,8 +237,14 @@ Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness
     
       s = snext;
       fitness = res[0];
+    }else{
+      history_.push_back(fitness);
     }
     delete res;
   }
   return best;
+}
+
+std::vector<int> Metaheuristic::history(){
+  return this->history_;
 }

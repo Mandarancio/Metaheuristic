@@ -3,6 +3,8 @@
 #include <time.h>
 #include <cmath>
 #include <stdlib.h> 
+#include "matplotlibcpp.hpp"
+namespace plt = matplotlibcpp;
 using namespace std;
 
 
@@ -18,6 +20,7 @@ void print(QAP::Solution * s){
 
 
 int main(int argc, char const *argv[]) {
+ 
   srand(time(NULL));
   QAP::Solution * s= new QAP::Solution(12);
   cout<<"Starting S: ";
@@ -25,9 +28,9 @@ int main(int argc, char const *argv[]) {
   QAP::Fitness *f = new QAP::Fitness("1.dat");
   cout<<"Start fitness: "<<f->f(s)<<endl;
   int bf=-1;
-  QAP::Metaheuristic m(f);
+  QAP::Metaheuristic m(f,10);
   clock_t t;
-  int N = 20000;
+  int N = 1000;
   t=clock();
   QAP::Solution * best = m.run(s,N,bf);
   t = clock() - t;
@@ -39,5 +42,8 @@ int main(int argc, char const *argv[]) {
   cout<<"Best: "<<bf<<endl;
   cout<<"Computed: "<<f->f(best)<<endl;
   delete s;
+  plt::plot(m.history());
+  plt::show();
+
   return 0;
 }
