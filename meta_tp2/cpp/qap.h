@@ -38,20 +38,30 @@ private:
 
 class Metaheuristic{
 public:
-  Metaheuristic(Fitness *f,double lcoef=1.0);
-  Metaheuristic(std::string path,double lcoef=1.0);
+  Metaheuristic(Fitness *f,double lcoef=1.0,bool diversification=false);
+  Metaheuristic(std::string path,double lcoef=1.0, bool diversification=false);
   ~Metaheuristic();
   Solution * run(Solution * s, int n_iterations, int & best_fitness);
-  std::vector<int> history();
+  std::vector<int> history_f();
+  std::vector<int> history_t();
+  std::vector<int> all_history_f();
+  double average();
+
 private:
   Fitness * f_;
+  bool diversification_;
   int t_len;
+  int div_len;
   int n_;
+  long avg_;
   int **tabu_;
-  std::vector<int> history_;
+  std::vector<int> history_f_;
+  std::vector<int> history_t_;
+  std::vector<int> all_history_f_;
 
   void init_tabu();
   bool is_tabu(int value,int pos,int t);
+  bool is_mandatory(int value, int pos, int t);
   bool set_tabu(int value, int pos, int t);
   int * step(Solution * s, int fitness, int best_fitness,int t);
 };

@@ -39,7 +39,9 @@ Solution::Solution(int n){
 }
 
 Solution::~Solution(){
-  delete this->vec_;
+  if (vec_!=NULL){
+    delete this->vec_;
+  }
 }
 
 int Solution::at(int i){
@@ -149,23 +151,29 @@ int Fitness::n(){
   return this->n_;
 }
 
-Metaheuristic::Metaheuristic(Fitness *f,double lcoef){
+Metaheuristic::Metaheuristic(Fitness *f,double lcoef,bool diversification){
   this->f_=f;
+  this->diversification_=diversification;
   this->n_=f->n();
+  this->div_len=n_*n_;
   init_tabu();
   this->t_len=round(lcoef*n_);
 }
 
-Metaheuristic::Metaheuristic(std::string path,double lcoef){
+Metaheuristic::Metaheuristic(std::string path,double lcoef,bool diversification){
+  this->diversification_=diversification;
   this->f_ = new Fitness(path);
   this->n_ = this->f_->n();
+  this->div_len=n_*n_;
   this->t_len=round(lcoef*n_);
   init_tabu();
 }
 
 Metaheuristic::~Metaheuristic(){
-  delete this->f_;
-  delete[] this->tabu_;
+  if (this->f_)
+    delete this->f_;
+  if (this->tabu_)
+    delete[] this->tabu_;
 }
 
 void Metaheuristic::init_tabu(){
@@ -181,6 +189,10 @@ void Metaheuristic::init_tabu(){
 
 bool Metaheuristic::is_tabu(int value,int pos, int t){
   return tabu_[value-1][pos]>t;
+}
+
+bool Metaheuristic::is_mandatory(int value,int pos,int t){
+  return diversification_ &&  tabu_[value-1][pos]<t-div_len;
 }
 
 bool Metaheuristic::set_tabu(int value, int pos, int t){
@@ -200,7 +212,13 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
         res[1]=i;
         res[2]=j;
       }else if (res[0]>=best_fitness){
-        if (!is_tabu(s->at(i),j,t) && !is_tabu(s->at(j),i,t)){
+        if (is_mandatory(s->at(i),j,t) && is_mandatory(s->at(i),j,t)){
+          res[0]=f;
+          res[1]=i;
+          res[2]=j;
+          return res;
+        }
+        else if (!is_tabu(s->at(i),j,t) && !is_tabu(s->at(j),i,t)){
           if (f<res[0]){
             res[0]=f;
             res[1]=i;
@@ -216,13 +234,16 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
 Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness){
   Solution * best = s;
   best_fitness = f_->f(s);
-  history_.clear();
+  history_f_.clear();
+  history_t_.clear();
+  avg_=0;
+  all_history_f_.clear();
   int fitness = best_fitness;
   for (int i = 0; i < n_iterations;i++){
     int * res = this->step(s,fitness,best_fitness,i);
-    
     if (res[1]>=0){
-      history_.push_back(res[0]);
+      avg_+=res[0];
+      all_history_f_.push_back(res[0]);
       Solution * snext = s->neighbor(res[1],res[2]);
       set_tabu(s->at(res[1]),res[1],i);
       set_tabu(s->at(res[2]),res[2],i);
@@ -231,20 +252,36 @@ Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness
       }
       if (res[0]<best_fitness){
         best_fitness=res[0];
+        history_f_.push_back(best_fitness);
+        history_t_.push_back(i);
         delete best;
         best = snext;
       }     
-    
       s = snext;
       fitness = res[0];
     }else{
-      history_.push_back(fitness);
+      all_history_f_.push_back(fitness);
+      avg_+=fitness;
     }
     delete res;
   }
   return best;
 }
 
-std::vector<int> Metaheuristic::history(){
-  return this->history_;
+std::vector<int> Metaheuristic::history_t(){
+  return this->history_t_;
+}
+
+std::vector<int> Metaheuristic::history_f(){
+  return this->history_f_;
+}
+std::vector<int> Metaheuristic::all_history_f(){
+  return this->all_history_f_;
+}
+
+double Metaheuristic::average(){
+  if (all_history_f_.size()==0)
+    return -1;
+  return avg_/(double)all_history_f_.size();
+  
 }
