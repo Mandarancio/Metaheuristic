@@ -156,7 +156,6 @@ Metaheuristic::Metaheuristic(Fitness *f,double lcoef,bool diversification){
   this->diversification_=diversification;
   this->n_=f->n();
   this->div_len=n_*n_;
-  init_tabu();
   this->t_len=round(lcoef*n_);
 }
 
@@ -166,7 +165,6 @@ Metaheuristic::Metaheuristic(std::string path,double lcoef,bool diversification)
   this->n_ = this->f_->n();
   this->div_len=n_*n_;
   this->t_len=round(lcoef*n_);
-  init_tabu();
 }
 
 Metaheuristic::~Metaheuristic(){
@@ -232,6 +230,10 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
 }
 
 Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness){
+  if (tabu_){
+    delete tabu_;
+  } 
+  init_tabu();
   Solution * best = s;
   best_fitness = f_->f(s);
   history_f_.clear();

@@ -59,7 +59,7 @@ private:
   std::vector<int> history_f_;
   std::vector<int> history_t_;
   std::vector<int> all_history_f_;
-
+ 
   void init_tabu();
   bool is_tabu(int value,int pos,int t);
   bool is_mandatory(int value, int pos, int t);
