@@ -1,6 +1,11 @@
 #include "histo.h"
 #include <algorithm>    // std::min_element, std::max_element
 
+std::vector<double> * hh::histo(std::vector<int> xs, bool normed){
+  int min = *std::min_element(xs.begin(),xs.end());
+  int max= *std::max_element(xs.begin(),xs.end());
+  return hh::histo(xs,max-min,normed);  
+}
 
 std::vector<double> * hh::histo(std::vector<int> xs, int bins,bool normed){
   std::vector<double> * res=new std::vector<double>[2];
@@ -10,8 +15,6 @@ std::vector<double> * hh::histo(std::vector<int> xs, int bins,bool normed){
   int histo_size = max-min;
   if (histo_size==0){
     histo_size=2;
-    //min-=0;
-   // max+;
   }
   if (histo_size<bins){
     bins=histo_size;
@@ -27,7 +30,7 @@ std::vector<double> * hh::histo(std::vector<int> xs, int bins,bool normed){
     res[1].push_back(0);
     res[1].push_back(0);
   }
-  res[0].push_back(max+0.5*bin_size);
+  res[0].push_back(res[0][res[0].size()-1]);
   res[1].push_back(0);
   for (int i =0;i<xs.size();i++){
     int v=xs[i];
@@ -41,6 +44,3 @@ std::vector<double> * hh::histo(std::vector<int> xs, int bins,bool normed){
   return res;
 }
 
-int hh::pippo(){
-  return -1;
-}

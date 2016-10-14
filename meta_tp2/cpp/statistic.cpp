@@ -83,7 +83,7 @@ int main(int argc, char* argv[]){
   std::cout<<"\033[1mMaximum distance: \033[0m"<<distance<<std::endl;
   #if PLOT
   if (histo_on){
-    std::vector<double> * xy = hh::histo(results);
+    std::vector<double> * xy = hh::histo(results,20,false);
     plt::plot(xy[0],xy[1]);
     double my= *std::max_element(xy[1].begin(),xy[1].end());
     plt::xlim(xy[0][0]-1,xy[0][xy[0].size()-1]+1);

@@ -14,6 +14,16 @@ namespace plt = matplotlibcpp;
 #endif 
 using namespace std;
 
+void display_help(){
+  std::cout<<"analyser DAT_FILE (options)\n"
+  <<" -help show this help\n"
+  <<" -n INT number of iterations\n"
+  <<" -l FLOAT tabu size coefficent\n"
+  <<" -d enable diversification\n"
+  <<" -h show histogram\n"
+  <<" -p show plot\n"
+  <<" -pe show plot with extra information\n";
+}
 
 void print(QAP::Solution * s){
   int n = s->n();
@@ -27,18 +37,24 @@ void print(QAP::Solution * s){
 
 
 int main(int argc, char const *argv[]) {
-  std::string path = "1.dat";
+  if (argc<2){
+    display_help();
+    return 0;
+  }
+  std::string path = std::string(argv[1]);
   float l = 1.0; 
   bool diversification =false;
   int N = 1000;
   bool plot=false;
   bool histo = false;
+  bool plot_extra = false;
   int bins = 20;
   for (int i = 1;i<argc;i++){
-    if (strcmp(argv[i],"-f")==0 && i+1<argc){
-      path = std::string(argv[i+1]);
-      i++;
-    }else if (strcmp(argv[i],"-l")==0 && i+1<argc){
+    if (!strcmp(argv[i],"-help")){
+      display_help();
+      return 0;
+    }
+    else if (strcmp(argv[i],"-l")==0 && i+1<argc){
       l=atof(argv[i+1]);
       i++;
     }else if (strcmp(argv[i],"-n")==0 && i+1<argc){
@@ -53,6 +69,9 @@ int main(int argc, char const *argv[]) {
       i++;
     }else if (strcmp(argv[i],"-d")==0){
       diversification=true;
+    }else if (!strcmp(argv[i],"-pe")){
+      plot=true;
+      plot_extra=true;
     }
   }
   
@@ -86,22 +105,30 @@ int main(int argc, char const *argv[]) {
 #if PLOT
   if (plot){
     double x_max = (double)m.all_history_f().size();
-    plt::plot(m.history_t(),m.history_f(),"ro-");
-    plt::plot(m.all_history_f(),"-");
-    plt::plot({0,x_max},{(double)bf,(double)bf},"--");
-    plt::plot({0,x_max},{m.average(),m.average()},"k--");
+    plt::named_plot("fitness",m.all_history_f(),"b-");
+    if (plot_extra){
+      plt::named_plot("best discovery",m.history_t(),m.history_f(),"ro-");
+    }
+    plt::named_plot("best fitness",{0,x_max},{(double)bf,(double)bf},"g--");
+    plt::named_plot("average",{0,x_max},{m.average(),m.average()},"k--");
+    plt::xlabel("iterations");
+    plt::ylabel("fitness");
+    plt::legend();
   }
   if (histo && plot){
     plt::figure();
   }
   if (histo){
     std::vector<int> xs = m.all_history_f();
-    std::vector<double> * xy=hh::histo(xs,bins,true);
+    std::vector<double> * xy=hh::histo(xs,bins,false);
     double max = *std::max_element(xy[1].begin(),xy[1].end());
     max+=0.1*max;
-    plt::plot(xy[0],xy[1]);
-    plt::plot({m.average(),m.average()},{0,max},"--");
+    plt::named_plot("histogram",xy[0],xy[1]);
+    plt::named_plot("average",{m.average(),m.average()},{0.,max},"--");
     plt::ylim(0.,max);
+    plt::xlabel("fitness");
+    plt::ylabel("occurency");
+    plt::legend();
   }
   if (histo || plot){
     plt::show();

@@ -6,8 +6,7 @@
 namespace hh{
   
 std::vector<double> * histo(std::vector<int> xs, int bins=10,bool normed=false);
-int pippo();
-
+std::vector<double> * histo(std::vector<int> xs, bool normed=false);
 };
 #endif
 

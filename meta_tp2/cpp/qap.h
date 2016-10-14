@@ -16,6 +16,7 @@ public:
   int at(int i);
   int * vec();
   int psi(int i);
+
 private:
   int * vec_;
   int n_;

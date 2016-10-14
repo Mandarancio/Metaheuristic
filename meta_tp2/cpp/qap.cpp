@@ -77,6 +77,10 @@ int Solution::psi(int j){
   return 0;
 }
 
+int f(int v,int p, int n){
+  return (v-1)*n+(p+1);
+}
+
 
 Fitness::Fitness(int n, int* D[], int *W[]){
   this->n_=n;
