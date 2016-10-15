@@ -7,7 +7,7 @@
 
 using namespace QAP;
 
-
+//Copy a int array of size len to another one
 int * intdup(int const * src, size_t len)
 {
   int * p = new int[len];
@@ -20,6 +20,7 @@ Solution::Solution(int * vec, int n){
   this->n_ =n;
 }
 
+//generate a random solution of size n by perfoming 10*n random permutation
 Solution::Solution(int n){
   this->vec_=new int[n];
   this->n_ = n;
@@ -75,10 +76,6 @@ int Solution::psi(int j){
     }
   }
   return 0;
-}
-
-int f(int v,int p, int n){
-  return (v-1)*n+(p+1);
 }
 
 
@@ -232,7 +229,7 @@ int * Metaheuristic::step(Solution * s, int fitness, int best_fitness, int t){
           res[2]=j;
           return res;
         }
-        else if (!is_tabu(s->at(i),j,t) && !is_tabu(s->at(j),i,t)){
+        else if (!(is_tabu(s->at(i),j,t) && is_tabu(s->at(j),i,t))){
           if (f<res[0]){
             res[0]=f;
             res[1]=i;
@@ -258,7 +255,9 @@ Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness
     int * res = this->step(s,fitness,best_fitness,i);
     if (res[1]>=0){
       avg_+=res[0];
+#if !HIPERF
       all_history_f_.push_back(res[0]);
+#endif
       Solution * snext = s->neighbor(res[1],res[2]);
       set_tabu(s->at(res[1]),res[1],i);
       set_tabu(s->at(res[2]),res[2],i);
@@ -267,15 +266,19 @@ Solution * Metaheuristic::run(Solution * s, int n_iterations, int & best_fitness
       }
       if (res[0]<best_fitness){
         best_fitness=res[0];
+#if !HIPERF
         history_f_.push_back(best_fitness);
         history_t_.push_back(i);
+#endif
         delete best;
         best = snext;
       }     
       s = snext;
       fitness = res[0];
     }else{
+#if !HIPERF
       all_history_f_.push_back(fitness);
+#endif
       avg_+=fitness;
     }
     delete res;
