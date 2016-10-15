@@ -102,14 +102,16 @@ int main(int argc, char * argv[]){
       std::vector<double> y;
       std::vector<double> *xy = hh::histo(landscape,20);
       double max_y = *std::max_element(xy[1].begin(),xy[1].end());
-      delete[] xy;
+
       for (int i=0;i<100;i++){
         double xt = min_x+i*dx;
         double yt = gaussian(xt,max_y,average,dist_avg);
         x.push_back(xt);
         y.push_back(yt);
       }
+      plt::named_plot("histogram",xy[1],xy[0]);
       plt::named_plot("distribution curve",y,x);
+
     }
     plt::legend();
     plt::xlabel("time");
