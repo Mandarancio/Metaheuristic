@@ -19,7 +19,8 @@ void display_help(){
   <<" -s INT size of the landscape\n"
   <<" -h show histogram\n"
   <<" -hg show histogram and gauss fit\n"
-  <<" -p show plot\n";
+  <<" -p show plot\n"
+  <<" -pg show plot distribution\n";
 }
 
 double gaussian(double x, double a, double b, double c){
@@ -35,6 +36,7 @@ int main(int argc, char * argv[]){
   bool plot_on = false;
   bool histo_on = false;
   bool gauss_on = false;
+  bool plot_gauss_on =false;
   std::string path(argv[1]);
   for (int i = 2;i<argc;i++){
     if (!std::strcmp(argv[i],"-help")){
@@ -50,6 +52,9 @@ int main(int argc, char * argv[]){
     }else if (!std::strcmp(argv[i],"-hg")){
       histo_on = true;
       gauss_on = true;
+    }else if (!std::strcmp(argv[i],"-pg")){
+      plot_on=true;
+      plot_gauss_on=true;
     }
   }
   QAP::Fitness f(path);
@@ -84,10 +89,28 @@ int main(int argc, char * argv[]){
   #if PLOT
   if (plot_on){
     int l = landscape.size();
-    plt::named_plot("landscape",solutions_hash,landscape);
+    plt::named_plot("landscape",solutions_hash,landscape,"black");
     plt::named_plot("average",{0.,(double)l},{average,average},"r--");
-    plt::named_plot("min",{0.,(double)l},{(double)min,(double)min},"g--");
-    plt::named_plot("max",{0.,(double)l},{(double)max,(double)max},"b--"); 
+    plt::plot({0.,(double)l},{average-dist_avg,average-dist_avg},"w--");
+    plt::plot({0.,(double)l},{average+dist_avg,average+dist_avg},"w--"); 
+    
+    if (plot_gauss_on){
+      double max_x =(double) max; 
+      double min_x =(double)min;
+      double dx=(max_x-min_x)/100.0;
+      std::vector<double> x;
+      std::vector<double> y;
+      std::vector<double> *xy = hh::histo(landscape,20);
+      double max_y = *std::max_element(xy[1].begin(),xy[1].end());
+      delete[] xy;
+      for (int i=0;i<100;i++){
+        double xt = min_x+i*dx;
+        double yt = gaussian(xt,max_y,average,dist_avg);
+        x.push_back(xt);
+        y.push_back(yt);
+      }
+      plt::named_plot("distribution curve",y,x);
+    }
     plt::legend();
     plt::xlabel("time");
     plt::ylabel("fitness");
@@ -96,9 +119,9 @@ int main(int argc, char * argv[]){
     plt::figure();
   }
   if (histo_on){
-    std::vector<double> *xy = hh::histo(landscape,20);
+    std::vector<double> *xy = hh::histo(landscape,10,false);
     double max_y = *std::max_element(xy[1].begin(),xy[1].end());
-    plt::named_plot("fitness histogram",xy[0],xy[1]);
+    plt::named_plot("fitness histogram",xy[0],xy[1],"black");
     plt::named_plot("average",{average,average},{0.,max_y*1.01},"g--");
     plt::plot({average-dist_avg,average-dist_avg},{0,max_y*1.01},"r--");
     plt::plot({average+dist_avg,average+dist_avg},{0,max_y*1.01},"r--");
