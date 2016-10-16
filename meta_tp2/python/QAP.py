@@ -75,9 +75,12 @@ class TabuMatrix:
         self.__max_history__ = n*n
         self.__t__ = 1
         self.__diversification__ = True
+        self.__delta__ = []
         for i in range(0, n):
+            self.__delta__.append([])
             self.__st_matrix__.append([])
             for j in range(0, n):
+                self.__delta__[i].append(None)
                 self.__st_matrix__[i].append(0)
 
     def set_diversification(self, div: bool):
