@@ -25,12 +25,12 @@ namespace QAP{
 
   class Fitness{
   public:
-    Fitness(int n, int* D[], int *W[]);
-    Fitness(std::string path);
+    Fitness(int n, int* D[], int *W[]); //initalize the class with the D and W matrix
+    Fitness(std::string path); //intialize the matrix from file
     ~Fitness();
-    int f(Solution * s);
-    int delta(Solution * s,int i, int j);
-    int n();
+    int f(Solution * s); //compute the fitness of a solution
+    int delta(Solution * s,int i, int j); // compute the delta fintess exchanging s[i] with s[j]
+    int n(); //size of the problem
   private:
     int n_;
     int **D_;
