@@ -25,8 +25,8 @@ namespace QAP{
 
   class Fitness{
   public:
-    Fitness(int n, int* D[], int *W[]);
-    Fitness(std::string path);
+    Fitness(int n, int* D[], int *W[]); //load 
+    Fitness(std::string path); //load the matrix directly from file
     ~Fitness();
     int f(Solution * s);
     int delta(Solution * s,int i, int j);

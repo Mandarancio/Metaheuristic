@@ -86,7 +86,7 @@ Fitness::Fitness(int n, int* D[], int *W[]){
 }
 
 Fitness::Fitness(std::string path){
-  std::ifstream infile(path);
+  std::ifstream infile(path.c_str());
   int n;
   infile>>n;
   this->n_=n;
