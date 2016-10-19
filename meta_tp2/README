@@ -1,0 +1,11 @@
+To compile:
+cd cpp/
+./compile.sh
+
+if no python headers are installed (or no matplotlib installed) run
+./compile_no_pyton.sh
+
+NOTE IN THE SECOND CASE NO PLOT WILL BE AVAIABLE!
+
+all the binaries will be in the folder bin, and for each a simple help appear if no parame-
+ters are passed.

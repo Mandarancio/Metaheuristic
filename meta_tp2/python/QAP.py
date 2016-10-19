@@ -200,7 +200,7 @@ class QAP:
                             mandatory = True
                             min_f = f
                             perm = [i, j]
-                    elif self.__tabu__.status(s[i], j) and self.__tabu__.status(s[j], i):
+                    elif self.__tabu__.status(s[i], j) or self.__tabu__.status(s[j], i):
                         if f < min_f:
                             # min_n =s.neighbor(i,j)
                             min_f = f
