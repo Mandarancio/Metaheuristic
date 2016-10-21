@@ -23,7 +23,7 @@ namespace tsp{
   {
     public:
       Solution(std::vector<City> array,bool loop=true);
-      ~Solution();
+      virtual ~Solution();
       virtual double fitness();
       bool loop();
       std::vector<City> cities();

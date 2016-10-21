@@ -3,21 +3,18 @@
 #include "meta.hpp"
 
 namespace sa{
-  class Annealing{
+  class Annealing: public meta::AMeta
+  {
   public:
     Annealing(meta::ASolution * startSolution);
-    ~Annealing();
-    meta::ASolution * run();
-    meta::ASolution * oConfiguration();
+    virtual meta::ASolution * run();
+    virtual void reset(meta::ASolution * startSol);
     double t0();
-    int T();
     double tf();
   private:
     void computeT0();
     double t0_;
-    meta::ASolution * zero_conf_;
     double ti_;
-    int T_;
   };
 };
 

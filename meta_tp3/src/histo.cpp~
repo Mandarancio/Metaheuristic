@@ -1,13 +1,8 @@
-#include "histo.h"
+#include "histo.hpp"
 #include <algorithm>    // std::min_element, std::max_element
 
-std::vector<double> * hh::histo(std::vector<int> xs, bool normed){
-  int min = *std::min_element(xs.begin(),xs.end());
-  int max= *std::max_element(xs.begin(),xs.end());
-  return hh::histo(xs,max-min,normed);  
-}
-
-std::vector<double> * hh::histo(std::vector<int> xs, int bins,bool normed){
+template<typename Numeric> 
+std::vector<double> * hh::histo(std::vector<Numeric> xs, int bins,bool normed){
   std::vector<double> * res=new std::vector<double>[2];
   
   int min = *std::min_element(xs.begin(),xs.end());

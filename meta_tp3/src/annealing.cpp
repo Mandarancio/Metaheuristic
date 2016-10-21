@@ -1,31 +1,30 @@
-#include "sa.hpp"
+#include "annealing.hpp"
 #include <cstdlib>
 #include <cmath>
 
 using namespace sa;
 
 Annealing::Annealing(meta::ASolution * startSolution):
-  zero_conf_(startSolution), t0_(0), ti_(0), T_(0)
+  t0_(0), ti_(0), meta::AMeta(startSolution,"Simulated Annealing")
 {
-  computeT0();
+  if (startSolution_)
+  {
+    computeT0();
+  }
 }
 
-Annealing::~Annealing()
-{
-  delete zero_conf_;
-}
 
 meta::ASolution * Annealing::run()
 {
   bool condition = false;
   ti_=t0_;
-  meta::ASolution * old = zero_conf_->neighbour(0,0);
+  meta::ASolution * old = startSolution_->neighbour(0,0);
   meta::ASolution * current = NULL;
   int accepted = 0;
   int attempted = 0;
-  T_=0;
   int n = old->n();
   int no_counter = 0;
+  int done = 0;
   while (!condition)
   {
     current = old->rand_neighbour();
@@ -40,14 +39,16 @@ meta::ASolution * Annealing::run()
     }else{
       delete current; 
     }
-    T_++;
+    iters_++;
     if (accepted >=12*n || attempted>=100*n)
     {
       ti_=0.95*ti_;
       
-      if (accepted ==0   || ti_<1e-8) 
+      if ((accepted ==0  && done==8) || ti_<1e-3) 
       {
         condition = true;
+      }else {
+        done = accepted==0 ? done + 1 : 0;
       }
       accepted=0;
       attempted=0;
@@ -57,9 +58,11 @@ meta::ASolution * Annealing::run()
   return old;
 }
 
-meta::ASolution * Annealing::oConfiguration()
+
+void Annealing::reset(meta::ASolution * startSol)
 {
-  return zero_conf_;
+  meta::AMeta::reset(startSol);
+  computeT0();  
 }
 
 double Annealing::t0()
@@ -71,7 +74,7 @@ void Annealing::computeT0()
 {
   while (t0_<=0)
   {
-    meta::ASolution * old= zero_conf_->neighbour(0,0);
+    meta::ASolution * old= startSolution_->neighbour(0,0);
     double delta_e=0;
     int n = old->n();
     for (int i =0 ;i<100;i++){
@@ -82,21 +85,18 @@ void Annealing::computeT0()
     }
     delete old;
     delta_e = sqrt(delta_e/100);
-    t0_=10.0*-delta_e/log(0.5);
+    t0_=-delta_e/log(0.5);
     if (t0_<0)
     {
-      meta::ASolution * sol = zero_conf_->random();
-      delete zero_conf_;
-      zero_conf_ = sol;
+      meta::ASolution * sol = startSolution_->random();
+      delete startSolution_;
+      startSolution_ = sol;
     }
   }
   ti_=t0_;
 }
 
-int Annealing::T()
-{
-  return T_;
-}
+
 double Annealing::tf()
 {
   return ti_;
