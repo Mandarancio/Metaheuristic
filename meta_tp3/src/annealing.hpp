@@ -8,9 +8,10 @@ namespace sa{
   public:
     Annealing(meta::ASolution * startSolution);
     virtual meta::ASolution * run();
+    virtual meta::ASolution * step(meta::ASolution * sol);
     virtual void reset(meta::ASolution * startSol);
     double t0();
-    double tf();
+    double ti();
   private:
     void computeT0();
     double t0_;

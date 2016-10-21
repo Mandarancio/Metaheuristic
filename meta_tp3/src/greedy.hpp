@@ -7,8 +7,11 @@ namespace greedy{
   {
   public:
     Greedy(meta::ASolution * start);
+    virtual meta::ASolution * step(meta::ASolution * sol);
     virtual meta::ASolution * run();
-
+    virtual void reset(meta::ASolution * startSol);
+  private:
+    int index_;
   };
 };
 

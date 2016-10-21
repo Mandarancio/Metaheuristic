@@ -12,6 +12,10 @@ namespace meta{
     virtual ASolution * neighbour(int i, int j)=0;
     virtual ASolution * random()=0;
     virtual ASolution * rand_neighbour()=0;
+    ASolution * clone()
+    {
+      return neighbour(0,0);
+    };
     virtual int n()=0;
   };
   
@@ -29,6 +33,7 @@ namespace meta{
       delete startSolution_;
       startSolution_= sol;      
     }
+    virtual ASolution * step(meta::ASolution * sol)=0;
     virtual ASolution * run()=0;
     virtual int iters(){
       return iters_;
