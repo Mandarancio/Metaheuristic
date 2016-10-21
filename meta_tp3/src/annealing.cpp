@@ -44,7 +44,7 @@ meta::ASolution * Annealing::run()
     {
       ti_=0.95*ti_;
       
-      if ((accepted ==0  && done==8) || ti_<1e-3) 
+      if ((accepted ==0  && done==10) || ti_<1e-4) 
       {
         condition = true;
       }else {

@@ -1,6 +1,7 @@
 #include "exmath.hpp"
 #include <cmath>
 #include <algorithm>
+#include <iostream>
 
 double math::gaussian(double alpha, double mu, double sigma, double x)
 {
@@ -56,6 +57,10 @@ std::vector<double> math::scale(std::vector<double> val, double min, double max)
   double my_max = *std::max_element(val.begin(),val.end());
   double my_ds = my_max-my_min;
   double scale = ds/my_ds;
+  if (my_ds ==0 )
+  {
+    scale = 1.0;
+  }
   std::vector<double>s_val;
   for (int i =0;i<val.size();i++)
   {
