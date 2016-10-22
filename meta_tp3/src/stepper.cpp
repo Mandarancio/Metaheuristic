@@ -32,21 +32,31 @@ int main(int argc, char * argv[])
   meta::ASolution * old = meta->oSolution()->clone();
   double t=meta->ti();
   int done = 0;
+  double f = old->fitness();
   while (t>1e-3 && done<3)
   {
     std::cout<<"T: "<<t<<std::endl;
     save(old,t,out_path);
     meta::ASolution * s= meta->step(old);
-    if (s){
+    t=meta->ti();
+    if (s)
+    {
+      double nf = s->fitness();
+      if (nf==f)
+      {
+        done++;
+      }
+      f=nf;
       delete old;
       old=s;
-      t=meta->ti();
+      
     }
     else
     {
       done++;
     }
   }
+//  plt::legend();
   plt::show();
   return 0;
 }
@@ -54,7 +64,7 @@ int main(int argc, char * argv[])
 
 void save(meta::ASolution * s, double t, std::string out)
 {
-  plt::figure();
+//  plt::figure();
 
   double fitness=s->fitness();
   std::vector<double> x,y;
@@ -66,9 +76,10 @@ void save(meta::ASolution * s, double t, std::string out)
   }
   x.push_back(x[0]);
   y.push_back(y[0]);
-  plt::plot(x,y,"o-");
-  plt::title("T="+std::to_string(t));
-//  plt::save(out+"fig_"+std::to_string(t)+".png");
+//  plt::named_plot("T="+std::to_string(t),x,y,"o-");
+  plt::named_plot("T="+std::to_string(t),x,y,"o-");
+//  plt::title("T="+std::to_string(t));
+  plt::save(out+"fig_"+std::to_string(t)+".png");
 
-//  plt::close();
+  plt::close();
 }

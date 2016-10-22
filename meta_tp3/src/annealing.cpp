@@ -22,7 +22,7 @@ meta::ASolution * Annealing::step(meta::ASolution * sol)
   int attempted = 0;
   int accepted = 0;
   int n = old->n();
-  while (! (accepted >=12*n || attempted>=100*n))
+  while (! (accepted >=1 || attempted>=100*n))
   {
     attempted ++;
     iters_++;
@@ -44,9 +44,9 @@ meta::ASolution * Annealing::step(meta::ASolution * sol)
   if (accepted==0)
   {
     delete old;
-  }else{
-    ti_=0.95*ti_;
   }
+  ti_=0.9*ti_;
+  
   return accepted > 0 ? old : NULL;
 }
 
@@ -101,13 +101,13 @@ void Annealing::computeT0()
     int n = old->n();
     for (int i =0 ;i<100;i++){
       meta::ASolution * curr = old->rand_neighbour();
-      delta_e+= pow(curr->fitness()-old->fitness(),2);
+      delta_e+= curr->fitness()-old->fitness();
       delete old;
       old = curr;
     }
     delete old;
-    delta_e = sqrt(delta_e/100);
-    t0_=-5*delta_e/log(0.5);
+//    delta_e = sqrt(delta_e/100);
+    t0_=-delta_e/log(0.5);
     if (t0_<0)
     {
       meta::ASolution * sol = startSolution_->random();

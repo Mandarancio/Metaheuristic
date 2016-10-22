@@ -12,48 +12,70 @@ Annealing::Annealing(meta::ASolution * startSolution):
     computeT0();
   }
 }
-
-
-meta::ASolution * Annealing::run()
+meta::ASolution * Annealing::step(meta::ASolution * sol)
 {
-  bool condition = false;
-  ti_=t0_;
-  meta::ASolution * old = startSolution_->neighbour(0,0);
+
+  meta::ASolution * old = sol->clone();
   meta::ASolution * current = NULL;
-  int accepted = 0;
+
+  double old_fitness = old->fitness();
   int attempted = 0;
+  int accepted = 0;
   int n = old->n();
-  int no_counter = 0;
-  int done = 0;
-  while (!condition)
+  while (! (accepted >=2 || attempted>=100*n))
   {
+    attempted ++;
+    iters_++;
     current = old->rand_neighbour();
     double fitness = current->fitness();
-    attempted ++;
-    double de = fitness-old->fitness();
-    if (de<=0 || rand()<=exp(-de/ti_))
+    double de = fitness-old_fitness;
+     if (de<=0 || rand()<=exp(-de/ti_))
     {
       accepted++; 
       delete old;
       old=current;
-    }else{
-      delete current; 
+      old_fitness = fitness;
     }
-    iters_++;
-    if (accepted >=12*n || attempted>=100*n)
+    else
     {
-      ti_=0.9*ti_;
-      
-      if ((accepted ==0  && done==8) || ti_<1e-3) 
-      {
-        condition = true;
-      }else {
-        done = accepted==0 ? done + 1 : 0;
-      }
-      accepted=0;
-      attempted=0;
+      delete current; 
+    }   
+  }
+  if (accepted==0)
+  {
+    delete old;
+  }
+  ti_=0.9*ti_;
+  
+  return accepted > 0 ? old : NULL;
+}
+
+meta::ASolution * Annealing::run()
+{
+
+  ti_=t0_;
+  meta::ASolution * old = startSolution_->clone();
+  double last_fitness = old->fitness();
+  int done = 0;
+  while (ti_>1e-3 && done <3)
+  {
+    meta::ASolution *s= this->step(old);
+    if (s==NULL)
+    {
+      done++;
     }
-    
+    else
+    {
+      double f = s->fitness();
+      delete old;
+      old  = s;
+     
+      if (f == last_fitness)
+      {
+        done++;
+      }  
+      last_fitness=f;
+    }  
   }
   return old;
 }
@@ -74,17 +96,17 @@ void Annealing::computeT0()
 {
   while (t0_<=0)
   {
-    meta::ASolution * old= startSolution_->neighbour(0,0);
+    meta::ASolution * old= startSolution_->clone();
     double delta_e=0;
     int n = old->n();
     for (int i =0 ;i<100;i++){
       meta::ASolution * curr = old->rand_neighbour();
-      delta_e+= pow(curr->fitness()-old->fitness(),2);
+      delta_e+= curr->fitness()-old->fitness();
       delete old;
       old = curr;
     }
     delete old;
-    delta_e = sqrt(delta_e/100);
+//    delta_e = sqrt(delta_e/100);
     t0_=-delta_e/log(0.5);
     if (t0_<0)
     {
@@ -97,7 +119,7 @@ void Annealing::computeT0()
 }
 
 
-double Annealing::tf()
+double Annealing::ti()
 {
   return ti_;
 }
