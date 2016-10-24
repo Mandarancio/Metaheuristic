@@ -8,6 +8,7 @@ namespace meta{
     ASolution(){};
     virtual ~ASolution(){};
     virtual double fitness()=0;
+    virtual double delta_fitness(int i, int j)=0;
     virtual std::vector<ASolution*> neighbours()=0;
     virtual ASolution * neighbour(int i, int j)=0;
     virtual ASolution * random()=0;

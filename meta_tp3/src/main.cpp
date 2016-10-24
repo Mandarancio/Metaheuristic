@@ -20,6 +20,7 @@ void run(meta::AMeta * meta, std::string path, int N)
   std::vector<double> best_fit;
   std::vector<double> iters;
   double min_fit=10000;
+  double t0= 0.0;
   tsp::Solution * min_sol = NULL;
   std::cout<<"\n\033[1m"<<meta->name()<<"\033[0m\n\n";
   for (int i = 0;i<N;i++)
@@ -50,8 +51,6 @@ void run(meta::AMeta * meta, std::string path, int N)
   std::cout<<"Best fitness: \033[0m"<<min_fit<<std::endl;
   std::cout<<"\033[1mMean: \033[0m"<<avg<<std::endl;
   std::cout<<"\033[1mDeviation: \033[0m"<<sigma<<std::endl;
-  std::cout<<"\033[1mMax iters: \033[0m"<<max_it<<std::endl;
-  std::cout<<"\033[1mMin iters: \033[0m"<<min_it<<std::endl;
   plt::figure();
   double simple_x[]={0,N-1.};
   double s_avg[]={avg,avg};

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
-#include <iostream>
+
 
 using namespace tsp;
 
@@ -40,17 +40,39 @@ Solution::Solution(std::vector<City> array,bool loop):
 Solution::~Solution(){
   cities_.clear();
 }
+
+
+double Solution::delta_fitness(int i, int j)
+{
+  City cj = cities_[j];
+  City ci = cities_[i];
+  int n = this->n();
+  double delta = 0;
+  for (int k = -1;k<=1;k+=2){
+    int ik = (i+k)%n;
+    int jk = (j+k)%n;
+    ik = ik<0 ? n+ik:ik;
+    jk = jk<0 ? n+jk:jk;
+  
+    if (ik!=j){
+      delta+= cities_[ik].distance(cj)-cities_[ik].distance(ci);
+    
+    }
+    if (jk!=i){
+      delta+= cities_[jk].distance(ci)-cities_[jk].distance(cj);
+    }
+  }
+  return delta;
+}
+
 double Solution::fitness()
 {
   double d=0;
+  unsigned int n = cities_.size(); 
 #pragma omp simd
-  for (int i = 1;i<cities_.size();i++)
+  for (int i = 0;i<( loop_ ? n: n-1);i++)
   {
-    d+=cities_[i-1].distance(cities_[i]);
-  }
-  if (loop_)
-  {
-    d+=cities_[0].distance(cities_[cities_.size()-1]);
+    d+=cities_[i].distance(cities_[(i+1)%n]);
   }
   return d;
 }

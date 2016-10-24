@@ -1,0 +1,10 @@
+#ifndef PT_H
+#define PT_H
+#include "meta.hpp"
+namespace pt{
+  class ParallelTempering : meta::AMeta
+  {
+  
+  };
+};
+#endif

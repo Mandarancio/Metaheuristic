@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cmath>
 
+#include <iostream>
 using namespace sa;
 
 Annealing::Annealing(meta::ASolution * startSolution):
@@ -12,42 +13,48 @@ Annealing::Annealing(meta::ASolution * startSolution):
     computeT0();
   }
 }
+
 meta::ASolution * Annealing::step(meta::ASolution * sol)
 {
 
   meta::ASolution * old = sol->clone();
-  meta::ASolution * current = NULL;
+
 
   double old_fitness = old->fitness();
   int attempted = 0;
   int accepted = 0;
   int n = old->n();
-  while (! (accepted >=1 || attempted>=100*n))
+  while (!(accepted >=12*n || attempted>=100*n))
   {
     attempted ++;
     iters_++;
-    current = old->rand_neighbour();
-    double fitness = current->fitness();
-    double de = fitness-old_fitness;
-     if (de<=0 || rand()<=exp(-de/ti_))
+    int i = rand()%n;
+    int j = rand()%n;
+    
+    double de = old->delta_fitness(i,j);
+    double r = ((double) rand() / (RAND_MAX)) ;
+    if (de<=0 || r<=exp(-de/ti_))
     {
       accepted++; 
+      meta::ASolution * current = old->neighbour(i,j);
       delete old;
       old=current;
-      old_fitness = fitness;
+      old_fitness = old->fitness();
     }
-    else
-    {
-      delete current; 
-    }   
+  
   }
+
+
   if (accepted==0)
   {
     delete old;
   }
-  ti_=0.9*ti_;
-  
   return accepted > 0 ? old : NULL;
+}
+
+void Annealing::step_down_t()
+{
+  ti_=0.9*ti_;
 }
 
 meta::ASolution * Annealing::run()
@@ -58,8 +65,10 @@ meta::ASolution * Annealing::run()
   double last_fitness = old->fitness();
   int done = 0;
   while (ti_>1e-3 && done <3)
+  //change done<N if needed to change precision
   {
     meta::ASolution *s= this->step(old);
+    step_down_t();
     if (s==NULL)
     {
       done++;
@@ -70,11 +79,11 @@ meta::ASolution * Annealing::run()
       delete old;
       old  = s;
      
-      if (f == last_fitness)
-      {
-        done++;
-      }  
-      last_fitness=f;
+//      if (f == last_fitness)
+//      {
+//        done++;
+//      }  
+//      last_fitness=f;
     }  
   }
   return old;
@@ -96,17 +105,16 @@ void Annealing::computeT0()
 {
   while (t0_<=0)
   {
-    meta::ASolution * old= startSolution_->clone();
+    int N = 100;
     double delta_e=0;
-    int n = old->n();
-    for (int i =0 ;i<100;i++){
-      meta::ASolution * curr = old->rand_neighbour();
-      delta_e+= curr->fitness()-old->fitness();
-      delete old;
-      old = curr;
+    double f = startSolution_->fitness();
+    int n = startSolution_->n();
+    for (int i =0 ;i<N;i++){
+      meta::ASolution * curr = startSolution_->rand_neighbour();
+      delta_e+=curr->fitness()-f;
+      delete curr;
     }
-    delete old;
-//    delta_e = sqrt(delta_e/100);
+    delta_e/=N;
     t0_=-delta_e/log(0.5);
     if (t0_<0)
     {
@@ -118,6 +126,10 @@ void Annealing::computeT0()
   ti_=t0_;
 }
 
+void Annealing::set_ti(double t)
+{
+  ti_=t;
+}
 
 double Annealing::ti()
 {

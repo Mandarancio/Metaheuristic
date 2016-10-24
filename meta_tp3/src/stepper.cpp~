@@ -39,7 +39,6 @@ int main(int argc, char * argv[])
     std::cout<<"T: "<<t<<std::endl;
     plot(old,t);
     meta::ASolution * s= meta->step(old);
-    meta->step_down_t();
     t=meta->ti();
     if (s)
     {

@@ -10,6 +10,8 @@ namespace sa{
     virtual meta::ASolution * run();
     virtual meta::ASolution * step(meta::ASolution * sol);
     virtual void reset(meta::ASolution * startSol);
+    void step_down_t();
+    void set_ti(double t);
     double t0();
     double ti();
   private:

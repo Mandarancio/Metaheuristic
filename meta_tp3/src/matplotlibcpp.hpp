@@ -273,10 +273,11 @@ namespace matplotlibcpp {
 	}
 
 	template<typename Numeric>
-	bool named_plot(const std::string& name, const std::vector<Numeric>& x, const std::vector<Numeric>& y, const std::string& format = "") {
+	bool named_plot(const std::string& name, const std::vector<Numeric>& x, const std::vector<Numeric>& y, const std::string& format = "",double alpha=1.0) {
 		PyObject* kwargs = PyDict_New();
 		PyDict_SetItemString(kwargs, "label", PyString_FromString(name.c_str()));
-
+    PyDict_SetItemString(kwargs, "alpha", PyFloat_FromDouble(alpha));
+    
 		PyObject* xlist = PyList_New(x.size());
 		PyObject* ylist = PyList_New(y.size());
 		PyObject* pystring = PyString_FromString(format.c_str());

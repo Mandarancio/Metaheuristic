@@ -25,6 +25,7 @@ namespace tsp{
       Solution(std::vector<City> array,bool loop=true);
       virtual ~Solution();
       virtual double fitness();
+      virtual double delta_fitness(int i, int j);
       bool loop();
       std::vector<City> cities();
       virtual meta::ASolution * neighbour(int i, int j);
