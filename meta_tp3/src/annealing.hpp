@@ -6,7 +6,7 @@ namespace sa{
   class Annealing: public meta::AMeta
   {
   public:
-    Annealing(meta::ASolution * startSolution);
+    Annealing(meta::ASolution * startSolution, int max_perm = 100, int max_accepted = 12);
     virtual meta::ASolution * run();
     virtual meta::ASolution * step(meta::ASolution * sol);
     virtual void reset(meta::ASolution * startSol);
@@ -18,6 +18,8 @@ namespace sa{
     void computeT0();
     double t0_;
     double ti_;
+    int max_perm_;
+    int max_accepted_;
   };
 };
 

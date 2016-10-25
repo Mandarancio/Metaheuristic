@@ -5,8 +5,8 @@
 #include <iostream>
 using namespace sa;
 
-Annealing::Annealing(meta::ASolution * startSolution):
-  t0_(0), ti_(0), meta::AMeta(startSolution,"Simulated Annealing")
+Annealing::Annealing(meta::ASolution * startSolution,int max_perm, int max_accepted):
+  t0_(0), ti_(0), max_perm_(max_perm), max_accepted_(max_accepted), meta::AMeta(startSolution,"Simulated Annealing")
 {
   if (startSolution_)
   {
@@ -24,7 +24,7 @@ meta::ASolution * Annealing::step(meta::ASolution * sol)
   int attempted = 0;
   int accepted = 0;
   int n = old->n();
-  while (!(accepted >=12*n || attempted>=100*n))
+  while (!(accepted >=max_accepted_*n || attempted>=max_perm_*n))
   {
     attempted ++;
     iters_++;
@@ -126,7 +126,7 @@ void Annealing::computeT0()
   ti_=t0_;
 }
 
-void set_ti(double t)
+void Annealing::set_ti(double t)
 {
   ti_=t;
 }
