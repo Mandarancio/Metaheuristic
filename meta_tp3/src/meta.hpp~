@@ -5,39 +5,23 @@
 namespace meta{
   class ASolution{
   public:
-    ASolution(){};
-    virtual ~ASolution(){};
+    ASolution();
+    virtual ~ASolution();
     virtual double fitness()=0;
-    virtual double delta_fitness(int i, int j){
-      ASolution * n = neighbour(i,j);
-      double de = n->fitness()-fitness();
-      return de;
-    }
+    virtual double delta_fitness(int i, int j);
     virtual std::vector<ASolution*> neighbours()=0;
     virtual ASolution * neighbour(int i, int j)=0;
     virtual ASolution * random()=0;
     virtual ASolution * rand_neighbour()=0;
-    ASolution * clone()
-    {
-      return neighbour(0,0);
-    };
+    ASolution * clone();
     virtual int n()=0;
   };
   
   class AMeta{
   public:
-    AMeta(ASolution * startSolution, std::string name):
-    startSolution_(startSolution), name_(name), iters_(0) {}
-    virtual ~AMeta()
-    {
-      delete startSolution_;
-    }
-    virtual void reset(ASolution * sol)
-    {
-      iters_=0;
-      delete startSolution_;
-      startSolution_= sol;      
-    }
+    AMeta(ASolution * startSolution, std::string name);
+    virtual ~AMeta();
+    virtual void reset(ASolution * sol);
     virtual ASolution * step(meta::ASolution * sol)=0;
     virtual ASolution * run()=0;
     virtual int iters(){
@@ -56,6 +40,9 @@ namespace meta{
     ASolution * startSolution_;
     int iters_;
   };
+  
+  std::vector <ASolution *> sol_landscape(ASolution * s, int N);
+  std::vector <double> landscape(ASolution * s, int  N);
 };
 
 #endif

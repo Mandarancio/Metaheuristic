@@ -18,10 +18,11 @@ void run(meta::AMeta * meta, std::string path, int N)
 {
   std::vector<double> best_fit;
   std::vector<double> iters;
+  
   double min_fit=10000;
   double t0= 0.0;
   tsp::Solution * min_sol = NULL;
-  std::cout<<"\n\033[1m"<<meta->name()<<"\033[0m\n\n";
+  std::cout<<"\n\033[31;1m"<<meta->name()<<"\033[0m\n\n";
   for (int i = 0;i<N;i++)
   {
     
@@ -77,6 +78,9 @@ void run(meta::AMeta * meta, std::string path, int N)
     std::vector<double> s_iters = math::scale(iters,min_y,max_y);
     plt::named_plot("Iterations",s_iters,"g:");
   }
+  plt::xlabel("t");
+  plt::ylabel("fitness");
+
   plt::legend();
   plt::figure();
   std::vector<double> x,y;
@@ -84,10 +88,24 @@ void run(meta::AMeta * meta, std::string path, int N)
   {
     x.push_back(min_sol->cities()[i].x());
     y.push_back(min_sol->cities()[i].y());
+
   }
   x.push_back(x[0]);
   y.push_back(y[0]);
   plt::named_plot("Solution",x,y,"o-");
+  double *xlims = plt::xlim();
+  double *ylims = plt::ylim();
+  double xrange= xlims[1]-xlims[0];
+  plt::xlim(xlims[0]-0.05*xrange,xlims[1]+0.05*xrange);
+  plt::ylim(ylims[0]-0.05*xrange,ylims[1]+0.05*xrange);
+  if (min_sol->n()<=20)
+  {
+    
+    for (int i=0;i<min_sol->n();i++)
+    {
+      plt::annotate(min_sol->cities()[i].name(),x[i]-0.02*xrange,y[i]+0.02*xrange);
+    }
+  }
   plt::legend();
 }
 
