@@ -14,7 +14,6 @@
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
 
-
 void run(meta::AMeta * meta, std::string path, int N)
 {
   std::vector<double> best_fit;
@@ -57,13 +56,13 @@ void run(meta::AMeta * meta, std::string path, int N)
   double s_n_sigm[]={avg-sigma,avg-sigma};
   double s_p_sigm[]={avg+sigma,avg+sigma};
   plt::plot(simple_x,s_avg,"r--");
-  plt::plot(best_fit,"x-");
+  plt::named_plot("Fitness found",best_fit,"x-");
   plt::plot(simple_x,s_n_sigm,"g--");
   plt::plot(simple_x,s_p_sigm,"g--");
   if (N>10)
   {
-    std::vector<double> * xy=hh::histo(best_fit,10);
-    plt::plot(xy[1],xy[0],"r-");
+    std::vector<double> * xy=hh::histo(best_fit,15);
+    plt::named_plot("Distribution",xy[1],xy[0],"r-");
     double alpha = *std::max_element(xy[1].begin(),xy[1].end());
     double min_x = *std::min_element(xy[0].begin(),xy[0].end());
     double max_x = *std::max_element(xy[0].begin(),xy[0].end());
@@ -72,12 +71,13 @@ void run(meta::AMeta * meta, std::string path, int N)
     max_x+=dx/10.;
     std::vector<double> x=math::lin_space(min_x,max_x);
     std::vector<double> y = math::std_dist(alpha,avg,sigma,x);
-    plt::plot(y,x,"r:");
+    plt::named_plot("Fit",y,x,"r:");
     double min_y =min_fit;
     double max_y =*std::max_element(best_fit.begin(),best_fit.end());
     std::vector<double> s_iters = math::scale(iters,min_y,max_y);
-    plt::plot(s_iters);
+    plt::named_plot("Iterations",s_iters,"g:");
   }
+  plt::legend();
   plt::figure();
   std::vector<double> x,y;
   for (int i=0;i<min_sol->n();i++)
@@ -87,8 +87,8 @@ void run(meta::AMeta * meta, std::string path, int N)
   }
   x.push_back(x[0]);
   y.push_back(y[0]);
-  plt::plot(x,y,"o-");
-
+  plt::named_plot("Solution",x,y,"o-");
+  plt::legend();
 }
 
 int main(int argc, char * argv[])

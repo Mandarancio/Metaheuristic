@@ -62,7 +62,6 @@ meta::ASolution * Annealing::run()
 
   ti_=t0_;
   meta::ASolution * old = startSolution_->clone();
-  double last_fitness = old->fitness();
   int done = 0;
   while (ti_>1e-5 && done <3)
   //change done<N if needed to change precision
@@ -75,15 +74,9 @@ meta::ASolution * Annealing::run()
     }
     else
     {
-      double f = s->fitness();
       delete old;
       old  = s;
      
-//      if (f == last_fitness)
-//      {
-//        done++;
-//      }  
-//      last_fitness=f;
     }  
   }
   return old;

@@ -34,29 +34,24 @@ int main(int argc, char * argv[])
 
 void run(std::string path, int nreplica)
 {
-  int imax= 100;//5*nreplica+20;//10*nreplica;
+  int imax= 15;//5*nreplica+20;//10*nreplica;
   std::vector<sa::Annealing*> metas;
   std::vector<meta::ASolution * > solutions;
-  std::vector<std::vector<double> > swaps;
   std::vector<double> Bs;
   //Initialize
   double Mt=0;
   for (int i = 0;i<nreplica;i++)
   {
-    sa::Annealing *sa=new sa::Annealing(tsp::randomFromFile(path), 4,20);
+    sa::Annealing *sa=new sa::Annealing(tsp::randomFromFile(path), 12,100);
     solutions.push_back(sa->oSolution());
     metas.push_back(sa);
-    swaps.push_back(std::vector<double>());
-//    if (mt>sa->t0())
-//    {
-//      mt=sa->t0();
-//    }
+
     if (Mt<sa->t0())
     {
       Mt=sa->t0();
     }
   }
-//  mt=1e-3;//nreplica/2;
+
   Mt*=2;
  
   for (int i=0;i<nreplica;i++){
@@ -64,7 +59,7 @@ void run(std::string path, int nreplica)
     double t = Mt*1/(nreplica-i);
     double b = 1.0/t;
     metas[i]->set_ti(t);
-    swaps[i].push_back(t);
+
     Bs.push_back(b);
   }
   //Run
@@ -80,33 +75,26 @@ void run(std::string path, int nreplica)
         solutions[j]=sol;
       }
       
-    }
+    
 //    for (int k=0;k<nreplica-1;k++){
-      for (int j=0;j<nreplica-1;j++)
+      for (int z=0;z<nreplica-1;z++)
       {
 
-        double bi = Bs[j];
-        double bj = Bs[j+1];
-        double ei = solutions[j]->fitness();
-        double ej = solutions[j+1]->fitness();
+        double bi = Bs[z];
+        double bj = Bs[z+1];
+        double ei = solutions[z]->fitness();
+        double ej = solutions[z+1]->fitness();
         double p= MIN(1,exp((bi-bj)*(ei-ej)));
         if (rand()/RAND_MAX<p)
         {
 
-          meta::ASolution * t= solutions[j];
-          solutions[j]=solutions[j+1];
-          solutions[j+1]=t;
-          double tj = swaps[j][i];
-          swaps[j].push_back(swaps[j+1][i]);
-          swaps[j+1].push_back(tj);
-        
-        }else
-        {
-          swaps[j].push_back(swaps[j][i]);
-          swaps[j+1].push_back(swaps[j+1][i]);
+          meta::ASolution * t= solutions[z];
+          solutions[z]=solutions[z+1];
+          solutions[z+1]=t;
+         
         }
       }
-//    }
+    }
   }
   tsp::Solution * min_sol = dynamic_cast<tsp::Solution*>(solutions[0]);
   std::vector<double> x,y;
@@ -121,11 +109,6 @@ void run(std::string path, int nreplica)
   y.push_back(y[0]);
   plt::plot(x,y,"o-");
   plt::figure();
-  for (int k=0;k<nreplica;k++)
-  {
-    std::cout<<swaps[k].size()<<std::endl;
-    plt::plot(swaps[k]);
-  }
 //    std::cout<<k<<" : ";
 //    for (int i = 0;i<swaps[0].size();i++)
 //    {

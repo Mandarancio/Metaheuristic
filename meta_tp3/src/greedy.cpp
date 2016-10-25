@@ -16,28 +16,25 @@ void Greedy::reset(meta::ASolution * startSol)
 
 meta::ASolution *  Greedy::step(meta::ASolution * sol)
 {
-  if (index_==sol->n()-1)
+  if (index_==sol->n())
   {
     return NULL;
   } 
   iters_++;
   meta::ASolution * next =  sol->clone();
-  double best_fit = next->fitness();
+  double best_fit =0;
 
   for (int i =index_+1;i<sol->n();i++)
   {
     iters_++;
-    meta::ASolution * s = sol->neighbour(index_,i);
-    double fit = s->fitness();
+    double fit = next->delta_fitness(index_,i);
     if (fit<best_fit)
     {
+      meta::ASolution * s = sol->neighbour(index_,i);
+   
       delete next;
       best_fit = fit;
       next= s;
-    }
-    else
-    {
-      delete s;
     }
   }
   index_++;
@@ -46,6 +43,7 @@ meta::ASolution *  Greedy::step(meta::ASolution * sol)
 
 meta::ASolution * Greedy::run()
 {
+  index_=1;
   double fitness = startSolution_->fitness();
   meta::ASolution * sol = startSolution_->clone();
   while (true)
