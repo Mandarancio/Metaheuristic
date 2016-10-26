@@ -23,6 +23,7 @@ void run(meta::AMeta * meta, std::string path, int N)
   double t0= 0.0;
   tsp::Solution * min_sol = NULL;
   std::cout<<"\n\033[31;1m"<<meta->name()<<"\033[0m\n\n";
+  int t=clock();
   for (int i = 0;i<N;i++)
   {
     
@@ -42,13 +43,19 @@ void run(meta::AMeta * meta, std::string path, int N)
       delete best;
     }
     //delete a;        
-  }
+  } 
+  t = clock() - t;
+  int millit = round(1000.*((double)t)/CLOCKS_PER_SEC);
+
   double avg = math::mean(best_fit);
   double sigma = math::sigma(best_fit,avg);
   double min_it = *std::min_element(iters.begin(),iters.end());
   double max_it = *std::max_element(iters.begin(),iters.end());
+
   std::cout<<"\r\033[1m"<<N<<"/"<<N<<std::endl;
-  std::cout<<"Best fitness: \033[0m"<<min_fit<<std::endl;
+  std::cout<<"Time : \033[0m"<<millit<<" ms"<<std::endl;
+  std::cout<<"\033[1mTime x iterations: \033[0m"<<millit/N<<" ms"<<std::endl;
+  std::cout<<"\033[1mBest fitness: \033[0m"<<min_fit<<std::endl;
   std::cout<<"\033[1mMean: \033[0m"<<avg<<std::endl;
   std::cout<<"\033[1mDeviation: \033[0m"<<sigma<<std::endl;
   plt::figure();

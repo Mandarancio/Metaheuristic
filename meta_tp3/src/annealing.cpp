@@ -43,8 +43,6 @@ meta::ASolution * Annealing::step(meta::ASolution * sol)
     }
   
   }
-
-
   if (accepted==0)
   {
     delete old;
