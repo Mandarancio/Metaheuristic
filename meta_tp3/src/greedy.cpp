@@ -16,28 +16,29 @@ void Greedy::reset(meta::ASolution * startSol)
 
 meta::ASolution *  Greedy::step(meta::ASolution * sol)
 {
-  if (index_==sol->n())
-  {
-    return NULL;
-  } 
-  iters_++;
+  
   meta::ASolution * next =  sol->clone();
   double best_fit =0;
 
-  for (int i =index_+1;i<sol->n();i++)
+  for (int i =0;i<sol->n()-1;i++)
   {
-    iters_++;
-    double fit = next->delta_fitness(index_,i);
-    if (fit<best_fit)
+    for (int j=i+1;j<sol->n();j++)
     {
-      meta::ASolution * s = sol->neighbour(index_,i);
-   
-      delete next;
-      best_fit = fit;
-      next= s;
+      iters_++;
+      double fit = next->delta_fitness(i,j);
+      if (fit<best_fit)
+      {
+        meta::ASolution * s = sol->neighbour(i,j);
+        delete next;
+        best_fit = fit;
+        next= s;
+      }
     }
   }
-  index_++;
+  
+  if (best_fit==0 or iters_>300*sol->n()){
+    return NULL;
+  }
   return next;
 }
 

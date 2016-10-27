@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 
 void run(std::string path, int nreplica)
 {
-  int imax= 15;//5*nreplica+20;//10*nreplica;
+  int imax= 200;//5*nreplica+20;//10*nreplica;
   std::vector<sa::Annealing*> metas;
   std::vector<meta::ASolution * > solutions;
   std::vector<double> Bs;
@@ -103,17 +103,8 @@ void run(std::string path, int nreplica)
     x.push_back(min_sol->cities()[i].x());
     y.push_back(min_sol->cities()[i].y());
   }
-  
-
+  std::cout<<"\033[1mFitness: \033[0m"<<min_sol->fitness()<<std::endl;
   x.push_back(x[0]);
   y.push_back(y[0]);
   plt::plot(x,y,"o-");
-  plt::figure();
-//    std::cout<<k<<" : ";
-//    for (int i = 0;i<swaps[0].size();i++)
-//    {
-//      std::cout<<swaps[k][i]<<" ";
-//     }
-//       std::cout<<std::endl;
-//  }
 }
