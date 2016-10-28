@@ -32,6 +32,7 @@ namespace tsp{
       virtual std::vector<meta::ASolution*> neighbours();
       virtual meta::ASolution * random();
       virtual meta::ASolution * rand_neighbour();
+      virtual meta::ASolution * sub_solution(int i, int j);
       virtual int n();
 
     private:

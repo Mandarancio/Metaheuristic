@@ -4,7 +4,6 @@
 #include <sstream>
 #include <cstdlib>
 
-
 using namespace tsp;
 
 City::City(std::string name, float x, float y):
@@ -162,4 +161,12 @@ Solution* tsp::randomFromFile(std::string path, bool loop)
     cities[y]=a;
   }
   return new Solution(cities,loop);
+}
+
+meta::ASolution * Solution::sub_solution(int i, int j)
+{
+  std::vector<City> cities;
+  cities.push_back(cities_[i]);
+  cities.push_back(cities_[j]);
+  return new Solution(cities,false);
 }

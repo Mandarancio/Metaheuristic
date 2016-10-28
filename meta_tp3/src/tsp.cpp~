@@ -163,3 +163,11 @@ Solution* tsp::randomFromFile(std::string path, bool loop)
   }
   return new Solution(cities,loop);
 }
+
+meta::ASolution * Solution::sub_solution(int i, int j)
+{
+  std::vector<City> cities;
+  cities.push_back(cities_[i]);
+  cities.push_back(cities_[j]);
+  return new Solution(cities,false);
+}

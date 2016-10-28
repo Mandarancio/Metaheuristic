@@ -13,6 +13,7 @@ namespace meta{
     virtual ASolution * neighbour(int i, int j)=0;
     virtual ASolution * random()=0;
     virtual ASolution * rand_neighbour()=0;
+    virtual ASolution * sub_solution(int i, int j)=0;
     ASolution * clone();
     virtual int n()=0;
   };

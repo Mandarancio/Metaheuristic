@@ -25,13 +25,14 @@ namespace tsp{
       Solution(std::vector<City> array,bool loop=true);
       virtual ~Solution();
       virtual double fitness();
-      virtual
+      virtual double delta_fitness(int i, int j);
       bool loop();
       std::vector<City> cities();
       virtual meta::ASolution * neighbour(int i, int j);
       virtual std::vector<meta::ASolution*> neighbours();
       virtual meta::ASolution * random();
       virtual meta::ASolution * rand_neighbour();
+      virtual meta::ASolution * sub_solution(int i, int j)=0;
       virtual int n();
 
     private:

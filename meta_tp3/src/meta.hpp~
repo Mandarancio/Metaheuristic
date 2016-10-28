@@ -13,6 +13,7 @@ namespace meta{
     virtual ASolution * neighbour(int i, int j)=0;
     virtual ASolution * random()=0;
     virtual ASolution * rand_neighbour()=0;
+    virtual ASolution * sub_solution(int i, int j)=0.
     ASolution * clone();
     virtual int n()=0;
   };
@@ -24,17 +25,9 @@ namespace meta{
     virtual void reset(ASolution * sol);
     virtual ASolution * step(meta::ASolution * sol)=0;
     virtual ASolution * run()=0;
-    virtual int iters(){
-      return iters_;
-    }
-    meta::ASolution * oSolution()
-    {
-      return startSolution_;
-    }
-    std::string name()
-    {
-      return name_;
-    }
+    virtual int iters();
+    meta::ASolution * oSolution();
+    std::string name();
   protected:
     std::string name_;
     ASolution * startSolution_;

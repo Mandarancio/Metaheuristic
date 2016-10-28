@@ -1,7 +1,7 @@
 #!/bin/sh
 cd ..
 echo 'compile analyse...'
-g++ main.cpp exmath.cpp annealing.cpp tsp.cpp greedy.cpp meta.cpp -o bin/analyse -lpython2.7 -O2 
+g++ main.cpp exmath.cpp annealing.cpp tsp.cpp greedy.cpp meta.cpp -o bin/analyse -lpython2.7 -O2 -g
 echo 'compile stepper...'
 g++ stepper.cpp annealing.cpp tsp.cpp meta.cpp -o bin/stepper -lpython2.7 
 echo 'compile generator...'
