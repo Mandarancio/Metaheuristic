@@ -42,9 +42,9 @@
   metal trough several cycles of controlled heating and cooling of the metal.
 
   While the temperature is high the molecules are free to move around and
-  trough a very slow and controlled cooling an optimized organization is
-  frozen. If the metal is cooled down too fast the molecular organization
-  will be optimized only locally.
+  trough a very slow and controlled cooling an optimized organization will
+  eventually be frozen. If the metal is cooled down too fast the molecular
+  organization will be optimized only locally.
 
   This mechanism is the core of the Simulated Annealing algorithm, where the
   temperature parameter influences the probability of the selection of a
@@ -440,7 +440,7 @@
 
       <tuple|normal|Results at every temperature decrease|<pageref|auto-5>>
 
-      <tuple|normal|TSP landscape of 1000 random samples of
+      <tuple|normal|TSP landscape of 1,000 random samples of
       <with|font-shape|<quote|italic>|cities.dat>|<pageref|auto-9>>
 
       <tuple|normal|Global minimum for <with|font-shape|<quote|italic>|cities.dat>|<pageref|auto-10>>
