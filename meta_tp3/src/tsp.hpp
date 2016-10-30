@@ -41,6 +41,7 @@ namespace tsp{
   };
   
   Solution * randomFromFile(std::string path,bool loop=true);
+  Solution * fromFile(std::string path, bool loop= true);
 
 };
 

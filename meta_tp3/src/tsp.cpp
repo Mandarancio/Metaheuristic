@@ -135,6 +135,20 @@ int Solution::n()
   return cities_.size();  
 }
 
+Solution * tsp::fromFile(std::string path, bool loop)
+{
+  std::ifstream fin(path.c_str());
+  std::vector<City> cities;
+  std::string line;
+  while (std::getline(fin, line)){
+    std::istringstream iss(line);
+    std::string name;
+    float x,y;
+    iss>>name>>x>>y;
+    cities.push_back(City(name,x,y));
+  }
+  return new Solution(cities,loop);
+}
 
 Solution* tsp::randomFromFile(std::string path, bool loop)
 {

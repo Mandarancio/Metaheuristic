@@ -11,11 +11,13 @@
 #include <cstring>
 
 #include "histo.hpp"
+#if !NO_PLOT
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
 
 void plot_statistics(std::vector<double> fs, std::vector<double> iters, double mu, double sigma);
 void plot_tsp_solution(meta::ASolution *s);
+#endif
 
 void run(meta::AMeta * meta, std::string path, int N);
 
@@ -35,8 +37,9 @@ int main(int argc, char * argv[])
   greedy::Greedy * meta_2 = new greedy::Greedy(NULL);
   run(meta_1,path,N);
   run(meta_2,path,N);
+#if !NO_PLOT
   plt::show();
-
+#endif
   return 0;
 }
 
@@ -85,11 +88,13 @@ void run(meta::AMeta * meta, std::string path, int N)
   std::cout<<"\033[1mBest fitness: \033[0m"<<min_fit<<std::endl;
   std::cout<<"\033[1mMean: \033[0m"<<avg<<std::endl;
   std::cout<<"\033[1mDeviation: \033[0m"<<sigma<<std::endl;
+#if !NO_PLOT
   plot_statistics (best_fit, iters, avg,sigma);
   plot_tsp_solution (min_sol);
+#endif
 }
 
-
+#if !NO_PLOT
 void plot_statistics(std::vector<double> fs, std::vector<double> iters, double mu, double sigma)
 {
   plt::figure();
@@ -152,3 +157,4 @@ void plot_tsp_solution(meta::ASolution * s)
   }
   plt::legend();
 }
+#endif
