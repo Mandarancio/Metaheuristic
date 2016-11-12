@@ -8,11 +8,15 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <fstream>
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
 
 void plot_tsp_solution(meta::ASolution *s);
 void plot_statistics(std::vector<double> fs, double mu, double sigma);
+
+void save_csv(std::string path, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n);
+
 void help();
 
 int main(int argc, char * argv[])
@@ -29,6 +33,9 @@ int main(int argc, char * argv[])
   int N = 20;
   int n_ants =-1;
   int iters = 25;
+  bool do_plot = true;
+  bool csv = false;
+  std::string csv_path;
   for (int i =1;i<argc;i++)
   {
     if (!strcmp(argv[i],"-h"))
@@ -46,9 +53,20 @@ int main(int argc, char * argv[])
       i++;
       n_ants=atoi(argv[i]);
     }
-    else if (!strcmp(argv[i],"-iter") && i+1<argc){
+    else if (!strcmp(argv[i],"-iter") && i+1<argc)
+    {
       i++;
       iters= atoi(argv[i]);
+    }
+    else if (!strcmp(argv[i],"-csv") && i+1<argc)
+    {
+      i++;
+      csv=true;
+      csv_path = std::string(argv[i]);
+    }
+    else if (!strcmp(argv[i],"-no_plot"))
+    {
+      do_plot = false;
     }
   }
 
@@ -76,7 +94,7 @@ int main(int argc, char * argv[])
   std::vector<double>fs;
   double best = ts->fitness();
   meta::ASolution *best_s=ts->clone();
-  int total_t = 0;
+  double total_t = 0;
   
   display("N Test",N);
   display("N Ants",n_ants);
@@ -86,11 +104,11 @@ int main(int argc, char * argv[])
   //start the run
   for (int i = 0;i<N;i++){
     progress(i+1,N);
-    int t=clock();
+    double t=clock();
     antSystem->reset(tsp::randomFromFile(path));
     meta::ASolution * s = antSystem->run();
     t = clock() - t;
-    total_t += round(1000.*((double)t)/CLOCKS_PER_SEC);
+    total_t += 1000.*t/CLOCKS_PER_SEC;
     double f =s->fitness();
     fs.push_back(f);
     if (s->fitness()<best)
@@ -110,10 +128,18 @@ int main(int argc, char * argv[])
   display("Mean Fitness",mean_f);
   display("Sigma Fitness", sigma_f);
   display("Total Time",total_t,"ms");
-  display("Single Run TIme",total_t/N,"ms");
-  plot_tsp_solution(best_s);
-  plot_statistics(fs,mean_f,sigma_f);
-  plt::show();
+  display("Single Run Time",total_t/N,"ms");
+  
+  if (csv) 
+  {
+    save_csv(csv_path,n_ants,iters,total_t/N,best,mean_f,sigma_f,N);
+  }
+  if (do_plot)
+  {
+    plot_tsp_solution(best_s);
+    plot_statistics(fs,mean_f,sigma_f);
+    plt::show();
+  }
   return 0;
 }
 
@@ -151,10 +177,12 @@ void help()
 {
   std::cout
   <<"analyse FILE_DATA [options]"<<std::endl
-  <<" -n INT : number of test to run (default: 10)"<<std::endl
-  <<" -h : show the help"<<std::endl
+  <<" -n INT    : number of test to run (default: 10)"<<std::endl
+  <<" -h        : show the help"<<std::endl
   <<" -ants INT : set number of ants (default: N_CITIES || 50 )"<<std::endl
-  <<" -iter INT : set number of iteration for run (default: 25)"<<std::endl;
+  <<" -iter INT : set number of iterations for run (default: 25)"<<std::endl
+  <<" -csv PATH : save statistics to csv file"<<std::endl
+  <<" -no_plot  : no plot output"<<std::endl;
 }
 
 
@@ -188,4 +216,21 @@ void plot_statistics(std::vector<double> fs, double mu, double sigma)
 
   plt::legend();
 
+}
+
+void save_csv(std::string path, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n)
+{
+  bool write_labels = false;
+  {
+    std::ifstream f(path.c_str());
+    write_labels=!f.good();
+  }
+  std::ofstream of;
+  of.open(path.c_str(), std::ofstream::out | std::ofstream::app);
+  if (write_labels)
+  {
+    of<<"N Ants,N Iters,Exec T,Best f,Mean f,Sigma f,N Test"<<std::endl;
+  }
+  of<<ants_n<<","<<iter_n<<","<<exec_t<<","<<best_fit<<","<<mean_fit<<","<<sigma_fit<<","<<test_n<<std::endl;
+  of.close();
 }

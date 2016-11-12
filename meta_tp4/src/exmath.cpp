@@ -36,7 +36,7 @@ double math::sigma(std::vector<double> vs, double mu){
   {
     avg+=pow((vs[i]-mu),2);
   }
-  return sqrt(avg/vs.size());
+  return sqrt(avg/(vs.size()-1));
 
 }
 
