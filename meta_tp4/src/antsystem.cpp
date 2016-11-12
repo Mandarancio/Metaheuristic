@@ -237,9 +237,10 @@ meta::ASolution * AntSystem::step(meta::ASolution * sol)
   int* m_path;
   int * path = ants_[0]->walk(0);
   m_path = path;
-  //memcpy(m_path,path,n_*sizeof(int));
   double min=ants_[0]->L(); 
   bool rand_start=n_ants_==gk_->n(); 
+  gk_->resetDelta();
+  
   for (int i = 1;i<n_ants_; i++)
   {
     int s=rand_start?i:rand()%n_;
@@ -249,10 +250,6 @@ meta::ASolution * AntSystem::step(meta::ASolution * sol)
       min=l;
       m_path= path;
     }
-  }
-  gk_->resetDelta();
-  for (int i = 0;i<n_ants_;i++)
-  {
     ants_[i]->updateDelta();
   }
   gk_->updatePherormones();

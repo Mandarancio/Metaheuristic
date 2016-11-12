@@ -52,11 +52,16 @@
 
   \;
 
-  <small-figure|<with|gr-mode|<tuple|group-edit|props>|gr-frame|<tuple|scale|1cm|<tuple|0.639987gw|0.390011gh>>|gr-geometry|<tuple|geometry|0.819996par|0.30667par|center>|gr-line-width|5ln|gr-transformation|<tuple|<tuple|1.0|0.0|6.93889390390723e-17|0.0>|<tuple|0.0|1.0|0.0|0.0>|<tuple|-6.93889390390723e-17|0.0|1.0|0.0>|<tuple|0.0|0.0|0.0|1.0>>|gr-fill-color|pastel
-  grey|<graphics||<with|fill-color|pastel
-  grey|line-width|5ln|<cline|<point|0|0>|<point|1.0|2.0>|<point|2.0|0.0>|<point|1.0|-1.0>>>|<with|line-width|5ln|<line|<point|-6|0.3>|<point|-3.7|0.3>|<point|-2.0|1.5>|<point|-1.0|0.2>|<point|-0.4|0.2>|<point|1.0|2.7>|<point|2.3|0.5>|<point|3.3|0.5>>>|<with|fill-color|pastel
-  grey|line-width|5ln|<cline|<point|-3.5|0>|<point|-2.0|1.0>|<point|-1.09994708294748|-0.212495039026326>|<point|-2.54093612150881|-0.8>>>|<with|color|red|dash-style|10|line-width|2ln|<line|<point|-5.6|0>|<point|-3.7|0.0>|<point|-2.5|-1.0>|<point|-0.740111125810292|-0.191328218018256>|<point|-0.083939674560127|-0.254828681042466>|<point|1.0|-1.4>|<point|2.5|0.3>|<point|3.0|0.3>>>|<text-at|<samp|Ant
-  Colony>|<point|-7.59816113242492|-0.0888841116549808>>|<text-at|<samp|Food>|<point|3.59908718084403|0.080450456409578>>|<text-at||<point|5.89592|-0.364053>>|<with|line-width|5ln|<line|<point|-6.04281410489052|-0.275019843894695>|<point|-3.70103518983993|-0.322794020373065>|<point|-2.5|-1.3>|<point|-1.0|-0.5>|<point|0.0|-0.6>|<point|1.0|-1.7>|<point|2.6|0.0>|<point|3.3|0.0>>>>>|Example
+  <small-figure|<with|gr-mode|<tuple|edit|line>|gr-frame|<tuple|scale|1cm|<tuple|0.639987gw|0.390011gh>>|gr-geometry|<tuple|geometry|0.819996par|0.30667par|center>|gr-transformation|<tuple|<tuple|1.0|0.0|6.93889390390723e-17|0.0>|<tuple|0.0|1.0|0.0|0.0>|<tuple|-6.93889390390723e-17|0.0|1.0|0.0>|<tuple|0.0|0.0|0.0|1.0>>|gr-dash-style|10|gr-color|dark
+  green|gr-grid|<tuple|empty>|gr-grid-old|<tuple|cartesian|<point|0|0>|0.1>|gr-edit-grid-aspect|<tuple|<tuple|axes|none>|<tuple|1|none>|<tuple|10|none>>|gr-edit-grid|<tuple|empty>|gr-edit-grid-old|<tuple|cartesian|<point|0|0>|0.1>|gr-line-width|2ln|<graphics||<text-at|<samp|Ant
+  Colony>|<point|-7.59816113242492|-0.0888841116549808>>|<text-at|<samp|Food>|<point|3.59908718084403|0.080450456409578>>|<with|color|dark
+  blue|fill-color|pastel grey|dash-style|10|line-width|2ln|<line|<point|-5.8113|0.00418375>|<point|-3.7|0.0>>>|<with|color|dark
+  blue|fill-color|pastel grey|dash-style|10|line-width|2ln|<line|<point|-0.9|-0.1>|<point|-0.3|0.0>>>|<with|color|dark
+  blue|fill-color|pastel grey|dash-style|10|line-width|2ln|<line|<point|2.4|0.2>|<point|3.3|0.2>|<point|3.48152864135468|0.207798650615161>>>|<with|color|magenta|dash-style|10|line-width|2ln|<line|<point|-0.33|-0.005>|<point|1.0|2.3>|<point|2.3|0.2>>>|<with|color|dark
+  green|dash-style|10|line-width|2ln|<line|<point|-0.321345|0.01>|<point|1.06149953697579|-1.31642743749173>|<point|2.3|0.2>>>|<with|color|dark
+  magenta|dash-style|10|line-width|2ln|<line|<point|-3.68|0.0414558>|<point|-2.5|-1.1>|<point|-1.3|-0.4>|<point|-0.9|-0.1>>>|<with|line-width|5ln|<line|<point|-6.04281410489052|-0.275019843894695>|<point|-3.70103518983993|-0.322794020373065>|<point|-2.5|-1.3>|<point|-0.8|-0.3>|<point|-0.4|-0.3>|<point|1.1|-1.6>|<point|2.6|0.0>|<point|3.3|0.0>>>|<with|fill-color|pastel
+  grey|line-width|5ln|<cline|<point|0|0>|<point|1.0|1.8>|<point|2.0|0.2>|<point|1.0|-1.0>>>|<with|color|red|dash-style|10|line-width|2ln|<line|<point|-3.7|0.0>|<point|-2.0|1.2>|<point|-0.9|-0.1>>>|<with|fill-color|pastel
+  grey|line-width|5ln|<cline|<point|-3.4|0.0>|<point|-2.0|1.0>|<point|-1.2|0.0>|<point|-2.54093612150881|-0.8>>>|<with|line-width|5ln|<line|<point|-6|0.3>|<point|-3.7|0.3>|<point|-2.0|1.5>|<point|-0.843514353750496|0.207583675089298>|<point|-0.4|0.2>|<point|1.0|2.7>|<point|2.3|0.5>|<point|3.3|0.5>>>>>|Example
   of enviroment used in the Gross Experience>
 
   \;
@@ -66,14 +71,45 @@
   majority (90% of the ants) ants after a short period of time was choosing
   the shortest path.\ 
 
-  This happen because every time a ant is moving release a chemicals call
-  pherormone, and naturally the ants will follow the strongest path of
-  pherormones. So as the frequency of movement on \ the shortest path is
-  higher (as is shorter) also the the path of pherormones will be stronger.
-  \ 
+  This happens because every time an ant is moving it releases a chemical
+  called <with|font-shape|italic|pherormone>, and naturally the ants will
+  follow the strongest path of pherormones. So as the frequency of movement
+  on \ the shortest path is higher (as is shorter) also the the path of
+  pherormones will be stronger. \ 
 
-  Moreover the pherormone naturally evaporate, this implies that the
-  pherormones trace left in the long and less used path will disappear.
+  Moreover the pherormone naturally evaporates, this implies that the
+  pherormone traces left in the longer and less used path will disappear.
+
+  Gross and Deneubourg proposed the following mathematical modelling of the
+  ant behaviour at a crossing:
+
+  Given
+
+  <\itemize>
+    <item><math|L<rsub|m>>: the number of ants that already passed on the
+    <math|L> (lower) path
+
+    <item><math|U<rsub|m>>: the number of ants that already passed on the
+    <math|U> (upper) path\ 
+  </itemize>
+
+  The probability <math|P<rsub|U>> that the <math|<around*|(|*m+1|)>>th ant
+  will choose the <math|U> path will be
+
+  <\equation*>
+    P<rsub|U><around*|(|m+1|)>=<frac|<around*|(|U<rsub|m>+k|)><rsup|h>|<around*|(|U<rsub|m>+k|)><rsup|h>+<around*|(|L<rsub|m>+k|)><rsup|h>>
+  </equation*>
+
+  And the probability <math|P<rsub|L>> that the <math|<around*|(|*m+1|)>>th
+  ant will choose the <math|L> path will be
+
+  <\equation*>
+    P<rsub|L><around*|(|m+1|)>=1-P<rsub|U><around*|(|m+1|)>=<frac|<around*|(|L<rsub|m>+k|)><rsup|h>|<around*|(|U<rsub|m>+k|)><rsup|h>+<around*|(|L<rsub|m>+k|)><rsup|h>>
+  </equation*>
+
+  Where <math|k> and <math|h> are parameter representing the minimum quantity
+  of pherormones need to influence the choise and the ant perception of the
+  pherormones.\ 
 
   The results of the interactions between the ants are structures
   auto-organized in the time and in the space, where there are not difference
@@ -84,128 +120,12 @@
   individuals are very simple and they are in general very robust to the
   error and the disfuction, some times the performance can benifct from
   eventual errors, exploring new part of the solution space. More over this
-  kind of system are easely parallezible.\ 
+  kind of system are easely parallesible.\ 
 
-  \;
+  <section|The Ant System and the TSP >
 
-  Noi presenteremo la metaeuristica AS per analizzare il problma del commesso
-  viaggiatore.\ 
-
-  Ci si dona una lista di <math|n> città e una amtrice di distanze
-  <math|d<rsub|ij>> che rappresenta la distnza tra la città <math|i> e
-  <math|j>.
-
-  \;
-
-  Bisogna trovare il percorso più corto tra le <math|n> città, senza passare
-  due volte per la stessa. Inoltre spesso si impone che il punto di partenza
-  sia anche quello di arrivo (come nel caso di esempio), in questo modo il
-  punto di partenza non conta.
-
-  Per l'algoritmo AS definiamo la visibilità <math|\<eta\><rsub|ij>>:
-
-  <\equation*>
-    \<eta\><rsub|ij>=<frac|1|d<rsub|ij>>
-  </equation*>
-
-  Si individua cosi <math|\<tau\><rsub|ij>> come l'intenstità del percorso
-  tra la città <math|i> e <math|j>.\ 
-
-  Si definisce <math|m> il numero di formiche che esploreranno i percorsi
-  possibili. Questi percorsi saranno influenzati dalla quantità di ormoni
-  depostati tra le città (<math|\<tau\>>) e la prossimità tra queste due
-  (<math|\<eta\>>).
-
-  Bisognerà specificare inoltre il tasso di evaporazione dei ferormoni e la
-  quantità di ferormoni depositati dalle formiche.
-
-  <subsubsection|Algoritmo>
-
-  A ogni iterazione <math|t>, lanciamo <math|m> formiche attraverso le
-  <math|n> città, ciascuna attreverà in modo indipendente i percorsi del
-  problema TSP secondo i valori di <math|\<tau\>> e <math|\<eta\>>.
-
-  <underline|Durante una iterazione le <math|m> formiche determinano il loro
-  percorso in modo indipendente l'una dall'altra. A l'iterazione <math|t> le
-  <math|m> formiche sono influnzate solo dalle piste dei ferormoni lasciate
-  dalle <math|m> formiche lasciate nell'iterazione <math|t-1>.>
-
-  Nell'iterazione <math|t> possiamo definire <math|P<rsub|ij>> la
-  probabilita' che una formica vada dalla citta' <math|i> a quella <math|j>.\ 
-
-  <\equation*>
-    P<rsub|ij>=<around*|{|<tabular|<tformat|<cwith|1|-1|1|-1|cell-valign|c>|<table|<row|<cell|0>|<cell|se
-    j\<nin\>J>>|<row|<cell|<frac|<around*|[|\<tau\><rsub|ij><around*|(|t-1|)>|]><rsup|\<alpha\>><around*|[|\<eta\><rsub|ij>|]><rsup|\<beta\>>|<big|sum><rsub|l\<in\>J><around*|{|<around*|[|\<tau\><rsub|il><around*|(|t-1|)>|]><rsup|\<alpha\>><around*|[|\<eta\><rsub|il>|]><rsup|\<beta\>>|}>>>|<cell|se
-    j \<in\> J>>>>>|\<nobracket\>>
-  </equation*>
-
-  Dove <math|J> è l'insieme di città ancora da visitare .
-
-  Il fattore <math|<big|sum><rsub|l\<in\>J><around*|{|<around*|[|\<tau\><rsub|il><around*|(|t-1|)>|]><rsup|\<alpha\>><around*|[|\<eta\><rsub|il>|]><rsup|\<beta\>>|}>>
-  è un fattore di normalizzazione che assume che
-  <math|<big|sum><rsub|l\<in\>J>P<rsub|il>=1>.
-
-  <math|\<alpha\>> e <math|\<beta\>> sono parametri specificati.
-
-  In particolare i parametri <math|\<alpha\>> e <math|\<beta\>> sono i
-  parametri di guida della metaeursitica. Se <math|\<alpha\>> e' grande
-  mettiamo più di importanza alla traccia di ferormoni (quindi
-  <underline|intensificheremo> il risultato) mentre se <math|\<beta\>> è
-  grande si darà più importanza alla distanza tra le città (favorendo quindi
-  la <underline|diversificazione>).
-
-  Una volta che tutte le <math|m> formiche hanno seguito il loro percorso si
-  può mettere a giorno il tasso di ferormoni in ciascun percorso in questo
-  modo:
-
-  <\equation*>
-    \<tau\><rsub|ij><around*|(|t|)>=<around*|(|1-\<rho\>|)>\<tau\><rsub|ij><around*|(|t-1|)>
-    \<noplus\>+\<Delta\>\<tau\><rsub|ij><around*|(|t|)>
-  </equation*>
-
-  Dove <math|\<rho\>> è il tasso di evaporazione e
-  <math|\<Delta\>\<tau\><rsub|ij>=<big|sum><rsub|k=1><rsup|m>\<Delta\>\<tau\><rsub|ij><rsup|m>>
-  e quindi
-
-  <\equation*>
-    \<Delta\>\<tau\><rsub|ij><rsup|k>=<around*|{|<tabular|<tformat|<cwith|2|2|1|-1|cell-valign|c>|<cwith|1|-1|1|-1|cell-halign|c>|<table|<row|<cell|0>|<cell|se
-    <around*|(|i,j|)>\<nin\>T<rsub|k>>>|<row|<cell|<frac|Q|L<rsub|k>>>|<cell|se
-    <around*|(|i,j|)> \<in\> T<rsub|k>>>>>>|\<nobracket\>>
-  </equation*>
-
-  Dove <math|Q> e' un parametro e <math|L<rsub|k>> è la lunghezza del tour
-  <math|T<rsub|k>>.
-
-  Concludendo ci sono 5 parametri da definire per l'algoritmo
-  <with|font-series|bold|AS>:
-
-  <\itemize>
-    <item><math|m> è il numero di formiche; in generale si sceglie
-    <math|m=n>, dove <math|n> è il numero di città e ogni formica partirà da
-    una città diversa
-
-    <item>In modo emprico si scelgono:
-
-    <\itemize>
-      <item><math|\<alpha\>=1>
-
-      <item><math|\<beta\>=5>
-
-      <item><math|\<rho\>=0.5>
-
-      <item><math|Q=1>
-    </itemize>
-  </itemize>
-
-  L'algoritmo <with|font-series|bold|AS> ha avuto un grande successo su dei
-  problemi di benchmarking, trovando soluzioni migliori di quelle mai
-  trovate.\ 
-
-  Invece non su tutti i problemi ha perfomato correttamente e per questo
-  motivo una nuova variante dell'<with|font-series|bold|AS> è stata proposta:
-  <with|font-series|bold|Ant Colony System (ACS)>.
-
-  <section|The Simulate Annealing and the TSP >
+  In our case we will study the adaptation of the <with|font-series|bold|AS>
+  for the <with|font-series|bold|TSP> problem.
 
   As for any other metaheuristics we have to define some elements:
 
@@ -214,85 +134,90 @@
 
     <item>A start solution <math|x<rsub|0>>
 
-    <item>The neighbourhood of a solution <math|N<around*|(|x<rsub|>|)>>
+    <item>The neighbourhood of a solution <math|N<around*|(|x<rsub|i>|)>>
 
     <item>The exploration operator <math|U>
 
     <item>The stop condition
   </itemize>
 
-  As we are implementing the <with|font-series|bold|SA> for the
-  <with|font-series|bold|TSP> problem the research space <math|S> and the
-  neighbourhood of a solution <math|N<around*|(|x|)>> is the one defined in
-  section 1.
+  The research space <math|S> will be the one already defined in the section
+  1 for the <with|font-series|bold|TSP>.\ 
 
   The start solution <math|x<rsub|0>> is simply a random solution extracted
   from <math|S>.
 
-  The exploration operator <math|U> has already been described in section 2,
-  but we still need to define:
+  The neighbourhood of a solution <math|N<around*|(|x<rsub|i>|)>> is the
+  entire solution space <math|S>, but it will be not explored, instead the
+  successor <math|x<rsub|i+1>> will be created by the exploration operator
+  <math|U>.\ 
 
-  <\itemize>
-    <item>The initial temperature <math|t<rsub|0>>
+  As the <with|font-series|bold|AS> is based on the collective knowledge of
+  <math|m> ants at every iteration the algorithm will explore <math|m>
+  solutions.
 
-    <item>The conditions of temperature decrease
+  The exploration operator <math|U<around*|(|t|)>> of an ant will create the
+  successor solution from the path of the ant itself.
 
-    <item>The decrease of temperature function
-  </itemize>
-
-  The initial temperature <math|t<rsub|0>> will be defined empirically:
-  computing the average difference between the fitness
-  (<math|\<Delta\>E<rsub|N<around*|(|x<rsub|0>|)>>>) of 100 random samples
-  from <math|N<around*|(|x<rsub|0>|)>> and <math|x<rsub|0>>. Then imposing a
-  probability of exploration of 0.5:
+  Given <math|\<eta\><rsub|<around*|(|i,j|)>>> the visiblity of the city
+  <math|j> from the city <math|i> (the inverse of the distance) and
+  <math|\<tau\><rsub|<around*|(|i,j|)>><around*|(|t|)>> the pherormones
+  accumulated between the city <math|j> and <math|i> at the time <math|t>,
+  the ant will chose the next city with probability
 
   <\equation*>
-    <tabular|<tformat|<cwith|1|-1|1|1|cell-halign|c>|<table|<row|<cell|e<rsup|-<frac|\<Delta\>E<rsub|N<around*|(|x<rsub|0>|)>>|t<rsub|0>>>=0.5>>|<row|<cell|-<frac|\<Delta\>E<rsub|N<around*|(|x<rsub|0>|)>>|t<rsub|0>>=log<around*|(|0.5|)>>>|<row|<cell|t<rsub|0>=<frac|-\<Delta\>E<rsub|N<around*|(|x<rsub|0>|)>>|log<around*|(|0.5|)>>>>>>>
+    P<rsub|*<around*|(|i,j|)>><around*|(|t|)>=<around*|{|<tabular|<tformat|<cwith|1|-1|1|-1|cell-valign|c>|<table|<row|<cell|0>|<cell|if
+    j\<nin\>J>>|<row|<cell|<frac|<around*|[|\<tau\><rsub|<around*|(|i,j|)>><around*|(|t-1|)>|]><rsup|\<alpha\>><around*|[|\<eta\><rsub|<around*|(|i,j|)>>|]><rsup|\<beta\>>|<big|sum><rsub|l\<in\>J><around*|{|<around*|[|\<tau\><rsub|<around*|(|i,l|)>><around*|(|t-1|)>|]><rsup|\<alpha\>><around*|[|\<eta\><rsub|<around*|(|i,l|)>>|]><rsup|\<beta\>>|}>>>|<cell|if
+    j \<in\> J>>>>>|\<nobracket\>>
   </equation*>
 
-  The decrease of temperature will happen on every <math|100\<cdot\>n>
-  attempted selections or <math|12\<cdot\>n> successful selections and will
-  follow the rule: <math|t<rsub|i+1>=0.9\<cdot\>t<rsub|i>>.
+  Where <math|J> is the set of all the city not yet visited from the ant.
 
-  Finally the stop (or freezing) condition is: either
-  <math|t<rsub|i>\<thickapprox\>0> or no solution has been selected with the
-  previous temperature.
+  <math|\<alpha\>> and <math|\<beta\>> are parameters, bigger
+  <math|\<alpha\>> will favorize the pherormone trails and so the
+  intensification while bigger <math|\<beta\>> will favorize the visibility
+  and so the diversification.\ 
 
-  Those are not rules but more like steps of a recipe that can be adapted
-  depending on the context.
+  It's very important to note that at a time <math|t> the <math|m> ants will
+  move indipendently from the others, and they are influenced only from the
+  pherormone trails leaved at the time <math|t-1>.
+
+  For this reason the pherormone trails are updated at the end of the
+  iteration <math|t> with the following formula:
+
+  <\equation*>
+    \<forall\><around*|(|i,j|)>\<in\>S<space|1em>\<tau\><rsub|<around*|(|i,j|)>><around*|(|t|)>=<around*|(|1-\<rho\>|)>\<tau\><rsub|<around*|(|i,j|)>><around*|(|t-1|)>
+    \<noplus\>+\<Delta\>\<tau\><rsub|<around*|(|i,j|)>><around*|(|t|)>
+  </equation*>
+
+  Whit <math|\<Delta\>\<tau\><rsub|<around*|(|i,j|)>><around*|(|t|)>> defined
+  as:
+
+  <\equation*>
+    \<Delta\>\<tau\><rsub|<around*|(|i,j|)>><around*|(|t|)>=<big|sum><rsub|k=0><rsup|m>\<Delta\>\<tau\><rsub|<around*|(|i,j|)>><rsup|k><around*|(|t|)>
+  </equation*>
+
+  And <math|\<Delta\>\<tau\><rsub|<around*|(|i,j|)>><rsup|k><around*|(|t|)>>
+  of the <math|k>th ant defined as:
+
+  <\equation*>
+    \<Delta\>\<tau\><rsub|<around*|(|i,j|)>><rsup|k><around*|(|t|)>=<around*|{|<tabular|<tformat|<cwith|2|2|1|-1|cell-valign|c>|<cwith|1|-1|1|-1|cell-halign|c>|<table|<row|<cell|0>|<cell|se
+    <around*|(|i,j|)>\<nin\>T<rsub|k><around*|(|t|)>>>|<row|<cell|<frac|Q|L<rsub|k><around*|(|t|)>>>|<cell|se
+    <around*|(|i,j|)> \<in\> T<rsub|k><around*|(|t|)>>>>>>|\<nobracket\>>
+  </equation*>
+
+  Where <math|Q> is a constant, <math|L<rsub|k><around*|(|t|)>> the total
+  length of the itinerary found at the time <math|t> and
+  <math|T<rsub|k><around*|(|t|)>> the set of the itinerary.
+
+  The end condition is simply a maximum number of iteration
+  <math|t<rsub|max>>.
 
   <section|Implementation>
 
-  I implemented the algorithm in C++ using extensively the object-oriented
-  features of the language. To improve the performance of the algorithm I
-  chose to compute the <math|\<Delta\>E> directly without computing the total
-  fitness of the neighbours. <math|\<Delta\>E> for a neighbour that swaps the
-  <math|i>th city with the <math|j>th of the original itinerary is computed
-  as follows:
-
-  <\equation*>
-    \<Delta\>E<around*|(|i,j|)>=<big|sum><rsup|i+k\<neq\>j><rsub|k\<in\>-1,1><around*|(|<around*|\<\|\|\>|<around*|(|i+k|)>-j|\<\|\|\>>-<around*|\<\|\|\>|<around*|(|i+k|)>-i|\<\|\|\>>|)>+<big|sum><rsup|j+k\<neq\>i><rsub|k\<in\>-1,1><around*|(|<around*|\<\|\|\>|<around*|(|j+k|)>-i|\<\|\|\>>-<around*|\<\|\|\>|<around*|(|j+k|)>-j|\<\|\|\>>|)>
-  </equation*>
-
-  So the <math|\<Delta\>E> can be computed in only 4 operations independently
-  from the problem size <math|n>.
-
-  Also my stop condition is either <math|t<rsub|i>\<leqslant\>10<rsup|-5>> or
-  no solution has been selected or no fitness improvement within the last 3
-  temperatures steps.
-
-  I was also asked to implement a simple <with|font-series|bold|Greedy>
-  heuristic to be able to compare the performance and results of the
-  <with|font-series|bold|SA>.
-
-  The <with|font-series|bold|Greedy> heuristic is about choosing an itinerary
-  starting from a first random city and then choosing the closest city
-  between the remaining ones as second and repeating this mechanism till the
-  end.\ 
-
-  This means that given <math|n> cities with no equidistant ones, this
-  algorithm will always produce a maximum of <math|n> different itineraries,
-  depending only on the starting city.
+  Also this time I implemented the algorithm in C++ using extensively the
+  object-oriented features of the language, reusing all the code I could from
+  the previous TP.
 
   <section|Results>
 
@@ -465,8 +390,8 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|4|4>>
-    <associate|auto-11|<tuple|5|5>>
+    <associate|auto-10|<tuple|5|4>>
+    <associate|auto-11|<tuple|6|5>>
     <associate|auto-12|<tuple|6|5>>
     <associate|auto-13|<tuple|6|6>>
     <associate|auto-14|<tuple|6|7>>
@@ -479,11 +404,11 @@
     <associate|auto-20|<tuple|7.2.1|?|../../meta_tp3/doc/report.tm>>
     <associate|auto-3|<tuple|2|1>>
     <associate|auto-4|<tuple|2|2>>
-    <associate|auto-5|<tuple|1|2>>
-    <associate|auto-6|<tuple|3|3>>
-    <associate|auto-7|<tuple|4|3>>
-    <associate|auto-8|<tuple|5|4>>
-    <associate|auto-9|<tuple|3|4>>
+    <associate|auto-5|<tuple|3|2>>
+    <associate|auto-6|<tuple|4|3>>
+    <associate|auto-7|<tuple|5|3>>
+    <associate|auto-8|<tuple|3|4>>
+    <associate|auto-9|<tuple|4|4>>
     <associate|result_box|<tuple|4|3>>
   </collection>
 </references>
