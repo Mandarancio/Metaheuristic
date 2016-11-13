@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cd src/
 g++ main.cpp antsystem.cpp display.cpp exmath.cpp greedy.cpp tsp.cpp meta.cpp -O3 -std=c++11 -o ../bin/antsystem -lpython2.7 

@@ -8,11 +8,15 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
+
+#if !NO_PLOT
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
 
 void plot_tsp_solution(meta::ASolution *s);
 void plot_statistics(std::vector<double> fs, double mu, double sigma);
+#endif
+
 void run(meta::AMeta * meta, std::string path, int N);
 
 
@@ -35,7 +39,7 @@ int main(int argc, char * argv[])
   return 0;
 }
 
-
+#if !NO_PLOT
 void plot_tsp_solution(meta::ASolution * s)
 {
   tsp::Solution * min_sol = dynamic_cast<tsp::Solution*> (s);
@@ -99,7 +103,7 @@ void plot_statistics(std::vector<double> fs, double mu, double sigma)
 
 }
 
-
+#endif
 
 void run(meta::AMeta * meta, std::string path, int N)
 {

@@ -9,13 +9,18 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
+#include <cstring>
+
+#if !NO_PLOT
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
 
+
 void plot_tsp_solution(meta::ASolution *s);
 void plot_statistics(std::vector<double> fs, double mu, double sigma);
+#endif
 
-void save_csv(std::string path, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n);
+void save_csv(std::string path, int n_problem, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n);
 
 void help();
 
@@ -132,18 +137,20 @@ int main(int argc, char * argv[])
   
   if (csv) 
   {
-    save_csv(csv_path,n_ants,iters,total_t/N,best,mean_f,sigma_f,N);
+    save_csv(csv_path, gk->n(),n_ants,iters,total_t/N,best,mean_f,sigma_f,N);
   }
+#if !NO_PLOT
   if (do_plot)
   {
     plot_tsp_solution(best_s);
     plot_statistics(fs,mean_f,sigma_f);
     plt::show();
   }
+#endif
   return 0;
 }
 
-
+#if !NO_PLOT
 void plot_tsp_solution(meta::ASolution * s)
 {
   tsp::Solution * min_sol = dynamic_cast<tsp::Solution*> (s);
@@ -172,19 +179,6 @@ void plot_tsp_solution(meta::ASolution * s)
   }
   plt::legend();
 }
-
-void help()
-{
-  std::cout
-  <<"analyse FILE_DATA [options]"<<std::endl
-  <<" -n INT    : number of test to run (default: 10)"<<std::endl
-  <<" -h        : show the help"<<std::endl
-  <<" -ants INT : set number of ants (default: N_CITIES || 50 )"<<std::endl
-  <<" -iter INT : set number of iterations for run (default: 25)"<<std::endl
-  <<" -csv PATH : save statistics to csv file"<<std::endl
-  <<" -no_plot  : no plot output"<<std::endl;
-}
-
 
 void plot_statistics(std::vector<double> fs, double mu, double sigma)
 {
@@ -217,8 +211,20 @@ void plot_statistics(std::vector<double> fs, double mu, double sigma)
   plt::legend();
 
 }
+#endif
 
-void save_csv(std::string path, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n)
+void help()
+{
+  std::cout
+  <<"analyse FILE_DATA [options]"<<std::endl
+  <<" -n INT    : number of test to run (default: 10)"<<std::endl
+  <<" -h        : show the help"<<std::endl
+  <<" -ants INT : set number of ants (default: N_CITIES || 50 )"<<std::endl
+  <<" -iter INT : set number of iterations for run (default: 25)"<<std::endl
+  <<" -csv PATH : save statistics to csv file"<<std::endl
+  <<" -no_plot  : no plot output"<<std::endl;
+}
+void save_csv(std::string path, int n_problem, int ants_n, int iter_n, double exec_t, double best_fit, double mean_fit, double sigma_fit, int test_n)
 {
   bool write_labels = false;
   {
@@ -229,8 +235,8 @@ void save_csv(std::string path, int ants_n, int iter_n, double exec_t, double be
   of.open(path.c_str(), std::ofstream::out | std::ofstream::app);
   if (write_labels)
   {
-    of<<"N Ants,N Iters,Exec T,Best f,Mean f,Sigma f,N Test"<<std::endl;
+    of<<"P. Size,N Ants,N Iters,Exec T,Best f,Mean f,Sigma f,N Test"<<std::endl;
   }
-  of<<ants_n<<","<<iter_n<<","<<exec_t<<","<<best_fit<<","<<mean_fit<<","<<sigma_fit<<","<<test_n<<std::endl;
+  of<<n_problem<<","<<ants_n<<","<<iter_n<<","<<exec_t<<","<<best_fit<<","<<mean_fit<<","<<sigma_fit<<","<<test_n<<std::endl;
   of.close();
 }

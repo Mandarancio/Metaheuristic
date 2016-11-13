@@ -19,11 +19,14 @@ while [[ $# -gt 0 ]]; do
   shift 
 done
 
-for i in `seq 1 1 100`;
+for i in `seq 1 1 20`;
 do
   ./antsystem $file_in -ants $n_ants -iter $i -n 100 -csv $file_out -no_plot 
 done 
-
+for i in `seq 40 20 1000`;
+do
+  ./antsystem $file_in -ants $n_ants -iter $i -n 100 -csv $file_out -no_plot
+done
 
 exit 0
 
