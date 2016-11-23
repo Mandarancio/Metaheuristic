@@ -182,20 +182,6 @@ double Solution::sub_fitness(int i,int j)
   return cities_[i].distance(cities_[j]); 
 }
 
-std::string Solution::id(int i)
-{
-  return cities_[i].name();
-}
-
-int Solution::indexOf(std::string id)
-{
-  for (int i =0;i< n();i++)
-  {
-    if (cities_[i].name()==id)
-      return i;
-  }
-  return -1;
-}
 
 meta::ASolution * Solution::create(std::vector<int> is)
 {

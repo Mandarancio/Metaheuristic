@@ -34,7 +34,6 @@ namespace tsp{
       virtual meta::ASolution * rand_neighbour();
       virtual meta::ASolution * sub_solution(int i, int j);
       virtual double sub_fitness(int i,int j);
-      virtual int indexOf(std::string id);
       virtual int n();
       virtual std::string to_string();
       virtual meta::ASolution * create(std::vector<int> is);
