@@ -81,7 +81,7 @@ namespace matplotlibcpp {
 				s_python_function_annotate = PyObject_GetAttrString(pymod,"annotate");
         s_python_function_close = PyObject_GetAttrString(pymod,"close");
         s_python_function_arrow = PyObject_GetAttrString(pymod,"arrow");
-        s_python_function_contour = PyObject_GetAttrString(pymod,"contour");
+        s_python_function_contour = PyObject_GetAttrString(pymod,"contourf");
 
 				if(   !s_python_function_show
 						|| !s_python_function_figure
