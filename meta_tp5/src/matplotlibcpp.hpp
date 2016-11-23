@@ -35,6 +35,7 @@ namespace matplotlibcpp {
       PyObject *s_python_function_close;
       PyObject *s_python_function_arrow;
 			PyObject *s_python_function_contour;
+			PyObject *s_python_function_imshow;
 			/* For now, _interpreter is implemented as a singleton since its currently not possible to have
 			   multiple independent embedded python interpreters without patching the python source code
 			   or starting a separate process for each.
@@ -82,6 +83,7 @@ namespace matplotlibcpp {
         s_python_function_close = PyObject_GetAttrString(pymod,"close");
         s_python_function_arrow = PyObject_GetAttrString(pymod,"arrow");
         s_python_function_contour = PyObject_GetAttrString(pymod,"contourf");
+				s_python_function_imshow = PyObject_GetAttrString(pymod,"imshow");
 
 				if(   !s_python_function_show
 						|| !s_python_function_figure
@@ -100,6 +102,7 @@ namespace matplotlibcpp {
             || !s_python_function_close
             || !s_python_function_arrow
             || !s_python_function_contour
+						|| !s_python_function_imshow
             )
 				{ throw std::runtime_error("Couldn't find required function!"); }
 
@@ -120,6 +123,7 @@ namespace matplotlibcpp {
           || !PyFunction_Check(s_python_function_close)
           || !PyFunction_Check(s_python_function_arrow)
 					|| !PyFunction_Check(s_python_function_contour)
+					|| !PyFunction_Check(s_python_function_imshow)
           )
 				{ throw std::runtime_error("Python object is unexpectedly not a PyFunction."); }
 
@@ -130,6 +134,30 @@ namespace matplotlibcpp {
 				Py_Finalize();
 			}
 		};
+	}
+
+	template<typename Numeric>
+	bool imshow(const std::vector<std::vector<Numeric> > img)
+	{
+		PyObject* p_img = PyList_New(img.size());
+		for(size_t i = 0; i < img.size(); ++i) {
+			PyObject * zi = PyList_New(img.at(i).size());
+			for (size_t j=0; j<img[i].size();++j)
+			{
+				PyList_SetItem(zi, j,  PyFloat_FromDouble(img.at(i).at(j)));
+			}
+			PyList_SetItem(p_img, i, zi);
+		}
+		PyObject * args = PyTuple_New(1);
+		PyTuple_SetItem(args,0,p_img);
+
+		PyObject* res = PyObject_CallObject(detail::_interpreter::get().s_python_function_imshow, args);
+
+		Py_DECREF(args);
+
+		if(res) Py_DECREF(res);
+
+		return res;
 	}
 
 	template<typename Numeric>
@@ -157,13 +185,14 @@ namespace matplotlibcpp {
 		PyTuple_SetItem(xyz,2,zlist);
 		//PyTuple_SetItem(xyz,3,PyLong_FromLong(n));
 
-		PyObject* kwargs = PyDict_New();
+		// PyObject* kwargs = PyDict_New();
 		//PyDict_SetItem(kwargs, PyLong_FromLong(3),PyLong_FromLong(n));
 
-		PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_contour, xyz, kwargs);
+		// PyObject* res = PyObject_Call(detail::_interpreter::get().s_python_function_contour, xyz, kwargs);
+		PyObject* res = PyObject_CallObject(detail::_interpreter::get().s_python_function_contour, xyz);
 
 		Py_DECREF(xyz);
-		Py_DECREF(kwargs);
+		// Py_DECREF(kwargs);
 
 		if(res) Py_DECREF(res);
 

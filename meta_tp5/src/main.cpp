@@ -7,6 +7,7 @@
 #include "exmath.hpp"
 #include "meta.hpp"
 #include "pso.hpp"
+#include "display.hpp"
 
 #include "matplotlibcpp.hpp"
 namespace plt = matplotlibcpp;
@@ -41,7 +42,7 @@ void plot(std::vector<double> xs, std::vector<double>ys, std::vector<std::vector
 
 int main(int argc, char *argv[])
 {
-  int tmax=25;
+  int tmax=50;
   int nparticle = 10;
   int n = 2;
   double min[2]={-9,-9};
@@ -49,8 +50,9 @@ int main(int argc, char *argv[])
   srand(time(NULL));
   meta::RnSolution *r;
   r = new meta::RnSolution(n,std::vector<double>(min,min+2),std::vector<double>(max,max+2),f);
+  ok("Ready to Go");
   std::cout<<r->to_string()<<std::endl;
-  pso::PSO * meta= new pso::PSO(r,nparticle,tmax,0.6,0.1,0.3,3.);
+  pso::PSO * meta= new pso::PSO(r,nparticle,tmax,0.92,0.2,0.18,0.8);
   std::vector<double>xs,ys;
   std::vector<std::vector<double> >zs;
 
@@ -69,14 +71,18 @@ int main(int argc, char *argv[])
       zs[i].push_back(z);
     }
   }
-  double t1 =  clock();
+  double t1 = 0;
+  double t0;
 
   meta::ASolution * best = r->clone();
   for (int i =0;i<tmax;i++)
   {
-    std::vector<pso::Particle *> ps=meta->particles();
+    t0 =  clock();
 
-    // plot(xs,ys,zs,ps,i);
+    std::vector<pso::Particle *> ps=meta->particles();
+    t1 +=  clock()-t0;
+
+    plot(xs,ys,zs,ps,i);
     meta::ASolution * next = meta->step(best);
     if (next!=best)
     {
@@ -84,11 +90,9 @@ int main(int argc, char *argv[])
       best = next;
     }
   }
-  t1 =  clock()-t1;
   double millit = 1000.*(t1)/CLOCKS_PER_SEC;
-  std::cout<<"Execution Time: "<<millit<<"ms"<<std::endl;
   std::vector<pso::Particle *> ps=meta->particles();
-
+  display("Execution Time",millit,"ms");
   plot(xs,ys,zs,ps,tmax);
 
   std::cout<<best->to_string()<<std::endl;
