@@ -1,9 +1,10 @@
 #include "exmath.hpp"
 #include <cmath>
 #include <algorithm>
-#include <iostream>
 
 #define PI 3.1415926535
+
+using namespace math;
 
 double math::gaussian(double alpha, double mu, double sigma, double x)
 {
@@ -118,4 +119,8 @@ double math::r()
 double math::sinc(double x)
 {
   return x==0?1: sin(x)/(x);
+}
+double math::sigmoid(double x)
+{
+  return 1.0/(1+exp(-x));
 }

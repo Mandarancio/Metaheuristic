@@ -1,4 +1,5 @@
 #!/bin/sh
 
 cd src/
-g++ main.cpp pso.cpp display.cpp exmath.cpp meta.cpp -O3 -std=c++11 -o ../bin/steps -lpython2.7 
+g++ stepper.cpp pso.cpp display.cpp exmath.cpp meta.cpp matrix.cpp rsolution.cpp -O3 -std=c++11 -o ../bin/steps -lpython2.7 -g
+g++ run_once.cpp pso.cpp display.cpp exmath.cpp meta.cpp matrix.cpp rsolution.cpp -O3 -std=c++11 -o ../bin/simple_pso -lpython2.7 -g

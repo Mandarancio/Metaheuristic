@@ -2,6 +2,7 @@
 #define MATH_H
 #include <vector>
 namespace math{
+
   double gaussian(double alpha, double mu, double sigma, double x);
   double mean(std::vector<double> vals);
   double sigma(std::vector<double> vals, double mean);
@@ -13,6 +14,8 @@ namespace math{
   std::vector<double> mul(double a, std::vector<double> x);
   double r();
   double sinc(double x);
+  double sigmoid(double x);
+
 };
 
 #endif

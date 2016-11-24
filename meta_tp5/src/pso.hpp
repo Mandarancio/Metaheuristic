@@ -3,6 +3,9 @@
 
 
 #include "meta.hpp"
+#include "rsolution.hpp"
+#include "matrix.hpp"
+
 #include <vector>
 
 namespace pso
@@ -12,19 +15,19 @@ class Particle
 {
 public:
   Particle(meta::RnSolution * position,double omega, double c1, double c2,double vmax);
-  
+
   ~Particle();
   double current_fitness();
   meta::RnSolution * current_position();
   double best_fitness();
   meta::RnSolution * best_position();
   double move(meta::RnSolution * group_best);
-  std::vector<double> speed();
-private:  
-  std::vector<double> bounce(std::vector<double> p);
-  std::vector<double> limit(std::vector<double> s);
+  math::Vector<double> speed();
+private:
+  math::Vector<double> bounce(math::Vector<double> p);
+  math::Vector<double> limit(math::Vector<double> s);
   meta::RnSolution *position_;
-  std::vector<double> speed_;
+  math::Vector<double> speed_;
   meta::RnSolution * particle_best_;
   double omega_, c1_,c2_, vmax_;
 };
