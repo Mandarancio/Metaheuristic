@@ -19,6 +19,10 @@ RnSolution::RnSolution(uint32_t n, math::Vector<double> mins,
     : n_(n), min_(mins), max_(maxs), solution_(math::r(n)),
       fitness_function_(f) {}
 
+RnSolution::RnSolution(math::Vector<double> sol, double min, double max,
+                       double (*f)(math::Vector<double>))
+    : n_(sol.size()), min_(sol.size(), min), max_(sol.size(), max),
+      solution_(sol), fitness_function_(f) {}
 RnSolution::~RnSolution() {}
 
 double RnSolution::max(int d) { return max_.at(d); }

@@ -25,9 +25,11 @@ public:
   uint32_t rows() const;
   uint32_t columns() const;
 
-  bool reshape(uint32_t n, uint32_t m);
+  Matrix<Numeric> reshape(uint32_t n, uint32_t m);
+  void resize(uint32_t n, uint32_t m);
 
   std::string toString();
+  std::string toMatFile(std::string name = "mat");
   // std::string toLaTeX();
 
   Matrix<Numeric> operator+(const Matrix<Numeric> &b) const;
@@ -62,6 +64,8 @@ public:
   Vector<Numeric> operator/(const Numeric &b) const;
   Vector<Numeric> &operator=(const Vector<Numeric> &b);
 };
+
+Matrix<double> loadFromFile(std::string path);
 };
 
 #endif

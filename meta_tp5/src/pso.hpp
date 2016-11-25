@@ -1,53 +1,49 @@
 #ifndef PSO_HPP
 #define PSO_HPP
 
-
+#include "matrix.hpp"
 #include "meta.hpp"
 #include "rsolution.hpp"
-#include "matrix.hpp"
 
 #include <vector>
 
-namespace pso
-{
-
-class Particle
-{
+namespace pso {
+template <typename T> class Particle {
 public:
-  Particle(meta::RnSolution * position,double omega, double c1, double c2,double vmax);
+  Particle(T *position, double omega, double c1, double c2, double vmax);
 
   ~Particle();
   double current_fitness();
-  meta::RnSolution * current_position();
+  T *current_position();
   double best_fitness();
-  meta::RnSolution * best_position();
-  double move(meta::RnSolution * group_best);
+  T *best_position();
+  double move(T *group_best);
   math::Vector<double> speed();
+
 private:
   math::Vector<double> bounce(math::Vector<double> p);
   math::Vector<double> limit(math::Vector<double> s);
-  meta::RnSolution *position_;
+  T *position_;
   math::Vector<double> speed_;
-  meta::RnSolution * particle_best_;
-  double omega_, c1_,c2_, vmax_;
+  T *particle_best_;
+  double omega_, c1_, c2_, vmax_;
 };
-
-class PSO: public meta::AMeta
-{
+template <typename T> class PSO : public meta::AMeta {
 public:
-  PSO(meta::RnSolution * startSolution, int n_particle, int tmax, double omega, double c1, double c2, double vmax);
+  PSO(T *startSolution, int n_particle, int tmax, double omega, double c1,
+      double c2, double vmax);
   ~PSO();
-  virtual meta::ASolution * step(meta::ASolution * sol);
-  virtual meta::ASolution * run();
-  virtual void reset(meta::ASolution * sol);
-  std::vector<Particle*> particles();
+  virtual meta::ASolution *step(meta::ASolution *sol);
+  virtual meta::ASolution *run();
+  virtual void reset(meta::ASolution *sol);
+  std::vector<Particle<T> *> particles();
+
 private:
-  double omega_,c1_,c2_,vmax_;
+  double omega_, c1_, c2_, vmax_;
   int n_particles_;
   int tmax_;
-  std::vector<Particle*> particles_;
+  std::vector<Particle<T> *> particles_;
 };
-
 };
 
 #endif

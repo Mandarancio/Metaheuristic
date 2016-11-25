@@ -16,6 +16,7 @@ std::vector<double> sum(std::vector<double> x, std::vector<double> y);
 std::vector<double> sub(std::vector<double> x, std::vector<double> y);
 std::vector<double> mul(double a, std::vector<double> x);
 double r();
+double pow2(double x);
 Matrix<double> r(uint32_t n, uint32_t m, double scale = 0);
 Vector<double> r(uint32_t n, double scale = 0);
 

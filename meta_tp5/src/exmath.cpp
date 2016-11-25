@@ -95,7 +95,7 @@ std::vector<double> math::mul(double a, std::vector<double> x) {
 double math::r() { return double(rand()) / RAND_MAX; }
 
 double math::sinc(double x) { return x == 0 ? 1 : sin(x) / (x); }
-double math::sigmoid(double x) { return 1.0 / (1 + exp(-x)); }
+double math::sigmoid(double x) { return 1.0 / (1.0 + exp(-x)); }
 
 Matrix<double> math::r(uint32_t n, uint32_t m, double scale) {
   Matrix<double> x(n, m);
@@ -112,6 +112,8 @@ Vector<double> math::r(uint32_t n, double scale) {
   }
   return x;
 }
+
+double math::pow2(double x) { return x * x; }
 
 Vector<double> math::sigmoid(Vector<double> x) {
   // Vector<double> v();

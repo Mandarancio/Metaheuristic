@@ -9,6 +9,8 @@ public:
              math::Vector<double> maxs, double (*f)(math::Vector<double>));
   RnSolution(uint32_t n, math::Vector<double> mins, math::Vector<double> maxs,
              double (*f)(math::Vector<double>));
+  RnSolution(math::Vector<double> sol, double min, double max,
+             double (*f)(math::Vector<double>));
   ~RnSolution();
   double max(int d);
   double min(int d);
@@ -25,7 +27,7 @@ public:
   virtual int n();
   virtual std::string to_string();
   virtual ASolution *create(std::vector<int> is);
-  RnSolution *create(math::Vector<double> x);
+  virtual RnSolution *create(math::Vector<double> x);
 
 private:
   uint32_t n_;

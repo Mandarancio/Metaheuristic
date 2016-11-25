@@ -1,6 +1,7 @@
 #include "matrix.hpp"
 
 #include <cstdlib>
+#include <fstream>
 #include <sstream>
 
 #include <iostream>
@@ -110,17 +111,37 @@ template <typename Numeric> uint32_t Matrix<Numeric>::columns() const {
 }
 
 template <typename Numeric>
-bool Matrix<Numeric>::reshape(uint32_t n, uint32_t m) {
+Matrix<Numeric> Matrix<Numeric>::reshape(uint32_t n, uint32_t m) {
   if (n * m == n_ * m_) {
-    n_ = n;
-    m_ = m;
-    return true;
+    // n_ = n;
+    // m_ = m;
+    return Matrix<Numeric>(n, m, (*this));
   }
-  return false;
+  throw ERROR;
+}
+template <typename Numeric>
+void Matrix<Numeric>::resize(uint32_t n, uint32_t m) {
+  m_ = m;
+  n_ = n;
 }
 
 template <typename Numeric> std::string Matrix<Numeric>::toString() {
   std::stringstream bff;
+  for (uint32_t i = 0; i < n_; i++) {
+    for (uint32_t j = 0; j < m_; j++) {
+      bff << " " << (*this)[i * m_ + j];
+    }
+    bff << "\n";
+  }
+  return bff.str();
+}
+
+template <typename Numeric>
+std::string Matrix<Numeric>::toMatFile(std::string name) {
+  std::stringstream bff;
+  bff << " #name: " << name << "\n";
+  bff << " #type: matrix\n";
+  bff << " #rows: " << n_ << "\n #columns: " << m_ << "\n";
   for (uint32_t i = 0; i < n_; i++) {
     for (uint32_t j = 0; j < m_; j++) {
       bff << " " << (*this)[i * m_ + j];
@@ -183,18 +204,18 @@ Matrix<Numeric> Matrix<Numeric>::operator*(const Matrix<Numeric> &b) const {
   }
   Matrix<Numeric> v(n_, b.m_); //(n_*b.m_);
   for (uint32_t i = 0; i < n_; i++) {
-    uint32_t ind_a = i * b.m_;
-    uint32_t ind_b = i * m_;
+    // uint32_t ind_a = i * b.m_;/
+    // uint32_t ind_b = i * m_;
     for (uint32_t j = 0; j < b.m_; j++) {
       Numeric acc = 0;
       for (uint32_t k = 0; k < m_; k++) {
-        acc += (*this)[ind_b + k] * b[k * b.m_ + j];
+        acc += (*this)[i * m_ + k] * b[k * b.m_ + j];
         // acc += (*this)[ind_b + m_ - (k + 1)] * b[(m_ - k - 1) * b.m_ + 1];
       }
       // if (m_ % 2) {
       // acc += (*this)[ind_b + m_ / 2] * b[m_ / 2 * b.m_ + j];
       // }
-      v[ind_a + j] = acc;
+      v[i * b.m_ + j] = acc;
     }
   }
   return v;
@@ -348,6 +369,23 @@ Vector<Numeric> &Vector<Numeric>::operator=(const Vector<Numeric> &b) {
   }
 
   return *this;
+}
+
+Matrix<double> math::loadFromFile(std::string path) {
+  uint32_t n, m;
+  std::ifstream fin(path.c_str());
+  std::string a, b;
+  fin >> a >> a >> b >> b;
+  fin >> a >> n >> b >> m;
+  std::vector<double> v;
+  double x;
+  while (fin >> x) {
+    v.push_back(x);
+  }
+  if (v.size() != n * m) {
+    throw ERROR;
+  }
+  return Matrix<double>(n, m, v);
 }
 
 template class math::Matrix<double>;
