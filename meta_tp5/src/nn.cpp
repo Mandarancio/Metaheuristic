@@ -3,27 +3,31 @@
 
 using namespace nn;
 
-NeuralNetwork::NeuralNetwork(std::vector<int> levels):
-levels_(levels)
-{
-  for (unsigned int i = 0;i<levels.size()-1;i++)
-  {
-    std::pair<int,int> s(levels[i],levels[i+1]);
-    tetas_size_.push_back(s);
-    double **teta = new double*[levels[i]];
-    for ( int j =0;i<levels[i];j++)
-    {
-      teta[j]=new double[levels[i+1]];
-      for (int k=0;k<levels[i+1];i++)
-      {
-        teta[j][k]=math::r();
-      }
-    }
-    tetas_.push_back(teta);
+NeuralNetwork::NeuralNetwork(std::vector<int> levels) : levels_(levels) {
+  for (unsigned int i = 0; i < levels.size() - 1; i++) {
+    uint32_t n = levels[i];
+    uint32_t m = levels[i + 1];
+    tetas_.push_back(math::r(n, m));
   }
 }
 
-std::vector<double> NeuralNetwork::evaluate(std::vector<double> input)
-{
+math::Vector<double> NeuralNetwork::evaluate(math::Vector<double> input) {
+  math::Matrix<double> x = math::sigmoid(input);
+  for (uint32_t i = 0; i < tetas_.size(); i++) {
+    x = math::sigmoid(x * tetas_[i]);
+  }
+  if (x.rows() == 1) {
+    return math::Vector<double>(x.size(), x);
+  } else {
+    throw ERROR;
+  }
+}
 
+void NeuralNetwork::setTeta(math::Matrix<double> teta, uint32_t id) {
+  tetas_[id] = teta;
+}
+
+void NeuralNetwork::setTeta(math::Vector<double> teta, uint32_t id) {
+  tetas_[id] =
+      math::Matrix<double>(tetas_[id].rows(), tetas_[id].columns(), teta);
 }

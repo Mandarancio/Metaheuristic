@@ -3,8 +3,7 @@
 
 using namespace meta;
 
-ASolution::ASolution()
-{}
+ASolution::ASolution() {}
 
 ASolution::~ASolution()
 {}
