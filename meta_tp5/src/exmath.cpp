@@ -124,3 +124,13 @@ double math::sigmoid(double x)
 {
   return 1.0/(1+exp(-x));
 }
+
+Matrix<double> math::r(uint32_t n,uint32_t m, double scale)
+{
+  Matrix<double> x(n,m);
+  for (uint32_t i=0;i<n*m;i++)
+  {
+    x[i]=r()*scale;
+  }
+  return x;
+}

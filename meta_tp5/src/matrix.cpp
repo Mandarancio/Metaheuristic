@@ -221,20 +221,26 @@ Matrix<Numeric> Matrix<Numeric>::operator*(const Matrix<Numeric>& b) const
   if (m_!=b.n_){
     throw ERROR;
   }
-  std::vector<Numeric> v(n_*b.m_);
-  #pragma omp parallel for
+  Matrix<Numeric> v(n_,b.m_);//(n_*b.m_);
   for (uint32_t i=0;i<n_;i++)
   {
-    #pragma omp parallel for
+    uint32_t ind_a = i*b.m_;
+    uint32_t ind_b = i*m_;
     for (uint32_t j=0;j<b.m_;j++){
-      v[i*b.m_+j]=0;
-      for (uint32_t k=0;k<m_;k++)
+      Numeric acc = 0;
+      for (uint32_t k=0;k<m_/2;k++)
       {
-        v[i*b.m_+j]=v[i*b.m_+j]+(*this)[i*m_+k]*b[k*b.m_+j];
+        acc+=(*this)[ind_b+k]*b[k*b.m_+j];
+        acc+=(*this)[ind_b+m_-(k+1)]*b[(m_-k-1)*b.m_+1];
       }
+      if (m_%2)
+      {
+        acc+=(*this)[ind_b+m_/2]*b[m_/2*b.m_+j];
+      }
+      v[ind_a+j]=acc;
     }
   }
-  return Matrix<Numeric>(n_,b.m_,v);
+  return v;
 }
 
 template<typename Numeric>

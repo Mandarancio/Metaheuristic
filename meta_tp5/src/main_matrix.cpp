@@ -1,6 +1,7 @@
 #include <iostream>
 #include "matrix.hpp"
 #include "exmath.hpp"
+#include <ctime>
 
 int main(int argc, char *argv[])
 {
@@ -25,7 +26,13 @@ int main(int argc, char *argv[])
     std::cout<<c[0]<<std::endl;
     // delete a;
     // delete b;
-
+    std::cout<<"\nTest Performance\n";
+    math::Matrix<double> x = math::r(100,100);
+    double t=clock();
+    math::Matrix<double> y = x*x*x*x*x*x;
+    t=clock()-t;
+    double millit = 1000.*(t)/CLOCKS_PER_SEC;
+    std::cout<<"Execution Time: "<<millit<<" ms\n";
   }catch(int e)
   {
     std::cout<<"Error: "<<e<<std::endl;
