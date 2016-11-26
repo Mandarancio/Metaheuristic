@@ -4,12 +4,11 @@ using namespace nn;
 using namespace meta;
 #include <iostream>
 MyNeuralNetwork::MyNeuralNetwork(std::string i_path, std::string l_path)
-    : NeuralNetwork(std::vector<int>({401, 26,1})), loader(i_path, l_path) {
-
-    }
+    : NeuralNetwork(std::vector<int>({401, 26, 1})), loader(i_path, l_path) {}
 
 double MyNeuralNetwork::evalue(math::Vector<double> conf) {
-  this->setTeta(conf, 0);
+  this->setTeta(conf.subvector(0, 401 * 26), 0);
+  this->setTeta(conf.subvector(401 * 26, 401 * 26 + 26), 1);
   double f = 0;
   for (uint32_t i = 0; i < 200; i++) {
     math::Vector<double> img = loader.imgAsVector(i);
@@ -19,7 +18,6 @@ double MyNeuralNetwork::evalue(math::Vector<double> conf) {
   }
   return f / loader.n();
 }
-
 
 MyRnSolution::MyRnSolution(math::Vector<double> sol, double mins, double maxs,
                            nn::MyNeuralNetwork *nn)
