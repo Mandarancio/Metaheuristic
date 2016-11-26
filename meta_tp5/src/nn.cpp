@@ -28,7 +28,7 @@ math::Vector<double> NeuralNetwork::evaluate(math::Vector<double> input) {
   for (uint32_t i = 0; i < tetas_.size(); i++) {
     math::Matrix<double> teta = tetas_[i];
     x = math::sigmoid(x * teta);
-    std::cout << teta.toMatFile("teta" + std::to_string(i)) << std::endl;
+    // std::cout << teta.toMatFile("teta" + std::to_string(i)) << std::endl;
     // std::cout << x.toMatFile("layer" + std::to_string(i + 1)) << std::endl
     // << std::endl;
   }

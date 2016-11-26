@@ -50,6 +50,8 @@ public:
   Vector(uint32_t n);
   Vector(uint32_t n, Numeric initial_v);
   Vector(uint32_t n, std::vector<Numeric> v);
+  Vector(std::vector<Numeric> v);
+
   virtual ~Vector();
   Vector<Numeric> subvector(uint32_t n, uint32_t m);
   virtual Matrix<Numeric> t();

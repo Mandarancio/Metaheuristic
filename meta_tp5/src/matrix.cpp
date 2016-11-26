@@ -266,6 +266,9 @@ template <typename Numeric>
 Vector<Numeric>::Vector(uint32_t n, std::vector<Numeric> v)
     : Matrix<Numeric>(1, n, v) {}
 
+template <typename Numeric> Vector<Numeric>::Vector( std::vector<Numeric> v)
+    : Matrix<Numeric>(1, v.size(), v) {}
+
 template <typename Numeric> Vector<Numeric>::~Vector() {
   // Matrix<Numeric>::~Matrix();
 }

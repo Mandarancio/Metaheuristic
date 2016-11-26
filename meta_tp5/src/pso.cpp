@@ -91,13 +91,14 @@ template <typename T> double Particle<T>::move(T *group_best) {
   // std::cout<<bt.toString()<<"\n"<<std::cout<<p.toString()<<"\n";
   // std::cout<<speed_.toString()<<std::endl;
   // std::cout<<(speed_*omega_+ bt*r1*c1_+bg*r2*c2_).toString()<<std::endl;
-  speed_ = (speed_ * omega_ + bt * r1 * c1_ + bg * r2 * c2_);
   // std::cout<<speed_.toString()<<std::endl;
+  speed_ = (speed_ * omega_ + bt * r1 * c1_ + bg * r2 * c2_)+(math::r(speed_.size(),0.1)-0.05);
   p = bounce(p + speed_);
   T *x = dynamic_cast<T *>(position_->create(p));
   delete position_;
 
   double f = x->fitness();
+  // std::cout<<f<<std::endl;
   if (f < particle_best_->fitness()) {
     delete particle_best_;
     particle_best_ = dynamic_cast<T *>(x->clone());
