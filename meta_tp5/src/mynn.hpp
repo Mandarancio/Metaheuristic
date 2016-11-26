@@ -10,7 +10,7 @@ namespace nn {
 class MyNeuralNetwork : public NeuralNetwork {
 public:
   MyNeuralNetwork(std::string i_path, std::string l_path);
-  double evalue(math::Vector<double> conf);
+  double evalue(eig::VectorXd conf);
 
 private:
   Loader loader;
@@ -21,10 +21,10 @@ namespace meta {
 
 class MyRnSolution : public RnSolution {
 public:
-  MyRnSolution(math::Vector<double> sol, double mins, double maxs,
+  MyRnSolution(eig::VectorXd sol, double mins, double maxs,
                nn::MyNeuralNetwork *nn);
   virtual double fitness();
-  virtual MyRnSolution *create(math::Vector<double> x);
+  virtual MyRnSolution *create(eig::VectorXd x);
   virtual ASolution *random();
   virtual ASolution *clone();
 

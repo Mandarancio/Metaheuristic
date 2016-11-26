@@ -4,14 +4,11 @@
 #include <fstream>
 #include <sstream>
 
-#include <iostream>
-
 using namespace math;
 
 template <typename Numeric>
 Matrix<Numeric>::Matrix(uint32_t n, uint32_t m, Numeric inital_v)
     : std::vector<Numeric>(n * m), n_(n), m_(m) {
-  // v_=std::vector<Numeric>(n*m);
   for (uint32_t i = 0; i < n; i++) {
     for (uint32_t j = 0; j < m; j++) {
       (*this)[i * m + j] = inital_v;
@@ -22,7 +19,6 @@ Matrix<Numeric>::Matrix(uint32_t n, uint32_t m, Numeric inital_v)
 template <typename Numeric>
 Matrix<Numeric>::Matrix(uint32_t n, uint32_t m)
     : std::vector<Numeric>(n * m), n_(n), m_(m) {
-  // v_=std::vector<Numeric>(n*m);
   for (uint32_t i = 0; i < n; i++) {
     for (uint32_t j = 0; j < m; j++) {
       (*this)[i * m + j] = 0;
@@ -35,20 +31,10 @@ Matrix<Numeric>::Matrix(uint32_t n, uint32_t m, std::vector<Numeric> v)
     : std::vector<Numeric>(v), n_(n), m_(m) //,v_(v)
 {}
 
-template <typename Numeric> Matrix<Numeric>::~Matrix() {
-  // std::vector<Numeric>::~vector();
-  // nothing to do?
-  this->clear();
-}
+template <typename Numeric> Matrix<Numeric>::~Matrix() { this->clear(); }
 
 template <typename Numeric>
 Numeric Matrix<Numeric>::at(uint32_t x, uint32_t y) const {
-  // if (x<n_ && y <m_)
-  // {
-  //   return v_[x*m_+y];
-  // }else{
-  //   throw ERROR;
-  // }
   return std::vector<Numeric>::at(x * m_ + y);
 }
 
@@ -77,7 +63,7 @@ Matrix<Numeric> Matrix<Numeric>::column(uint32_t y) {
   if (y > m_) {
     throw ERROR;
   }
-  std::vector<Numeric> r(n_); //= new Numeric[n_];
+  std::vector<Numeric> r(n_);
   for (uint32_t i = 0; i < n_; i++) {
     r[i] = (*this)[y + i * m_];
   }
@@ -96,12 +82,6 @@ template <typename Numeric> Matrix<Numeric> Matrix<Numeric>::t() {
   return Matrix(m_, n_, vt);
 }
 
-// template<typename Numeric>
-// std::vector<Numeric> Matrix<Numeric>::raw()
-// {
-//   return v_;
-// }
-
 template <typename Numeric> uint32_t Matrix<Numeric>::rows() const {
   return n_;
 }
@@ -113,8 +93,6 @@ template <typename Numeric> uint32_t Matrix<Numeric>::columns() const {
 template <typename Numeric>
 Matrix<Numeric> Matrix<Numeric>::reshape(uint32_t n, uint32_t m) {
   if (n * m == n_ * m_) {
-    // n_ = n;
-    // m_ = m;
     return Matrix<Numeric>(n, m, (*this));
   }
   throw ERROR;
@@ -157,7 +135,6 @@ Matrix<Numeric> Matrix<Numeric>::operator+(const Matrix<Numeric> &b) const {
     throw ERROR;
   }
   std::vector<Numeric> v(n_ * m_);
-  // #pragma omp parallel for
   for (uint32_t i = 0; i < n_ * m_; i++) {
     v[i] = (*this)[i] + b[i];
   }
@@ -167,7 +144,6 @@ Matrix<Numeric> Matrix<Numeric>::operator+(const Matrix<Numeric> &b) const {
 template <typename Numeric>
 Matrix<Numeric> Matrix<Numeric>::operator+(const Numeric &b) const {
   std::vector<Numeric> v(n_ * m_);
-  // #pragma omp parallel for
   for (uint32_t i = 0; i < n_ * m_; i++) {
     v[i] = (*this)[i] + b;
   }
@@ -180,7 +156,6 @@ Matrix<Numeric> Matrix<Numeric>::operator-(const Matrix<Numeric> &b) const {
     throw ERROR;
   }
   std::vector<Numeric> v(n_ * m_);
-  // #pragma omp parallel for
   for (uint32_t i = 0; i < n_ * m_; i++) {
     v[i] = (*this)[i] - b[i];
   }
@@ -190,7 +165,6 @@ Matrix<Numeric> Matrix<Numeric>::operator-(const Matrix<Numeric> &b) const {
 template <typename Numeric>
 Matrix<Numeric> Matrix<Numeric>::operator-(const Numeric &b) const {
   std::vector<Numeric> v(n_ * m_);
-  // #pragma omp parallel for
   for (uint32_t i = 0; i < n_ * m_; i++) {
     v[i] = (*this)[i] - b;
   }
@@ -202,19 +176,13 @@ Matrix<Numeric> Matrix<Numeric>::operator*(const Matrix<Numeric> &b) const {
   if (m_ != b.n_) {
     throw ERROR;
   }
-  Matrix<Numeric> v(n_, b.m_); //(n_*b.m_);
+  Matrix<Numeric> v(n_, b.m_);
   for (uint32_t i = 0; i < n_; i++) {
-    // uint32_t ind_a = i * b.m_;/
-    // uint32_t ind_b = i * m_;
     for (uint32_t j = 0; j < b.m_; j++) {
       Numeric acc = 0;
       for (uint32_t k = 0; k < m_; k++) {
         acc += (*this)[i * m_ + k] * b[k * b.m_ + j];
-        // acc += (*this)[ind_b + m_ - (k + 1)] * b[(m_ - k - 1) * b.m_ + 1];
       }
-      // if (m_ % 2) {
-      // acc += (*this)[ind_b + m_ / 2] * b[m_ / 2 * b.m_ + j];
-      // }
       v[i * b.m_ + j] = acc;
     }
   }
@@ -224,7 +192,6 @@ Matrix<Numeric> Matrix<Numeric>::operator*(const Matrix<Numeric> &b) const {
 template <typename Numeric>
 Matrix<Numeric> Matrix<Numeric>::operator*(const Numeric &b) const {
   std::vector<Numeric> v(n_ * m_);
-  // #pragma omp parallel for
   for (uint32_t i = 0; i < n_ * m_; i++) {
     v[i] = (*this)[i] * b;
   }
@@ -266,7 +233,8 @@ template <typename Numeric>
 Vector<Numeric>::Vector(uint32_t n, std::vector<Numeric> v)
     : Matrix<Numeric>(1, n, v) {}
 
-template <typename Numeric> Vector<Numeric>::Vector( std::vector<Numeric> v)
+template <typename Numeric>
+Vector<Numeric>::Vector(std::vector<Numeric> v)
     : Matrix<Numeric>(1, v.size(), v) {}
 
 template <typename Numeric> Vector<Numeric>::~Vector() {
@@ -275,7 +243,7 @@ template <typename Numeric> Vector<Numeric>::~Vector() {
 
 template <typename Numeric>
 Vector<Numeric> Vector<Numeric>::subvector(uint32_t n, uint32_t m) {
-  if (n >= m || m > this->columns()) {
+  if (n >= m || m > this->size()) {
     throw ERROR;
   }
   uint32_t d = m - n;
@@ -285,10 +253,7 @@ Vector<Numeric> Vector<Numeric>::subvector(uint32_t n, uint32_t m) {
 }
 
 template <typename Numeric> Matrix<Numeric> Vector<Numeric>::t() {
-  // uint32_t t = this->rows() * this->columns();
-  std::vector<Numeric> v(*this); //= new Numeric[t];
-  // std::copy(this->begin(), this->begin() + t, v.begin());
-  return Matrix<Numeric>(this->columns(), this->rows(), v);
+  return Matrix<Numeric>(this->columns(), this->rows(), (*this));
 }
 
 template <typename Numeric> Numeric Vector<Numeric>::at(uint32_t i) const {
@@ -297,10 +262,6 @@ template <typename Numeric> Numeric Vector<Numeric>::at(uint32_t i) const {
 
 template <typename Numeric> void Vector<Numeric>::set(Numeric x, uint32_t i) {
   Matrix<Numeric>::set(x, 0, i);
-}
-
-template <typename Numeric> uint32_t Vector<Numeric>::size() const {
-  return this->m_ * this->n_;
 }
 
 template <typename Numeric>
@@ -372,6 +333,21 @@ Vector<Numeric> &Vector<Numeric>::operator=(const Vector<Numeric> &b) {
   }
 
   return *this;
+}
+template <typename Numeric>
+Vector<Numeric> Vector<Numeric>::operator*(const Matrix<Numeric> &b) const {
+  if (this->size() != b.rows()) {
+    throw ERROR;
+  }
+  std::vector<Numeric> x;
+  for (uint32_t i = 0; i < b.columns(); i++) {
+    Numeric v = 0;
+    for (uint32_t j = 0; j < b.rows(); j++) {
+      v += (*this)[j] * b[j * b.columns() + i];
+    }
+    x.push_back(v);
+  }
+  return Vector<Numeric>(x);
 }
 
 Matrix<double> math::loadFromFile(std::string path) {

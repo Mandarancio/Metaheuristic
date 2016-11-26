@@ -1,18 +1,19 @@
 #include "pso.hpp"
 #include "exmath.hpp"
 #include "mynn.hpp"
-#include <iostream>
+
 using namespace pso;
 
 template <typename T>
 Particle<T>::Particle(T *position, double omega, double c1, double c2,
                       double vmax)
-    : position_(position), speed_(position->n()), omega_(omega), c1_(c1),
-      c2_(c2), vmax_(vmax) {
+    : position_(position), omega_(omega), c1_(c1), c2_(c2), vmax_(vmax) {
   particle_best_ = dynamic_cast<T *>(position->clone());
-  for (int i = 0; i < position->n(); i++) {
-    speed_.set(math::r() * 2 * vmax - vmax, i);
-  }
+  // for (int i = 0; i < position->n(); i++) {
+  //   speed_.set(math::r() * 2 * vmax - vmax, i);
+  // }
+  speed_ = eig::VectorXd::Random(position_->n()) * 2 * vmax -
+           eig::VectorXd::Constant(position_->n(), vmax);
 }
 
 template <typename T> Particle<T>::~Particle() {
@@ -21,9 +22,7 @@ template <typename T> Particle<T>::~Particle() {
     delete particle_best_;
   }
 }
-template <typename T> math::Vector<double> Particle<T>::speed() {
-  return speed_;
-}
+template <typename T> eig::VectorXd Particle<T>::speed() { return speed_; }
 
 template <typename T> double Particle<T>::current_fitness() {
   return position_->fitness();
@@ -37,45 +36,45 @@ template <typename T> double Particle<T>::best_fitness() {
 
 template <typename T> T *Particle<T>::best_position() { return particle_best_; }
 
-template <typename T>
-math::Vector<double> Particle<T>::bounce(math::Vector<double> p) {
+template <typename T> eig::VectorXd Particle<T>::bounce(eig::VectorXd p) {
   // double b_factor = 0.9;
-  math::Vector<double> M = position_->max();
-  math::Vector<double> m = position_->min();
+  eig::VectorXd M = position_->max();
+  eig::VectorXd m = position_->min();
   int n = position_->n();
   // bool unchanged = true;
   for (int i = 0; i < n; i++) {
-    double v = p.at(i);
-    if (v < m.at(i)) {
-      double x = 0.9 * (v - m.at(i));
-      v = m.at(i) - x;
-      if (v > M.at(i)) {
-        v = M.at(i);
+    double v = p(i);
+    if (v < m(i)) {
+      double x = 0.9 * (v - m(i));
+      v = m(i) - x;
+      if (v > M(i)) {
+        v = M(i);
+        speed_(i) = 0.2 * speed_(i);
+
+      } else {
+        speed_(i) = -0.9 * speed_(i);
+      } // unchanged = false;
+    } else if (v > M(i)) {
+      double x = 0.9 * (v - M(i));
+      v = M(i) - x; //-b_factor*v;
+      if (v < m(i)) {
+        v = m(i);
+        speed_(i) = 0.2 * speed_(i);
+      } else {
+        speed_(i) = -.9 * speed_(i);
       }
-      speed_.set(-speed_.at(i), i);
       // unchanged = false;
-    } else if (v > M.at(i)) {
-      double x = 0.9 * (v - M.at(i));
-      v = M.at(i) - x; //-b_factor*v;
-      if (v < m.at(i)) {
-        v = m.at(i);
-      }
-      // unchanged = false;
-      speed_.set(-0.9 * speed_.at(i), i);
+      // speed_.set(-0.9 * speed_.at(i), i);
     }
-    p.set(v, i);
+    p(i) = v; //.set(v, i);
   }
   return p;
 }
 
-template <typename T>
-math::Vector<double> Particle<T>::limit(math::Vector<double> s) {
-  for (unsigned int i = 0; i < s.columns(); i++) {
-    if (s.at(i) < -vmax_) {
-      s.set(-vmax_, i);
-    } else if (s.at(i) > vmax_) {
-      s.set(vmax_, i);
-    }
+template <typename T> eig::VectorXd Particle<T>::limit(eig::VectorXd s) {
+  for (unsigned int i = 0; i < s.cols(); i++) {
+    s(i) = s(i) > vmax_ ? s(i) : vmax_;
+    s(i) = s(i) < -vmax_ ? s(i) : -vmax_;
   }
   return s;
 }
@@ -84,21 +83,16 @@ template <typename T> double Particle<T>::move(T *group_best) {
   double r1 = math::r();
   double r2 = math::r();
 
-  math::Vector<double> p = position_->solution();
-  math::Vector<double> bt = particle_best_->solution() - p;
-  math::Vector<double> bg = group_best->solution() - p;
+  eig::VectorXd p = position_->solution();
+  eig::VectorXd bt = particle_best_->solution() - p;
+  eig::VectorXd bg = group_best->solution() - p;
 
-  // std::cout<<bt.toString()<<"\n"<<std::cout<<p.toString()<<"\n";
-  // std::cout<<speed_.toString()<<std::endl;
-  // std::cout<<(speed_*omega_+ bt*r1*c1_+bg*r2*c2_).toString()<<std::endl;
-  // std::cout<<speed_.toString()<<std::endl;
-  speed_ = (speed_ * omega_ + bt * r1 * c1_ + bg * r2 * c2_)+(math::r(speed_.size(),0.1)-0.05);
+  speed_ = (speed_ * omega_ + bt * r1 * c1_ + bg * r2 * c2_);
   p = bounce(p + speed_);
   T *x = dynamic_cast<T *>(position_->create(p));
   delete position_;
 
   double f = x->fitness();
-  // std::cout<<f<<std::endl;
   if (f < particle_best_->fitness()) {
     delete particle_best_;
     particle_best_ = dynamic_cast<T *>(x->clone());
@@ -126,12 +120,10 @@ template <typename T> meta::ASolution *PSO<T>::step(meta::ASolution *sol) {
   double bf = sol->fitness();
   T *bs = dynamic_cast<T *>(sol);
   meta::ASolution *next_best = NULL;
-  // std::cout << "Fitness: " << bf << "\n";
 
   for (int i = 0; i < n_particles_; i++) {
     double f = particles_[i]->move(bs);
     if (f < bf) {
-      // std::cout << "New Best: " << f << "\n";
 
       if (next_best) {
         delete next_best;
@@ -144,7 +136,6 @@ template <typename T> meta::ASolution *PSO<T>::step(meta::ASolution *sol) {
 }
 template <typename T> meta::ASolution *PSO<T>::run() {
   meta::ASolution *best = startSolution_->clone();
-  // std::cout << "Fitness: " << best->fitness() << "\n";
   for (int i = 0; i < tmax_; i++) {
     meta::ASolution *next = step(best);
     if (next != best) {

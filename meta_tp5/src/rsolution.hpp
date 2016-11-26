@@ -1,22 +1,25 @@
 #ifndef RSOLUTION_HPP
 #define RSOLUTION_HPP
-#include "matrix.hpp"
 #include "meta.hpp"
+#include <eigen3/Eigen/Dense>
+
+namespace eig = Eigen;
+
 namespace meta {
 class RnSolution : public ASolution {
 public:
-  RnSolution(math::Vector<double> sol, math::Vector<double> mins,
-             math::Vector<double> maxs, double (*f)(math::Vector<double>));
-  RnSolution(uint32_t n, math::Vector<double> mins, math::Vector<double> maxs,
-             double (*f)(math::Vector<double>));
-  RnSolution(math::Vector<double> sol, double min, double max,
-             double (*f)(math::Vector<double>));
+  RnSolution(eig::VectorXd sol, eig::VectorXd mins, eig::VectorXd maxs,
+             double (*f)(eig::VectorXd));
+  RnSolution(uint32_t n, eig::VectorXd mins, eig::VectorXd maxs,
+             double (*f)(eig::VectorXd));
+  RnSolution(eig::VectorXd sol, double min, double max,
+             double (*f)(eig::VectorXd));
   ~RnSolution();
   double max(int d);
   double min(int d);
-  math::Vector<double> max();
-  math::Vector<double> min();
-  math::Vector<double> solution();
+  eig::VectorXd max();
+  eig::VectorXd min();
+  eig::VectorXd solution();
   virtual ASolution *neighbour(int i, int j);
   virtual ASolution *random();
   virtual ASolution *rand_neighbour();
@@ -27,14 +30,14 @@ public:
   virtual int n();
   virtual std::string to_string();
   virtual ASolution *create(std::vector<int> is);
-  virtual RnSolution *create(math::Vector<double> x);
+  virtual RnSolution *create(eig::VectorXd x);
 
 private:
   uint32_t n_;
-  math::Vector<double> min_;
-  math::Vector<double> max_;
-  math::Vector<double> solution_;
-  double (*fitness_function_)(math::Vector<double>);
+  eig::VectorXd min_;
+  eig::VectorXd max_;
+  eig::VectorXd solution_;
+  double (*fitness_function_)(eig::VectorXd);
 };
 };
 #endif

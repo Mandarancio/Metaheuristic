@@ -1,7 +1,9 @@
 #ifndef NN_HPP
 #define NN_HPP
-#include "matrix.hpp"
+#include <eigen3/Eigen/Dense>
 #include <vector>
+
+namespace eig = Eigen;
 
 namespace nn {
 
@@ -9,14 +11,16 @@ class NeuralNetwork {
 public:
   NeuralNetwork(std::vector<int> levels);
   NeuralNetwork(unsigned int n, int levels[]);
-  math::Vector<double> evaluate(math::Vector<double> input);
-  void setTeta(math::Matrix<double> teta, uint32_t id);
-  void setTeta(math::Vector<double> teta, uint32_t id);
-  math::Vector<double> vecotrializeTetas();
+  eig::VectorXd evaluate(eig::VectorXd input);
+  void setTeta(eig::MatrixXd teta, uint32_t id);
+  // void setTeta(eig::VectorXd teta, uint32_t id);
+  eig::VectorXd vecotrializeTetas();
+  eig::MatrixXd teta(uint32_t id);
+  void reset();
 
 private:
   std::vector<int> levels_;
-  std::vector<math::Matrix<double>> tetas_;
+  std::vector<eig::MatrixXd> tetas_;
 };
 };
 

@@ -13,10 +13,10 @@
 namespace plt = matplotlibcpp;
 
 double f2(double x, double y) {
-  return exp(-x * x / 81) * exp(-y * y / 81) + cos(x) * cos(y);
+  return -(exp(-x * x / 81) * exp(-y * y / 81) + cos(x) * cos(y));
 }
 
-double f(math::Vector<double> x) { return f2(x.at(0), x.at(1)); }
+double f(eig::VectorXd x) { return f2(x(0), x(1)); }
 
 void plot(std::vector<double> xs, std::vector<double> ys,
           std::vector<std::vector<double>> zs,
@@ -25,10 +25,10 @@ void plot(std::vector<double> xs, std::vector<double> ys,
   plt::contour(xs, ys, zs);
 
   for (unsigned int i = 0; i < ps.size(); i++) {
-    double x = ps[i]->current_position()->solution().at(0);
-    double y = ps[i]->current_position()->solution().at(1);
-    double sx = ps[i]->speed().at(0);
-    double sy = ps[i]->speed().at(1);
+    double x = ps[i]->current_position()->solution()(0);
+    double y = ps[i]->current_position()->solution()(1);
+    double sx = ps[i]->speed()(0);
+    double sy = ps[i]->speed()(1);
     plt::plot({x}, {y}, "o");
     plt::arrow(x, y, sx, sy, 0.2, 0.6);
   }
@@ -44,8 +44,8 @@ int main(int argc, char *argv[]) {
   srand(time(NULL));
 
   meta::RnSolution *r;
-  r = new meta::RnSolution(n, math::Vector<double>(2, -9),
-                           math::Vector<double>(2, 9), f);
+  r = new meta::RnSolution(n, eig::VectorXd::Constant(2, -9),
+                           eig::VectorXd::Constant(2, 9), f);
 
   ok("Ready to Go");
   std::cout << r->to_string() << std::endl;

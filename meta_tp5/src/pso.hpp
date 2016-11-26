@@ -1,7 +1,6 @@
 #ifndef PSO_HPP
 #define PSO_HPP
 
-#include "matrix.hpp"
 #include "meta.hpp"
 #include "rsolution.hpp"
 
@@ -18,13 +17,13 @@ public:
   double best_fitness();
   T *best_position();
   double move(T *group_best);
-  math::Vector<double> speed();
+  eig::VectorXd speed();
 
 private:
-  math::Vector<double> bounce(math::Vector<double> p);
-  math::Vector<double> limit(math::Vector<double> s);
+  eig::VectorXd bounce(eig::VectorXd p);
+  eig::VectorXd limit(eig::VectorXd s);
   T *position_;
-  math::Vector<double> speed_;
+  eig::VectorXd speed_;
   T *particle_best_;
   double omega_, c1_, c2_, vmax_;
 };

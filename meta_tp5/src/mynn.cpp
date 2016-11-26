@@ -1,33 +1,32 @@
 #include "mynn.hpp"
 #include "exmath.hpp"
+#include "pso.hpp"
 using namespace nn;
 using namespace meta;
-#include <iostream>
+
 MyNeuralNetwork::MyNeuralNetwork(std::string i_path, std::string l_path)
-    : NeuralNetwork(std::vector<int>({401, 26,1})), loader(i_path, l_path) {
+    : NeuralNetwork(std::vector<int>({400, 25, 1})), loader(i_path, l_path) {}
 
-    }
-
-double MyNeuralNetwork::evalue(math::Vector<double> conf) {
-  this->setTeta(conf, 0);
+double MyNeuralNetwork::evalue(eig::VectorXd conf) {
+  eig::MatrixXd t0 = conf.segment(0, 400 * 25);
+  eig::MatrixXd t1 = conf.segment(400 * 25, 25);
+  this->setTeta(t0, 0);
+  this->setTeta(t1, 1);
   double f = 0;
-  for (uint32_t i = 0; i < 200; i++) {
-    math::Vector<double> img = loader.imgAsVector(i);
-    img.push_back(math::r());
-    img.resize(1, 401);
-    f += math::pow2(loader.label(i) - this->evaluate(img)[0]);
+  for (uint32_t i = 0; i < loader.n(); i++) {
+    eig::VectorXd img = loader.imgAsVector(i);
+    f += math::pow2(loader.label(i) - this->evaluate(img)(0));
   }
   return f / loader.n();
 }
 
-
-MyRnSolution::MyRnSolution(math::Vector<double> sol, double mins, double maxs,
+MyRnSolution::MyRnSolution(eig::VectorXd sol, double mins, double maxs,
                            nn::MyNeuralNetwork *nn)
     : RnSolution(sol, mins, maxs, NULL), nn_(nn) {}
 
 double MyRnSolution::fitness() { return nn_->evalue(this->solution()); }
 
-MyRnSolution *MyRnSolution::create(math::Vector<double> x) {
+MyRnSolution *MyRnSolution::create(eig::VectorXd x) {
   return new MyRnSolution(x, min(0), max(0), nn_);
 }
 
@@ -36,17 +35,12 @@ ASolution *MyRnSolution::clone() {
 }
 
 ASolution *MyRnSolution::random() {
-  std::vector<double> r(n());
-  // math::Vector<double> r(n_);
+
+  // eig::VectorXd r(n_);
   double min = this->min(0);
   double dx = this->max(0) - min;
-  for (int i = 0; i < n(); i++) {
-    double x = double(rand()) / RAND_MAX * dx + min;
-    r[i] = x;
-  }
-  // math::Vector<double> m = min_;
-  // math::Vector<double> M = max_;
-  MyRnSolution *x =
-      new MyRnSolution(math::Vector<double>(n(), r), min, this->max(0), nn_);
+  eig::VectorXd r =
+      eig::VectorXd::Constant(n(), min) + eig::VectorXd::Random(n()) * dx;
+  MyRnSolution *x = new MyRnSolution(r, min, this->max(0), nn_);
   return x;
 }

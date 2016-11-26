@@ -56,13 +56,13 @@ public:
   Vector<Numeric> subvector(uint32_t n, uint32_t m);
   virtual Matrix<Numeric> t();
   Numeric at(uint32_t i) const;
-  uint32_t size() const;
   void set(Numeric x, uint32_t i);
   Vector<Numeric> operator-(const Vector<Numeric> &b) const;
   Vector<Numeric> operator+(const Vector<Numeric> &b) const;
   Vector<Numeric> operator-(const Numeric &b) const;
   Vector<Numeric> operator+(const Numeric &b) const;
   Vector<Numeric> operator*(const Numeric &b) const;
+  Vector<Numeric> operator*(const Matrix<Numeric> &b) const;
   Vector<Numeric> operator/(const Numeric &b) const;
   Vector<Numeric> &operator=(const Vector<Numeric> &b);
 };

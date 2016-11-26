@@ -7,37 +7,41 @@
 
 Loader::Loader(std::string i_path, std::string label_path) : labels_(0) {
   std::ifstream fin(label_path.c_str());
-  std::vector<double> v;
+
   double x;
   while (fin >> x) {
-    v.push_back(x);
+    labels_.push_back(x);
   }
   fin.close();
-  labels_ = math::Vector<double>(v.size(), v);
-  n_ = v.size();
+  // eig::VectorXd(v.size(), v);
+  n_ = labels_.size();
   fin = std::ifstream(i_path.c_str());
   std::string line;
   while (std::getline(fin, line)) {
     std::istringstream iss(line);
-    std::vector<double> img;
+    eig::VectorXd img(400);
     std::string token;
-
+    uint32_t c = 0;
     while (std::getline(iss, token, ',')) {
       x = atof(token.c_str());
-      img.push_back(x);
+      img(c) = x;
+      c++;
     }
     int size = round(sqrt(img.size()));
     sizes_.push_back(size);
-    imgs_.push_back(math::Vector<double>(img.size(), img));
+    imgs_.push_back(img);
     bias_.push_back(math::r());
   }
 }
 
-math::Matrix<double> Loader::img(uint32_t id) {
-  return imgs_.at(id).reshape(sizes_[id], sizes_[id]).t();
+eig::MatrixXd Loader::img(uint32_t id) {
+  eig::MatrixXd img = imgs_.at(id);
+  img.resize(sizes_[id], sizes_[id]);
+  return img;
+  ;
 }
-math::Vector<double> Loader::imgAsVector(uint32_t id) {
-  math::Vector<double> img = imgs_.at(id);
+eig::VectorXd Loader::imgAsVector(uint32_t id) {
+  eig::VectorXd img = imgs_.at(id);
   // img.push_back(bias_[id]);
   // img.resize(1, img.size() + );
   return img;

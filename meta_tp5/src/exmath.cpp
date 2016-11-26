@@ -97,38 +97,46 @@ double math::r() { return double(rand()) / RAND_MAX; }
 double math::sinc(double x) { return x == 0 ? 1 : sin(x) / (x); }
 double math::sigmoid(double x) { return 1.0 / (1.0 + exp(-x)); }
 
-Matrix<double> math::r(uint32_t n, uint32_t m, double scale) {
-  Matrix<double> x(n, m);
-  for (uint32_t i = 0; i < n * m; i++) {
-    x[i] = r() * scale;
-  }
+eig::MatrixXd math::r(uint32_t n, uint32_t m, double scale, double center) {
+  eig::MatrixXd x = eig::MatrixXd::Constant(n, m, center) +
+                    eig::MatrixXd::Random(n, m) * scale;
   return x;
 }
 
-Vector<double> math::r(uint32_t n, double scale) {
-  Vector<double> x(n);
-  for (uint32_t i = 0; i < n; i++) {
-    x[i] = r() * scale;
-  }
+eig::VectorXd math::r(uint32_t n, double scale) {
+  eig::VectorXd x = eig::VectorXd::Random(n) * scale;
+  // for (uint32_t i = 0; i < n; i++) {
+  // x[i] = r() * scale;
+  // }
   return x;
 }
 
 double math::pow2(double x) { return x * x; }
 
-Vector<double> math::sigmoid(Vector<double> x) {
+eig::VectorXd math::sigmoid(eig::VectorXd x) {
   // Vector<double> v();
-  std::vector<double> v;
+  eig::VectorXd v(x.size());
   for (uint32_t i = 0; i < x.size(); i++) {
-    v.push_back(sigmoid(x[i]));
+    v(i) = sigmoid(x(i));
   }
-  return Vector<double>(x.size(), v);
+  return v;
 }
 
-Matrix<double> math::sigmoid(Matrix<double> x) {
+eig::MatrixXd math::sigmoid(eig::MatrixXd x) {
   // Vector<double> v();
-  std::vector<double> v;
-  for (uint32_t i = 0; i < x.size(); i++) {
-    v.push_back(sigmoid(x[i]));
+  eig::MatrixXd v(x.rows(), x.cols());
+  for (uint32_t i = 0; i < x.rows(); i++) {
+    for (uint32_t j = 0; j < x.cols(); j++) {
+      v(i, j) = sigmoid(x(i, j));
+    }
   }
-  return Matrix<double>(x.rows(), x.columns(), v);
+  return v; // Matrix<double>(x.rows(), x.columns(), v);
+}
+
+eig::MatrixXd math::eye(uint32_t s) {
+  eig::MatrixXd x(s, s);
+  for (uint32_t i = 0; i < s; i++) {
+    x(i, i) = 1.0;
+  }
+  return x;
 }

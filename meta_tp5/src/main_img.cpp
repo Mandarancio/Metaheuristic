@@ -3,13 +3,13 @@
 #include <iostream>
 namespace plt = matplotlibcpp;
 
-void show_img(math::Matrix<double> img) {
+void show_img(eig::MatrixXd img) {
   std::vector<std::vector<double>> v;
-  std::cout << "Img(" << img.rows() << "," << img.columns() << ")]\n";
+  std::cout << "Img(" << img.rows() << "," << img.cols() << ")]\n";
   for (uint32_t i = 0; i < img.rows(); i++) {
     std::vector<double> row;
-    for (uint32_t j = 0; j < img.columns(); j++) {
-      row.push_back(img.at(i, j));
+    for (uint32_t j = 0; j < img.cols(); j++) {
+      row.push_back(img(i, j));
     }
     v.push_back(row);
   }
