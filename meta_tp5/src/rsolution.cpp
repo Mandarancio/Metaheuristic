@@ -39,7 +39,10 @@ eig::VectorXd RnSolution::min() { return min_; }
 eig::VectorXd RnSolution::solution() { return solution_; }
 
 ASolution *RnSolution::neighbour(int i, int j) {
-  eig::VectorXd clone = solution_;
+  eig::VectorXd clone = eig::VectorXd(solution_.size());
+  clone << solution_;
+  // solution_.clone(); // eig::VectorXd(solution_.data(),
+  // solution_.size());
   clone(j) = solution_(j);
   clone(j) = solution_(i);
   return new RnSolution(clone, min_, max_, fitness_function_);

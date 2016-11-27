@@ -1,5 +1,6 @@
 // #pragma once
 
+#include <eigen3/Eigen/Core>
 #include <iostream>
 #include <map>
 #include <numeric>
@@ -157,7 +158,28 @@ bool imshow(const std::vector<std::vector<Numeric>> img) {
 
   return res;
 }
+bool imshow(const Eigen::MatrixXd img) {
+  PyObject *p_img = PyList_New(img.rows());
+  for (uint32_t i = 0; i < img.rows(); ++i) {
+    PyObject *zi = PyList_New(img.cols());
+    for (uint32_t j = 0; j < img.cols(); ++j) {
+      PyList_SetItem(zi, j, PyFloat_FromDouble(img(i, j)));
+    }
+    PyList_SetItem(p_img, i, zi);
+  }
+  PyObject *args = PyTuple_New(1);
+  PyTuple_SetItem(args, 0, p_img);
 
+  PyObject *res = PyObject_CallObject(
+      detail::_interpreter::get().s_python_function_imshow, args);
+
+  Py_DECREF(args);
+
+  if (res)
+    Py_DECREF(res);
+
+  return res;
+}
 template <typename Numeric>
 bool contour(
     const std::vector<Numeric> &x, const std::vector<Numeric> &y,
@@ -380,6 +402,7 @@ bool plot(const std::vector<NumericX> &x, const std::vector<NumericY> &y,
 
   return res;
 }
+
 template <typename Numeric>
 bool named_plot(const std::string &name, const std::vector<Numeric> &y,
                 const std::string &format = "") {
@@ -407,6 +430,23 @@ bool named_plot(const std::string &name, const std::vector<Numeric> &y,
     Py_DECREF(res);
 
   return res;
+}
+
+bool named_plot(const std::string label, const Eigen::VectorXd y) {
+  std::vector<double> conv(y.size());
+  for (uint32_t i = 0; i < y.size(); i++) {
+    conv[i] = y(i);
+  }
+  return named_plot(label, conv);
+}
+
+bool named_plot(const std::string label, const Eigen::VectorXd y,
+                std::string style) {
+  std::vector<double> conv(y.size());
+  for (uint32_t i = 0; i < y.size(); i++) {
+    conv[i] = y(i);
+  }
+  return named_plot(label, conv, style);
 }
 
 template <typename Numeric>
@@ -448,6 +488,16 @@ bool plot(const std::vector<Numeric> &y, const std::string &format = "") {
   for (size_t i = 0; i < x.size(); ++i)
     x.at(i) = i;
   return plot(x, y, format);
+}
+
+bool plot(Eigen::VectorXd y, const std::string &format = "") {
+  std::vector<double> x(y.size());
+  std::vector<double> ys(y.size());
+  for (size_t i = 0; i < x.size(); ++i) {
+    x.at(i) = i;
+    ys.at(i) = y(i);
+  }
+  return plot(x, ys, format);
 }
 
 inline void figure() {

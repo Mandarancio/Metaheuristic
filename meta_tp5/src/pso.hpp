@@ -18,12 +18,15 @@ public:
   T *best_position();
   double move(T *group_best);
   eig::VectorXd speed();
+  eig::VectorXd pos() const;
 
 private:
+  double best_fitness_;
   eig::VectorXd bounce(eig::VectorXd p);
   eig::VectorXd limit(eig::VectorXd s);
   T *position_;
   eig::VectorXd speed_;
+  eig::VectorXd pos_;
   T *particle_best_;
   double omega_, c1_, c2_, vmax_;
 };
@@ -41,6 +44,7 @@ private:
   double omega_, c1_, c2_, vmax_;
   int n_particles_;
   int tmax_;
+  double bf_;
   std::vector<Particle<T> *> particles_;
 };
 };

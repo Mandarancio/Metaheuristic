@@ -1,6 +1,6 @@
 #ifndef IMG_LOADER_HPP
 #define IMG_LOADER_HPP
-#include <eigen3/Eigen/Dense>
+#include <eigen3/Eigen/Sparse>
 #include <string>
 #include <vector>
 
@@ -11,13 +11,15 @@ public:
   Loader(std::string i_path, std::string label_path);
   eig::MatrixXd img(uint32_t id);
   eig::VectorXd imgAsVector(uint32_t id);
+  eig::MatrixXd imgs();
+  eig::MatrixXd labels();
   double label(uint32_t id);
   uint32_t n();
 
 private:
   uint32_t n_;
-  std::vector<double> labels_;
-  std::vector<eig::VectorXd> imgs_;
+  eig::MatrixXd labels_;
+  eig::MatrixXd imgs_;
   std::vector<double> bias_;
   std::vector<uint32_t> sizes_;
 };

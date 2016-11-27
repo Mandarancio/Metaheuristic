@@ -44,6 +44,13 @@ double math::mean(std::vector<double> vs) {
   }
   return avg / vs.size();
 }
+double math::sigma(eig::VectorXd vs, double mean) {
+  double avg = 0;
+  for (uint32_t i = 0; i < vs.size(); i++) {
+    avg += pow((vs(i) - mean), 2);
+  }
+  return sqrt(avg / (vs.size() - 1));
+}
 
 std::vector<double> math::scale(std::vector<double> val, double min,
                                 double max) {
@@ -97,10 +104,9 @@ double math::r() { return double(rand()) / RAND_MAX; }
 double math::sinc(double x) { return x == 0 ? 1 : sin(x) / (x); }
 double math::sigmoid(double x) { return 1.0 / (1.0 + exp(-x)); }
 
-eig::MatrixXd math::r(uint32_t n, uint32_t m, double scale, double center) {
-  eig::MatrixXd x = eig::MatrixXd::Constant(n, m, center) +
-                    eig::MatrixXd::Random(n, m) * scale;
-  return x;
+eig::MatrixXd math::r(uint32_t n, uint32_t m, double scale) {
+  return eig::MatrixXd::Random(n, m) * scale;
+  // return /x;
 }
 
 eig::VectorXd math::r(uint32_t n, double scale) {
@@ -113,24 +119,24 @@ eig::VectorXd math::r(uint32_t n, double scale) {
 
 double math::pow2(double x) { return x * x; }
 
-eig::VectorXd math::sigmoid(eig::VectorXd x) {
-  // Vector<double> v();
-  eig::VectorXd v(x.size());
-  for (uint32_t i = 0; i < x.size(); i++) {
-    v(i) = sigmoid(x(i));
-  }
-  return v;
-}
+// eig::VectorXd math::sigmoid(eig::VectorXd x) {
+//   // Vector<double> v();
+//   // eig::VectorXd v(x.size());
+//   for (uint32_t i = 0; i < x.size(); i++) {
+//     x(i) = sigmoid(x(i));
+//   }
+//   return x;
+// }
 
 eig::MatrixXd math::sigmoid(eig::MatrixXd x) {
   // Vector<double> v();
-  eig::MatrixXd v(x.rows(), x.cols());
+  // eig::MatrixXd v(x.rows(), x.cols());
   for (uint32_t i = 0; i < x.rows(); i++) {
     for (uint32_t j = 0; j < x.cols(); j++) {
-      v(i, j) = sigmoid(x(i, j));
+      x(i, j) = sigmoid(x(i, j));
     }
   }
-  return v; // Matrix<double>(x.rows(), x.columns(), v);
+  return x; // Matrix<double>(x.rows(), x.columns(), v);
 }
 
 eig::MatrixXd math::eye(uint32_t s) {

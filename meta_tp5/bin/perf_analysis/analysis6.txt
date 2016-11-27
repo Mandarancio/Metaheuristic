@@ -1,0 +1,431 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+ 44.77      0.77     0.77     6330     0.12     0.12  Eigen::internal::gebp_kernel<double, double, long, 4, 4, false, false>::operator()(double*, long, double const*, double const*, long, long, long, double, long, long, long, long, double*) [clone .constprop.114]
+ 32.56      1.33     0.56     6330     0.09     0.09  math::sigmoid(Eigen::Matrix<double, -1, -1, 0, -1, -1>)
+  6.40      1.44     0.11     2110     0.05     0.05  Loader::imgs()
+  5.23      1.53     0.09     1000     0.09     0.11  pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>)
+  2.91      1.58     0.05     6330     0.01     0.01  Eigen::internal::gemm_pack_lhs<double, long, 4, 2, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.112]
+  1.74      1.61     0.03     1314     0.02     0.02  meta::RnSolution::RnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, double (*)(Eigen::Matrix<double, -1, 1, 0, -1, 1>))
+  1.16      1.63     0.02     5303     0.00     0.00  meta::RnSolution::solution()
+  1.16      1.65     0.02     2110     0.01     0.72  nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>)
+  1.16      1.67     0.02     1000     0.02     1.63  pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*)
+  0.58      1.68     0.01     1303     0.01     0.03  meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*)
+  0.58      1.69     0.01     1000     0.01     0.01  meta::RnSolution::max()
+  0.58      1.70     0.01     1000     0.01     0.01  meta::RnSolution::min()
+  0.58      1.71     0.01     1000     0.01     0.04  meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>)
+  0.58      1.72     0.01      110     0.09     0.12  meta::MyRnSolution::random()
+  0.00      1.72     0.00     6330     0.00     0.00  Eigen::internal::gemm_pack_rhs<double, long, 4, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.111]
+  0.00      1.72     0.00     4220     0.00     0.19  Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*)
+  0.00      1.72     0.00     2200     0.00     0.00  math::r()
+  0.00      1.72     0.00     2110     0.00     0.00  Loader::n()
+  0.00      1.72     0.00     2110     0.00     0.00  Loader::labels()
+  0.00      1.72     0.00     2100     0.00     0.72  meta::MyRnSolution::fitness()
+  0.00      1.72     0.00     1440     0.00     0.00  meta::RnSolution::n()
+  0.00      1.72     0.00     1413     0.00     0.00  meta::RnSolution::max(int)
+  0.00      1.72     0.00     1314     0.00     0.00  meta::ASolution::ASolution()
+  0.00      1.72     0.00     1303     0.00     0.00  meta::RnSolution::min(int)
+  0.00      1.72     0.00     1283     0.00     0.00  meta::RnSolution::~RnSolution()
+  0.00      1.72     0.00     1283     0.00     0.00  meta::MyRnSolution::~MyRnSolution()
+  0.00      1.72     0.00     1283     0.00     0.00  meta::ASolution::~ASolution()
+  0.00      1.72     0.00      193     0.00     0.03  meta::MyRnSolution::clone()
+  0.00      1.72     0.00      110     0.00     0.03  pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double)
+  0.00      1.72     0.00      100     0.00    17.03  pso::PSO<meta::MyRnSolution>::step(meta::ASolution*)
+  0.00      1.72     0.00      100     0.00     0.00  pso::Particle<meta::MyRnSolution>::~Particle()
+  0.00      1.72     0.00       26     0.00     0.00  pso::Particle<meta::MyRnSolution>::current_position()
+  0.00      1.72     0.00       10     0.00     0.00  meta::AMeta::reset(meta::ASolution*)
+  0.00      1.72     0.00        9     0.00     0.00  void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&)
+  0.00      1.72     0.00        9     0.00     0.00  void std::vector<unsigned int, std::allocator<unsigned int> >::_M_emplace_back_aux<unsigned int>(unsigned int&&)
+  0.00      1.72     0.00        5     0.00     0.00  void std::vector<pso::Particle<meta::MyRnSolution>*, std::allocator<pso::Particle<meta::MyRnSolution>*> >::_M_emplace_back_aux<pso::Particle<meta::MyRnSolution>* const&>(pso::Particle<meta::MyRnSolution>* const&)
+  0.00      1.72     0.00        2     0.00     0.00  math::r(unsigned int, unsigned int, double, double)
+  0.00      1.72     0.00        2     0.00     0.00  Eigen::internal::queryCacheSizes(int&, int&, int&)
+  0.00      1.72     0.00        2     0.00     0.00  void std::vector<Eigen::Matrix<double, -1, -1, 0, -1, -1>, std::allocator<Eigen::Matrix<double, -1, -1, 0, -1, -1> > >::_M_emplace_back_aux<Eigen::Matrix<double, -1, -1, 0, -1, -1> >(Eigen::Matrix<double, -1, -1, 0, -1, -1>&&)
+  0.00      1.72     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z7warningNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+  0.00      1.72     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN2nn15MyNeuralNetworkC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_
+  0.00      1.72     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN4meta10RnSolutionC2EN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES3_S3_PFdS3_E
+  0.00      1.72     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN6LoaderC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_
+  0.00      1.72     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      1.72     0.00        1     0.00     0.00  nn::NeuralNetwork::NeuralNetwork(std::vector<int, std::allocator<int> >)
+  0.00      1.72     0.00        1     0.00     0.00  meta::AMeta::AMeta(meta::ASolution*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  0.00      1.72     0.00        1     0.00     0.00  Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2016 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.58% of 1.72 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.0    0.00    1.70                 pso::PSO<meta::MyRnSolution>::run() [1]
+                0.00    1.70     100/100         pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+                0.00    0.00      10/193         meta::MyRnSolution::clone() [20]
+                0.00    0.00      25/1283        meta::MyRnSolution::~MyRnSolution() [39]
+-----------------------------------------------
+                0.00    1.70     100/100         pso::PSO<meta::MyRnSolution>::run() [1]
+[2]     99.0    0.00    1.70     100         pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+                0.02    1.61    1000/1000        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+                0.00    0.07     100/2100        meta::MyRnSolution::fitness() [4]
+                0.00    0.00      26/193         meta::MyRnSolution::clone() [20]
+                0.00    0.00      26/26          pso::Particle<meta::MyRnSolution>::current_position() [42]
+                0.00    0.00       1/1283        meta::MyRnSolution::~MyRnSolution() [39]
+-----------------------------------------------
+                0.02    1.61    1000/1000        pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+[3]     94.7    0.02    1.61    1000         pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+                0.00    1.45    2000/2100        meta::MyRnSolution::fitness() [4]
+                0.09    0.02    1000/1000        pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [10]
+                0.01    0.03    1000/1000        meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [12]
+                0.01    0.00    3000/5303        meta::RnSolution::solution() [15]
+                0.00    0.00      47/193         meta::MyRnSolution::clone() [20]
+                0.00    0.00    2000/2200        math::r() [31]
+                0.00    0.00    1047/1283        meta::MyRnSolution::~MyRnSolution() [39]
+-----------------------------------------------
+                0.00    0.07     100/2100        pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+                0.00    1.45    2000/2100        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[4]     88.3    0.00    1.52    2100         meta::MyRnSolution::fitness() [4]
+                0.02    1.49    2110/2110        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+                0.01    0.00    2110/5303        meta::RnSolution::solution() [15]
+-----------------------------------------------
+                0.02    1.49    2110/2110        meta::MyRnSolution::fitness() [4]
+[5]     87.8    0.02    1.49    2110         nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+                0.00    0.82    4220/4220        Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [6]
+                0.56    0.00    6330/6330        math::sigmoid(Eigen::Matrix<double, -1, -1, 0, -1, -1>) [8]
+                0.11    0.00    2110/2110        Loader::imgs() [9]
+                0.00    0.00    2110/2110        Loader::labels() [33]
+                0.00    0.00    2110/2110        Loader::n() [32]
+                0.00    0.00       2/2           Eigen::internal::queryCacheSizes(int&, int&, int&) [48]
+-----------------------------------------------
+                0.00    0.82    4220/4220        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[6]     47.7    0.00    0.82    4220         Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [6]
+                0.77    0.00    6330/6330        Eigen::internal::gebp_kernel<double, double, long, 4, 4, false, false>::operator()(double*, long, double const*, double const*, long, long, long, double, long, long, long, long, double*) [clone .constprop.114] [7]
+                0.05    0.00    6330/6330        Eigen::internal::gemm_pack_lhs<double, long, 4, 2, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.112] [11]
+                0.00    0.00    6330/6330        Eigen::internal::gemm_pack_rhs<double, long, 4, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.111] [30]
+-----------------------------------------------
+                0.77    0.00    6330/6330        Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [6]
+[7]     44.8    0.77    0.00    6330         Eigen::internal::gebp_kernel<double, double, long, 4, 4, false, false>::operator()(double*, long, double const*, double const*, long, long, long, double, long, long, long, long, double*) [clone .constprop.114] [7]
+-----------------------------------------------
+                0.56    0.00    6330/6330        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[8]     32.6    0.56    0.00    6330         math::sigmoid(Eigen::Matrix<double, -1, -1, 0, -1, -1>) [8]
+-----------------------------------------------
+                0.11    0.00    2110/2110        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[9]      6.4    0.11    0.00    2110         Loader::imgs() [9]
+-----------------------------------------------
+                0.09    0.02    1000/1000        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[10]     6.4    0.09    0.02    1000         pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [10]
+                0.01    0.00    1000/1000        meta::RnSolution::min() [19]
+                0.01    0.00    1000/1000        meta::RnSolution::max() [18]
+                0.00    0.00    1000/1440        meta::RnSolution::n() [34]
+-----------------------------------------------
+                0.05    0.00    6330/6330        Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [6]
+[11]     2.9    0.05    0.00    6330         Eigen::internal::gemm_pack_lhs<double, long, 4, 2, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.112] [11]
+-----------------------------------------------
+                0.01    0.03    1000/1000        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[12]     2.4    0.01    0.03    1000         meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [12]
+                0.01    0.02    1000/1303        meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [13]
+                0.00    0.00    1000/1303        meta::RnSolution::min(int) [37]
+                0.00    0.00    1000/1413        meta::RnSolution::max(int) [35]
+-----------------------------------------------
+                0.00    0.00     110/1303        meta::MyRnSolution::random() [17]
+                0.00    0.00     193/1303        meta::MyRnSolution::clone() [20]
+                0.01    0.02    1000/1303        meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [12]
+[13]     2.3    0.01    0.03    1303         meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [13]
+                0.03    0.00    1314/1314        meta::RnSolution::RnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, double (*)(Eigen::Matrix<double, -1, 1, 0, -1, 1>)) [14]
+-----------------------------------------------
+                0.03    0.00    1314/1314        meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [13]
+[14]     1.7    0.03    0.00    1314         meta::RnSolution::RnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, double (*)(Eigen::Matrix<double, -1, 1, 0, -1, 1>)) [14]
+                0.00    0.00    1314/1314        meta::ASolution::ASolution() [36]
+-----------------------------------------------
+                0.00    0.00     193/5303        meta::MyRnSolution::clone() [20]
+                0.01    0.00    2110/5303        meta::MyRnSolution::fitness() [4]
+                0.01    0.00    3000/5303        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[15]     1.2    0.02    0.00    5303         meta::RnSolution::solution() [15]
+-----------------------------------------------
+                                                 <spontaneous>
+[16]     0.9    0.00    0.02                 pso::PSO<meta::MyRnSolution>::reset(meta::ASolution*) [16]
+                0.01    0.00     100/110         meta::MyRnSolution::random() [17]
+                0.00    0.00     100/110         pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [21]
+                0.00    0.00     100/100         pso::Particle<meta::MyRnSolution>::~Particle() [41]
+                0.00    0.00      10/10          meta::AMeta::reset(meta::ASolution*) [43]
+-----------------------------------------------
+                0.00    0.00      10/110         pso::PSO<meta::MyRnSolution>::PSO(meta::MyRnSolution*, int, int, double, double, double, double) [22]
+                0.01    0.00     100/110         pso::PSO<meta::MyRnSolution>::reset(meta::ASolution*) [16]
+[17]     0.8    0.01    0.00     110         meta::MyRnSolution::random() [17]
+                0.00    0.00     110/1303        meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [13]
+                0.00    0.00     220/1413        meta::RnSolution::max(int) [35]
+                0.00    0.00     220/1440        meta::RnSolution::n() [34]
+                0.00    0.00     110/1303        meta::RnSolution::min(int) [37]
+-----------------------------------------------
+                0.01    0.00    1000/1000        pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [10]
+[18]     0.6    0.01    0.00    1000         meta::RnSolution::max() [18]
+-----------------------------------------------
+                0.01    0.00    1000/1000        pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [10]
+[19]     0.6    0.01    0.00    1000         meta::RnSolution::min() [19]
+-----------------------------------------------
+                0.00    0.00      10/193         pso::PSO<meta::MyRnSolution>::run() [1]
+                0.00    0.00      26/193         pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+                0.00    0.00      47/193         pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+                0.00    0.00     110/193         pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [21]
+[20]     0.4    0.00    0.01     193         meta::MyRnSolution::clone() [20]
+                0.00    0.00     193/1303        meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [13]
+                0.00    0.00     193/5303        meta::RnSolution::solution() [15]
+                0.00    0.00     193/1303        meta::RnSolution::min(int) [37]
+                0.00    0.00     193/1413        meta::RnSolution::max(int) [35]
+-----------------------------------------------
+                0.00    0.00      10/110         pso::PSO<meta::MyRnSolution>::PSO(meta::MyRnSolution*, int, int, double, double, double, double) [22]
+                0.00    0.00     100/110         pso::PSO<meta::MyRnSolution>::reset(meta::ASolution*) [16]
+[21]     0.2    0.00    0.00     110         pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [21]
+                0.00    0.00     110/193         meta::MyRnSolution::clone() [20]
+                0.00    0.00     220/1440        meta::RnSolution::n() [34]
+-----------------------------------------------
+                                                 <spontaneous>
+[22]     0.1    0.00    0.00                 pso::PSO<meta::MyRnSolution>::PSO(meta::MyRnSolution*, int, int, double, double, double, double) [22]
+                0.00    0.00      10/110         meta::MyRnSolution::random() [17]
+                0.00    0.00      10/110         pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [21]
+                0.00    0.00       5/5           void std::vector<pso::Particle<meta::MyRnSolution>*, std::allocator<pso::Particle<meta::MyRnSolution>*> >::_M_emplace_back_aux<pso::Particle<meta::MyRnSolution>* const&>(pso::Particle<meta::MyRnSolution>* const&) [46]
+                0.00    0.00       1/1           meta::AMeta::AMeta(meta::ASolution*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [56]
+-----------------------------------------------
+                0.00    0.00    6330/6330        Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [6]
+[30]     0.0    0.00    0.00    6330         Eigen::internal::gemm_pack_rhs<double, long, 4, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.111] [30]
+-----------------------------------------------
+                0.00    0.00     200/2200        Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [57]
+                0.00    0.00    2000/2200        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[31]     0.0    0.00    0.00    2200         math::r() [31]
+-----------------------------------------------
+                0.00    0.00    2110/2110        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[32]     0.0    0.00    0.00    2110         Loader::n() [32]
+-----------------------------------------------
+                0.00    0.00    2110/2110        nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[33]     0.0    0.00    0.00    2110         Loader::labels() [33]
+-----------------------------------------------
+                0.00    0.00     220/1440        pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [21]
+                0.00    0.00     220/1440        meta::MyRnSolution::random() [17]
+                0.00    0.00    1000/1440        pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [10]
+[34]     0.0    0.00    0.00    1440         meta::RnSolution::n() [34]
+-----------------------------------------------
+                0.00    0.00     193/1413        meta::MyRnSolution::clone() [20]
+                0.00    0.00     220/1413        meta::MyRnSolution::random() [17]
+                0.00    0.00    1000/1413        meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [12]
+[35]     0.0    0.00    0.00    1413         meta::RnSolution::max(int) [35]
+-----------------------------------------------
+                0.00    0.00    1314/1314        meta::RnSolution::RnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, double (*)(Eigen::Matrix<double, -1, 1, 0, -1, 1>)) [14]
+[36]     0.0    0.00    0.00    1314         meta::ASolution::ASolution() [36]
+-----------------------------------------------
+                0.00    0.00     110/1303        meta::MyRnSolution::random() [17]
+                0.00    0.00     193/1303        meta::MyRnSolution::clone() [20]
+                0.00    0.00    1000/1303        meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [12]
+[37]     0.0    0.00    0.00    1303         meta::RnSolution::min(int) [37]
+-----------------------------------------------
+                0.00    0.00    1283/1283        meta::MyRnSolution::~MyRnSolution() [39]
+[38]     0.0    0.00    0.00    1283         meta::RnSolution::~RnSolution() [38]
+-----------------------------------------------
+                0.00    0.00       1/1283        pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+                0.00    0.00      10/1283        meta::AMeta::reset(meta::ASolution*) [43]
+                0.00    0.00      25/1283        pso::PSO<meta::MyRnSolution>::run() [1]
+                0.00    0.00     200/1283        pso::Particle<meta::MyRnSolution>::~Particle() [41]
+                0.00    0.00    1047/1283        pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [3]
+[39]     0.0    0.00    0.00    1283         meta::MyRnSolution::~MyRnSolution() [39]
+                0.00    0.00    1283/1283        meta::ASolution::~ASolution() [40]
+                0.00    0.00    1283/1283        meta::RnSolution::~RnSolution() [38]
+-----------------------------------------------
+                0.00    0.00    1283/1283        meta::MyRnSolution::~MyRnSolution() [39]
+[40]     0.0    0.00    0.00    1283         meta::ASolution::~ASolution() [40]
+-----------------------------------------------
+                0.00    0.00     100/100         pso::PSO<meta::MyRnSolution>::reset(meta::ASolution*) [16]
+[41]     0.0    0.00    0.00     100         pso::Particle<meta::MyRnSolution>::~Particle() [41]
+                0.00    0.00     200/1283        meta::MyRnSolution::~MyRnSolution() [39]
+-----------------------------------------------
+                0.00    0.00      26/26          pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [2]
+[42]     0.0    0.00    0.00      26         pso::Particle<meta::MyRnSolution>::current_position() [42]
+-----------------------------------------------
+                0.00    0.00      10/10          pso::PSO<meta::MyRnSolution>::reset(meta::ASolution*) [16]
+[43]     0.0    0.00    0.00      10         meta::AMeta::reset(meta::ASolution*) [43]
+                0.00    0.00      10/1283        meta::MyRnSolution::~MyRnSolution() [39]
+-----------------------------------------------
+                0.00    0.00       9/9           Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [57]
+[44]     0.0    0.00    0.00       9         void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&) [44]
+-----------------------------------------------
+                0.00    0.00       9/9           Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [57]
+[45]     0.0    0.00    0.00       9         void std::vector<unsigned int, std::allocator<unsigned int> >::_M_emplace_back_aux<unsigned int>(unsigned int&&) [45]
+-----------------------------------------------
+                0.00    0.00       5/5           pso::PSO<meta::MyRnSolution>::PSO(meta::MyRnSolution*, int, int, double, double, double, double) [22]
+[46]     0.0    0.00    0.00       5         void std::vector<pso::Particle<meta::MyRnSolution>*, std::allocator<pso::Particle<meta::MyRnSolution>*> >::_M_emplace_back_aux<pso::Particle<meta::MyRnSolution>* const&>(pso::Particle<meta::MyRnSolution>* const&) [46]
+-----------------------------------------------
+                0.00    0.00       2/2           nn::NeuralNetwork::NeuralNetwork(std::vector<int, std::allocator<int> >) [55]
+[47]     0.0    0.00    0.00       2         math::r(unsigned int, unsigned int, double, double) [47]
+-----------------------------------------------
+                0.00    0.00       2/2           nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [5]
+[48]     0.0    0.00    0.00       2         Eigen::internal::queryCacheSizes(int&, int&, int&) [48]
+-----------------------------------------------
+                0.00    0.00       2/2           nn::NeuralNetwork::NeuralNetwork(std::vector<int, std::allocator<int> >) [55]
+[49]     0.0    0.00    0.00       2         void std::vector<Eigen::Matrix<double, -1, -1, 0, -1, -1>, std::allocator<Eigen::Matrix<double, -1, -1, 0, -1, -1> > >::_M_emplace_back_aux<Eigen::Matrix<double, -1, -1, 0, -1, -1> >(Eigen::Matrix<double, -1, -1, 0, -1, -1>&&) [49]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [323]
+[50]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z7warningNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [50]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [323]
+[51]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN2nn15MyNeuralNetworkC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ [51]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [323]
+[52]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN4meta10RnSolutionC2EN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES3_S3_PFdS3_E [52]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [323]
+[53]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN6LoaderC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ [53]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [323]
+[54]     0.0    0.00    0.00       1         _GLOBAL__sub_I_main [54]
+-----------------------------------------------
+                0.00    0.00       1/1           nn::MyNeuralNetwork::MyNeuralNetwork(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [68]
+[55]     0.0    0.00    0.00       1         nn::NeuralNetwork::NeuralNetwork(std::vector<int, std::allocator<int> >) [55]
+                0.00    0.00       2/2           math::r(unsigned int, unsigned int, double, double) [47]
+                0.00    0.00       2/2           void std::vector<Eigen::Matrix<double, -1, -1, 0, -1, -1>, std::allocator<Eigen::Matrix<double, -1, -1, 0, -1, -1> > >::_M_emplace_back_aux<Eigen::Matrix<double, -1, -1, 0, -1, -1> >(Eigen::Matrix<double, -1, -1, 0, -1, -1>&&) [49]
+-----------------------------------------------
+                0.00    0.00       1/1           pso::PSO<meta::MyRnSolution>::PSO(meta::MyRnSolution*, int, int, double, double, double, double) [22]
+[56]     0.0    0.00    0.00       1         meta::AMeta::AMeta(meta::ASolution*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [56]
+-----------------------------------------------
+                0.00    0.00       1/1           nn::MyNeuralNetwork::MyNeuralNetwork(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [68]
+[57]     0.0    0.00    0.00       1         Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [57]
+                0.00    0.00     200/2200        math::r() [31]
+                0.00    0.00       9/9           void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&) [44]
+                0.00    0.00       9/9           void std::vector<unsigned int, std::allocator<unsigned int> >::_M_emplace_back_aux<unsigned int>(unsigned int&&) [45]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2016 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [50] _GLOBAL__sub_I__Z7warningNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE [34] meta::RnSolution::n() [36] meta::ASolution::ASolution()
+  [51] _GLOBAL__sub_I__ZN2nn15MyNeuralNetworkC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES6_ [35] meta::RnSolution::max(int) [40] meta::ASolution::~ASolution()
+  [52] _GLOBAL__sub_I__ZN4meta10RnSolutionC2EN5Eigen6MatrixIdLin1ELi1ELi0ELin1ELi1EEES3_S3_PFdS3_E [18] meta::RnSolution::max() [7] Eigen::internal::gebp_kernel<double, double, long, 4, 4, false, false>::operator()(double*, long, double const*, double const*, long, long, long, double, long, long, long, long, double*) [clone .constprop.114]
+  [53] _GLOBAL__sub_I__ZN6LoaderC2ENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_ [37] meta::RnSolution::min(int) [11] Eigen::internal::gemm_pack_lhs<double, long, 4, 2, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.112]
+  [54] _GLOBAL__sub_I_main    [19] meta::RnSolution::min() [30] Eigen::internal::gemm_pack_rhs<double, long, 4, 0, false, false>::operator()(double*, double const*, long, long, long, long, long) [clone .constprop.111]
+  [55] nn::NeuralNetwork::NeuralNetwork(std::vector<int, std::allocator<int> >) [15] meta::RnSolution::solution() [48] Eigen::internal::queryCacheSizes(int&, int&, int&)
+   [5] nn::MyNeuralNetwork::evalue(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [14] meta::RnSolution::RnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, double (*)(Eigen::Matrix<double, -1, 1, 0, -1, 1>)) [6] Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*)
+   [2] pso::PSO<meta::MyRnSolution>::step(meta::ASolution*) [38] meta::RnSolution::~RnSolution() [32] Loader::n()
+  [42] pso::Particle<meta::MyRnSolution>::current_position() [20] meta::MyRnSolution::clone() [9] Loader::imgs()
+   [3] pso::Particle<meta::MyRnSolution>::move(meta::MyRnSolution*) [12] meta::MyRnSolution::create(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [33] Loader::labels()
+  [10] pso::Particle<meta::MyRnSolution>::bounce(Eigen::Matrix<double, -1, 1, 0, -1, 1>) [17] meta::MyRnSolution::random() [57] Loader::Loader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  [21] pso::Particle<meta::MyRnSolution>::Particle(meta::MyRnSolution*, double, double, double, double) [4] meta::MyRnSolution::fitness() [49] void std::vector<Eigen::Matrix<double, -1, -1, 0, -1, -1>, std::allocator<Eigen::Matrix<double, -1, -1, 0, -1, -1> > >::_M_emplace_back_aux<Eigen::Matrix<double, -1, -1, 0, -1, -1> >(Eigen::Matrix<double, -1, -1, 0, -1, -1>&&)
+  [41] pso::Particle<meta::MyRnSolution>::~Particle() [13] meta::MyRnSolution::MyRnSolution(Eigen::Matrix<double, -1, 1, 0, -1, 1>, double, double, nn::MyNeuralNetwork*) [46] void std::vector<pso::Particle<meta::MyRnSolution>*, std::allocator<pso::Particle<meta::MyRnSolution>*> >::_M_emplace_back_aux<pso::Particle<meta::MyRnSolution>* const&>(pso::Particle<meta::MyRnSolution>* const&)
+  [47] math::r(unsigned int, unsigned int, double, double) [39] meta::MyRnSolution::~MyRnSolution() [44] void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double>(double&&)
+  [31] math::r()              [43] meta::AMeta::reset(meta::ASolution*) [45] void std::vector<unsigned int, std::allocator<unsigned int> >::_M_emplace_back_aux<unsigned int>(unsigned int&&)
+   [8] math::sigmoid(Eigen::Matrix<double, -1, -1, 0, -1, -1>) [56] meta::AMeta::AMeta(meta::ASolution*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)

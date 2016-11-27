@@ -18,7 +18,7 @@ public:
   eig::MatrixXd teta(uint32_t id);
   void reset();
 
-private:
+protected:
   std::vector<int> levels_;
   std::vector<eig::MatrixXd> tetas_;
 };

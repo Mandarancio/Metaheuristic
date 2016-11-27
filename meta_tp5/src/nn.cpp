@@ -6,7 +6,7 @@ NeuralNetwork::NeuralNetwork(std::vector<int> levels) : levels_(levels) {
   for (unsigned int i = 0; i < levels.size() - 1; i++) {
     uint32_t n = levels[i];
     uint32_t m = levels[i + 1];
-    tetas_.push_back(math::r(n, m, 4.0, -2.0));
+    tetas_.push_back(math::r(n, m, 2.0));
   }
 }
 NeuralNetwork::NeuralNetwork(unsigned int n, int levels[]) {
@@ -15,7 +15,7 @@ NeuralNetwork::NeuralNetwork(unsigned int n, int levels[]) {
     if (i < n - 1) {
       uint32_t n = levels[i];
       uint32_t m = levels[i + 1];
-      tetas_.push_back(math::r(n, m, 4.0, -2.0));
+      tetas_.push_back(math::r(n, m, 2.0));
     }
   }
 }
@@ -23,9 +23,7 @@ NeuralNetwork::NeuralNetwork(unsigned int n, int levels[]) {
 eig::VectorXd NeuralNetwork::evaluate(eig::VectorXd input) {
   eig::MatrixXd x = math::sigmoid(input).transpose();
   for (uint32_t i = 0; i < tetas_.size(); i++) {
-
-    eig::MatrixXd prod = x * tetas_[i];
-    x = math::sigmoid(prod);
+    x = math::sigmoid(x * tetas_[i]);
   }
   if (x.rows() == 1) {
     return x;
@@ -69,7 +67,7 @@ void NeuralNetwork::reset() {
   for (unsigned int i = 0; i < levels_.size() - 1; i++) {
     uint32_t n = levels_[i];
     uint32_t m = levels_[i + 1];
-    tetas_.push_back(math::r(n, m, 4.0, -2.));
+    tetas_.push_back(math::r(n, m, 2.0));
   }
 }
 
