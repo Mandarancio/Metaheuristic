@@ -4,7 +4,8 @@
 # omega
 for i in `seq 1 1 50`;
 do
-  ./pso -csv -tmax 70 -npart 30 -omega 0.75 -c1 0.3 -c2 0.2 -vmax 0.3 #2>/dev/null
+  ./pso -csv -tmax 70 -npart 40 -omega 0.75 -c1 1.8 -c2 1.2 -vmax 0.35 #2>/dev/null
+  sleep 0.001
 done
 
 exit 0

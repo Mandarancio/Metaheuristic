@@ -13,7 +13,7 @@
 namespace plt = matplotlibcpp;
 
 double f2(double x, double y) {
-  return -(exp(-x * x / 81) * exp(-y * y / 81) + cos(x) * cos(y));
+  return -(exp(-x * x / 81) * exp(-y * y / 81) + 0.2 * cos(x) * cos(y));
 }
 
 double f(eig::VectorXd x) { return f2(x(0), x(1)); }
@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
   double t0;
 
   meta::ASolution *best = r->clone();
+  meta->setBest_fitness(r->fitness());
   for (int i = 0; i < tmax; i++) {
     t0 = clock();
 
@@ -80,7 +81,6 @@ int main(int argc, char *argv[]) {
     plot(xs, ys, zs, ps, i);
     meta::ASolution *next = meta->step(best);
     if (next != best) {
-      delete best;
       best = next;
     }
   }

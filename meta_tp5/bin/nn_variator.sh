@@ -2,29 +2,35 @@
 # testing 640,000 different possibilities
 # varing tmax, n particles, omega, c1, c2 and max speed
 # omega
-for i in `LC_NUMERIC="en_US.UTF-8" seq 0.1 0.1 1.0`;
+for i in `LC_NUMERIC="en_US.UTF-8" seq 5 5 50`;
 do
-  # c1
-  for j in `LC_NUMERIC="en_US.UTF-8" seq 0.1 0.1 2.0`;
+  for j in `seq 1 1 5`;
   do
-    # c2
-    for h in `LC_NUMERIC="en_US.UTF-8" seq 0.1 0.1 2.0`;
-    do
-      # vmax
-      for v in `LC_NUMERIC="en_US.UTF-8" seq 0.1 0.1 1.0`;
-      do
-        # tmax
-        for t in `seq 10 5 30`;
-        do
-          # npart
-          for p in `seq 15 10 55`;
-          do
-            ./pso_nn -csv -tmax $t -npart $p -omega $i -c1 $j -c2 $h -vmax $v
-          done
-        done
-      done
-    done
+    ./pso -csv -tmax $i -npart 25 -omega 0.8 -c1 1.8 -c2 1.5 -vmax 0.5
   done
 done
 
+for i in `LC_NUMERIC="en_US.UTF-8" seq 5 5 50`;
+do
+  for j in `seq 1 1 5`;
+  do
+    ./pso -csv -tmax 25 -npart $i -omega 0.8 -c1 1.8 -c2 1.5 -vmax 0.5
+  done
+done
+
+for i in `LC_NUMERIC="en_US.UTF-8" seq 0.05 0.05 0.5`;
+do
+  for j in `seq 1 1 5`;
+  do
+    ./pso -csv -tmax 25 -npart 25 -omega 0.8 -c1 1.8 -c2 1.5 -vmax $i
+  done
+done
+
+for i in `LC_NUMERIC="en_US.UTF-8" seq 0.5 0.05 0.9`;
+do
+  for j in `seq 1 1 5`;
+  do
+    ./pso -csv -tmax 25 -npart 25 -omega $i -c1 1.8 -c2 1.5 -vmax 0.5
+  done
+done
 exit 0

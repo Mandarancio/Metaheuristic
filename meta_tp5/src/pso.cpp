@@ -21,7 +21,11 @@ Particle<T>::Particle(T *position, double omega, double c1, double c2,
   particle_best_ = dynamic_cast<T *>(position->clone());
   speed_ = eig::VectorXd::Random(position_->n()) * vmax;
   best_fitness_ = position->fitness();
+  fitness_ = best_fitness_;
   pos_ = position->solution();
+  best_pos_ = position->solution();
+  min_ = position->min();
+  max_ = position->max();
 }
 
 template <typename T> Particle<T>::~Particle() {
@@ -32,27 +36,23 @@ template <typename T> Particle<T>::~Particle() {
 }
 template <typename T> eig::VectorXd Particle<T>::speed() { return speed_; }
 template <typename T> eig::VectorXd Particle<T>::pos() const { return pos_; }
-template <typename T> double Particle<T>::current_fitness() {
-  return position_->fitness();
-}
+template <typename T> double Particle<T>::current_fitness() { return fitness_; }
 
 template <typename T> T *Particle<T>::current_position() { return position_; }
 
 template <typename T> double Particle<T>::best_fitness() {
-  return particle_best_->fitness();
+  return best_fitness_;
 }
 
 template <typename T> T *Particle<T>::best_position() { return particle_best_; }
 
 template <typename T> eig::VectorXd Particle<T>::bounce(eig::VectorXd p) {
 
-  uint32_t n = position_->n();
-  eig::VectorXd mm = position_->min();
-  eig::VectorXd MM = position_->max();
+  uint32_t n = p.size();
   for (uint32_t i = 0; i < n; i++) {
     double v = p(i);
-    double m = mm(i);
-    double M = MM(i);
+    double m = min_(i);
+    double M = max_(i);
     if (v < m) {
       double x = 0.9 * (v - m);
       v = m - x;
@@ -93,22 +93,23 @@ template <typename T> double Particle<T>::move(T *group_best) {
     std::cerr << "Something wrong!!!" << std::endl;
     throw - 30;
   }
-
-  eig::VectorXd bt = particle_best_->solution() - pos_;
+  eig::VectorXd bt = best_pos_ - pos_;
   eig::VectorXd bg = group_best->solution() - pos_;
   speed_ = limit(speed_ * omega_ + bt * r1 * c1_ + bg * r2 * c2_);
   pos_ = bounce(pos_ + speed_);
   T *x = dynamic_cast<T *>(position_->create(pos_));
-
   if (position_ != particle_best_) {
     delete position_;
   }
 
   double f = x->fitness();
-
+  fitness_ = f;
   if (f < best_fitness_) {
-    delete particle_best_;
-    particle_best_ = x;
+    if (particle_best_ && particle_best_ != group_best) {
+      delete particle_best_;
+    }
+    best_pos_ = pos_;
+    particle_best_ = x; // dynamic_cast<T *>(x->clone());
     best_fitness_ = f;
   }
 
@@ -156,6 +157,11 @@ template <typename T> meta::ASolution *PSO<T>::run() {
   for (int i = 0; i < tmax_; i++) {
     meta::ASolution *next = step(best);
     if (next != best) {
+      //!!! SEMAPHORE NEED TO SYNC THE DELITION OF OLD BEST
+      // if (best) {
+      //   delete best;
+      // }
+      //!!!! THERE IS A SMALL MEMORY LEAK TO SOLVE
       best = next;
     }
   }
@@ -173,6 +179,8 @@ template <typename T> void PSO<T>::reset(meta::ASolution *sol) {
 template <typename T> std::vector<Particle<T> *> PSO<T>::particles() {
   return particles_;
 }
+template <typename T> double PSO<T>::best_fitness() { return bf_; }
+template <typename T> void PSO<T>::setBest_fitness(double x) { bf_ = x; }
 
 template class pso::Particle<meta::RnSolution>;
 template class pso::Particle<meta::MyRnSolution>;

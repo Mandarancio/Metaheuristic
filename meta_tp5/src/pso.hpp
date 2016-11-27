@@ -22,14 +22,19 @@ public:
 
 private:
   double best_fitness_;
+  double fitness_;
   eig::VectorXd bounce(eig::VectorXd p);
   eig::VectorXd limit(eig::VectorXd s);
   T *position_;
   eig::VectorXd speed_;
   eig::VectorXd pos_;
+  eig::VectorXd best_pos_;
+  eig::VectorXd min_;
+  eig::VectorXd max_;
   T *particle_best_;
   double omega_, c1_, c2_, vmax_;
 };
+
 template <typename T> class PSO : public meta::AMeta {
 public:
   PSO(T *startSolution, int n_particle, int tmax, double omega, double c1,
@@ -39,6 +44,8 @@ public:
   virtual meta::ASolution *run();
   virtual void reset(meta::ASolution *sol);
   std::vector<Particle<T> *> particles();
+  double best_fitness();
+  void setBest_fitness(double x);
 
 private:
   double omega_, c1_, c2_, vmax_;
