@@ -1,11 +1,18 @@
 #ifndef RSOLUTION_HPP
 #define RSOLUTION_HPP
 #include "meta.hpp"
+#include <bitset>
 #include <eigen3/Eigen/Dense>
 
 namespace eig = Eigen;
 
 namespace meta {
+
+class RSolution : public ASolution {
+public:
+  RSolution(eig::VectorXb sol, double (*f)(eig::VectorXb));
+};
+
 class RnSolution : public ASolution {
 public:
   RnSolution(eig::VectorXd sol, eig::VectorXd mins, eig::VectorXd maxs,
