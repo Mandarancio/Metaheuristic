@@ -12,6 +12,7 @@ public:
   Matrix(uint32_t n, uint32_t m, Numeric inital_v);
   Matrix(uint32_t n, uint32_t m);
   Matrix(uint32_t n, uint32_t m, std::vector<Numeric> v);
+  Matrix(Matrix<Numeric> *a);
   virtual ~Matrix();
 
   Matrix<Numeric> row(uint32_t x);
@@ -23,7 +24,7 @@ public:
   virtual Matrix<Numeric> t();
 
   uint32_t rows() const;
-  uint32_t columns() const;
+  uint32_t cols() const;
 
   Matrix<Numeric> reshape(uint32_t n, uint32_t m);
   void resize(uint32_t n, uint32_t m);

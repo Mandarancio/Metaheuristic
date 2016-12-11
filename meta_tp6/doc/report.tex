@@ -1,0 +1,368 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,graphicx,bbm,hyperref,calc,ifthen,capt-of}
+
+%%%%%%%%%% Start TeXmacs macros
+\newcommand{\longminus}{{-\!\!-}}
+\newcommand{\tmem}[1]{{\em #1\/}}
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\tmstrong}[1]{\textbf{#1}}
+\newcommand{\tmfloatcontents}{}
+\newlength{\tmfloatwidth}
+\newcommand{\tmfloat}[5]{
+  \renewcommand{\tmfloatcontents}{#4}
+  \setlength{\tmfloatwidth}{\widthof{\tmfloatcontents}+1in}
+  \ifthenelse{\equal{#2}{small}}
+    {\setlength{\tmfloatwidth}{0.45\linewidth}}
+    {\setlength{\tmfloatwidth}{\linewidth}}
+  \begin{minipage}[#1]{\tmfloatwidth}
+    \begin{center}
+      \tmfloatcontents
+      \captionof{#3}{#5}
+    \end{center}
+  \end{minipage}}
+%%%%%%%%%% End TeXmacs macros
+
+\begin{document}
+
+\title{
+  TP6: Genetic Algorithms and\\
+  Function Minimization 
+}
+
+\author{Martino Ferrari}
+
+\maketitle
+
+\section{Function Minimization}
+
+In this tp we will try to minimize the fitness function
+\[ f (x, y) = - \left| \frac{1}{2} \cdot x \cdot \sin \left( \sqrt{| x |}
+   \right) \right| - \left| y \cdot \sin \left( 30 \cdot \sqrt{\left|
+   \frac{x}{y} \right|} \right) \right| \]
+with $x, y \in [10 : 1000] \cap \mathbbm{N}$.
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-1.eps}}}{Fitness
+  landscape}
+\end{center}
+
+In figure 1 is shown the {\tmem{fitness landscape}} of the above function. The
+{\tmem{global minimum}} of the function can be found in position $(x = 903, y
+= 917)$ with value -1356.5.
+
+To represent the research space $S$ we will use two chains of 10 bits, each
+able to represent numbers from 0 to 1024.
+\[ x, y \in [0, 1024] \cap \mathbbm{N} \]
+For this reason I choose to adapt it to the function using the following
+conversion
+\[ x' = \frac{x \cdot 990}{1023} + 10 \]
+\[ y' = \frac{y \cdot 990}{1023} + 10 \]
+in this way $x'$ and $y'$ are in the range $x', y' \in [10, 1000] \cap
+\mathbbm{R}$, and using the round function is possible to return in the
+$\mathbbm{N}$ set:
+\[ x'' = \tmop{round} (x') \]
+\[ y'' = \tmop{round} (y') \]
+and the function will be:
+\[ f (x'', y'') = - \left| \frac{1}{2} \cdot x'' \cdot \sin \left( \sqrt{x''}
+   \right) \right| - \left| y'' \cdot \sin \left( 30 \cdot
+   \sqrt{\frac{x''}{y''}} \right) \right| \]
+I removed the internal absolute values as the $\mathbbm{N}$ is defined in $[0,
+\infty]$ only.
+
+Finally the research space has $2^{20} $ virtual solutions and only $2^{19,
+9}$ real solutions (due to the round and upper and lower bounds).
+
+\section{Genetic Algorithms}
+
+The Genetic Algorithms ({\tmstrong{GA}}), introduced in the 70th by Holland
+and John, are part of bigger group of metaheuristic call the
+{\tmem{Evolutionary algorithms}}. This family of metaheurstics have been based
+on some of the principle of the evolution and natural selection (some
+presented by C. Darwin in {\tmem{``On the Origin of Species''}}).
+
+In particular the {\tmstrong{GA}} is a population based metaheuristics where
+each $x_i \in S$ individual represent a possible solution of the problem.
+
+It's also important to define some terminology, the coding of the individuals
+is seen as the {\tmem{DNA}} of the the individual, the position or the value
+of $x_i$ is called {\tmem{genotype}} while its fitness is called
+{\tmem{phenotype}}, and finally the iterations are called
+{\tmem{generations}}.
+
+The population of the {\tmstrong{GA}} will evolve at each generation by
+applying the following actions:
+\begin{enumerate}
+  \item Selection: selection of the individuals to evolve from
+  
+  \item Crossover: crossover of couples of parents \
+  
+  \item Mutation: random mutations of the individuals
+\end{enumerate}
+As it's possible to imagine the names are linked to the evolutionary and
+genetic homonymous processes. \
+
+We can express this process of evolution of the population $P (t)$ at the
+generation $t$ schematically as
+\[ P (t) \overset{}{\underset{\tmop{selection}}{\longminus \rightarrow} P^1
+   (t) \underset{\tmop{crossover}}{\longminus \rightarrow} P^2 (t)
+   \underset{\tmop{mutation}}{\longminus \rightarrow}} P^3 (t) = P (t + 1) \]
+It's also possible to exchange the worst element of $P (t + 1)$ with the best
+of the previous generation.
+
+It's also important to see that the size of the population is constant (it's
+true also for the intermediary populations $P^1, P^2, P^3$). The results of
+this operation represents the research operator {\tmem{U}}.
+
+Often the $P (0)$ is generated randomly.
+
+In the following subsection I will explain in details the selection,
+crossover and mutation.
+
+\subsection{Selection}
+
+The selection action represents some how the process of {\tmem{Natural
+Selection}}, that C. Darwin expressed ad {\tmem{``Survival of the
+\textbackslash ttest.''}}, and it's a process that should select the bests
+individuals of the population from which the next generation will evolve.
+However simply selecting the bests individuals will be counterproductive as it
+will probably focus the evolution in a sub optimal region of {\tmem{S}}. There
+are many different selection strategies to avoid this problem and to add some
+randomness, in particular:
+\begin{itemize}
+  \item Fitness proportional selection: each individual $x_i$ has probability
+  $p_i$ to be selected:
+  \[ p_i = \frac{f (x_i)}{\sum_{j = 1}^n f (x_j)} \]
+  \item Selection by tournament: where $k$ random individuals are competing
+  and the one that will win the tournament will be selected.
+  
+  \item Selection by rang: after ordering the individuals by the fitness the
+  probability $p_i$ of one individual $i$ to be selected will be:
+  \[ p_i = \frac{1}{n} \left[ \beta - 2 (\beta - 1) \frac{i - 1}{n - 1}
+     \right] \]
+  with $1 \leqslant \beta \leqslant 2$.
+\end{itemize}
+The main problem of the selection action is the fast convergence of the
+individuals of the population to the best individual (so each individual will
+be equal), this will reduce the probability of success in rough landscape. For
+this reason choosing the correct selection method for each problem is
+critical.
+
+\subsection{Crossover}
+
+The crossover operation reflect the chromosomal crossover where tow chromosoms
+of the parents exchange parts of their genetic information. In the same way
+with a certain crossover probability $p_c$ pairs of individuals exchange parts
+of their coding to generate the next generation.
+
+To do so, the population $P^1 (t)$ will be divided in $\frac{n}{2}$ pairs and
+then each couple and then the crossover operation will be applied with
+probability $p_c$. In particular we saw 3 possible crossover methods:
+\begin{itemize}
+  \item Single-point crossover, the couple code will be splitted in two parts
+  (of random size) and the parts will be exchanged.
+  
+  \item Multiple-point crossover, is a variation of the first method were the
+  code will be splitted in two or more parts.
+  
+  \item Uniform crossover, each bit of a parent will have a certain
+  probability to be exchanged with the one from the other parent.
+\end{itemize}
+
+\subsection{Mutation}
+
+Each individual of $P^2 (t)$ will have a certain probability $p_m$ of
+mutation. In particular with a binary coding of the solution each bit of s
+solution will have $p_m$ to mutate (to switch).
+
+In this way it's possible to maintain a certain diversity in the population
+and explore more complex and \ \
+
+\subsection{Guiding parameters}
+
+Concluding the {\tmstrong{GA}} has 3 guiding parameters:
+\begin{enumerate}
+  \item $n,$ the size of the population
+  
+  \item $p_c,$ the crossover probability
+  
+  \item $p_m,$ the mutation probability
+\end{enumerate}
+The influence of each in the results will be studied in the section 5.
+
+\section{GA and Function Minimization}
+
+We need to define for {\tmstrong{GA}}, as all the other metaheuristics, few
+elements:
+\begin{itemize}
+  \item the solution space $S$
+  
+  \item the initial solution $x_0$, or in this case the initial population $P
+  (0)$
+  
+  \item the fitness function $f (x)$
+  
+  \item the research operator $U$
+  
+  \item the stop condition
+\end{itemize}
+The space solution $S$ and the fitness function $f (x)$ have been introduced
+in the section 1.
+
+The initial population $P (0)$ will be randomly chosen in $S$.
+
+The research operator $U$, as specified in section 2, will be the ensemble of
+the selection, crossover and mutation operations.
+
+Finally the stop condition can be both a number of generations to reach
+$t_{\max}$ (or similarly a number of fitness evaluations) or a certain fitness
+$f_{\tmop{target}}$ to reach.
+
+\section{Implementation}
+
+I implemented the algorithm in C++ extensively using the object-oriented
+features of the language, and reusing all the metaheurstic framework developed
+till now. The individuals represent a possible solution as an array of $n$ bit
+(20 in this case) that will be splitted in 2 to represent $x \tmop{and} y$.
+
+The selection is done using tournament method with $k = 5$ individuals per
+tournament.
+
+The crossover instead is done using the one-point crossover with a mid-break
+policy (meaning that I'm exchanging $x_1$ with $y_2$ and $y_1$ with $x_2$).
+
+Moreover the worst individual of the next generation is replaced by the best
+of the previous one. \ \
+
+\section{Results}
+
+This time the landscape of $S$ is defined mathematically and there is no need
+to study it more and it shown in figure 1 and figure 2.
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-2.eps}}}{3D
+  fitness landscape}
+\end{center}
+
+As it possible to see in both figure 1 and 2 the landscape is rough and have a
+multitude of local minimum. The global optimum \ is known and has values of
+-1356.5 at position \ $(x = 903, y = 917)$.
+
+Before analyzing the performance of my implementation of the {\tmstrong{GA}} I
+analyzed the impact of the parameter $p_c, p_m \tmop{and} n$.
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-3.eps}}}{$\tmop{Fitness}
+  \tmop{VS} p_c$ (50 executions per point, $n = 100$, $p_m = 0.1$)}
+\end{center}
+
+In figure 3 is possible to see the evolution of the fitness VS $p_c$. Is easy
+to see that increasing $p_c$ the diversification increase as well and so the
+fitness found varies more. It's important to note that while with $p_c = 0$
+(so no crossover) the solution found is not the optimal (even if it's very
+close to the optimal one). \
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-4.eps}}}{Fitness
+  VS $p_m$ (50 execution per point, $n = 100$, $p_c = 0.6$)}
+\end{center}
+
+In figure 4 is possible to see how the probability of mutation $p_m$ is
+important to diversificate and explore correctly the landscape. Between $p_c =
+0.01$ and $p_c = 0.1$ the average fitness fall from $\sim - 800$ to $\sim
+1350$.
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-5.eps}}}{Fitness
+  VS $n$ (50 execution pr point, $p_m = 0.1$, $p_c = 0.6$)}
+\end{center}
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-6.eps}}}{$t_{\tmop{exec}}$
+  VS $n$ (50 execution per points, $p_m = 0.1$, $p_c = 0.6$)}
+\end{center}
+
+In figure 5 is possible to see that also the size of the population $n$ is
+very important and with to small population the convergence of the individuals
+to the best one is to quick and freeze the research in sub optimal region.
+Moreover the execution time grows only linearly with the size of the
+population, as shown in figure 6.
+
+Numerical results of the previous experience are shown in table 1.
+
+\begin{center}
+  \tmfloat{h}{small}{table}{\begin{center}
+    \begin{tabular}{|r|rrrr|}
+      \hline
+      & $f_{\tmop{best}}$ & $f_{\tmop{mean}}$ & $\tmop{STD}$ &
+      $n_{\tmop{evals}}$\\
+      $p_m = 0.01, p_c = 0.6$ & -1347.8 & -1045.6 & 169.2 & 5000\\
+      $p_m = 0.1, p_c = 0.6$ & -1356.5 & -1330.4 & 32.6 & 5000\\
+      $p_m = 0.1, p_c = 0$ & -1356.5 &  -1348.2 & 16.7 & 5000\\
+      $p_m = 0.1, p_c = 0.6$ & -1356.5 & -1339.5 & 26.3 & 5000\\
+      \hline
+    \end{tabular}
+  \end{center}}{Table of results}
+\end{center}
+
+After this considerations I choose to use $n = 100$, $p_m = 0.1$ and $p_c =
+0.6$ as it seems to be the best combination of parameter.
+
+The last parameter we can change is the $t_{\max}$, the maximum number of
+generation.
+
+In particular the number of fitness evaluation $n_{\tmop{eval}}$ (a very
+useful number to compare metaheursitcs performance, in particular is also
+machine indipendent) can be computed as:
+\[ n_{\tmop{eval}} = n \cdot t_{\max} \]
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-7.eps}}}{Success
+  rate VS $n_{\tmop{eval}}$}
+\end{center}
+
+As it's possible to see in figure 7 the success rate (number of time the
+global best is found over number of try) as a sort of logarthmic trend, and it
+reach very good performance already at 20000 fitness evaluations (as shown in
+figure 8), and after 40000 evaluation the success rate is greater then 50\%.
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-8.eps}}}{100
+  run with $n_{\tmop{eval}} = 20000$}
+\end{center}
+However if we take in account all the result with a relative ($d = (f -
+f_{\tmop{best}}) / f_{\tmop{best}}$) distance of 0.1\% and 0.2\% the results
+are even better, as shown in figure 9.
+
+\begin{center}
+  \tmfloat{h}{small}{figure}{\resizebox{319pt}{239pt}{\includegraphics{report-9.eps}}}{0.2\%
+  and 0.1\% sucess rate VS $n_{\tmop{eval}}$}
+\end{center}
+
+In this case already with 10000 evaluation the success rate is close to 1.
+
+\
+
+\
+
+\section{Project structure}
+
+\section{Project structure}
+
+\begin{tabular}{ll}
+  compile.sh & is the compilation script\\
+  src/ & contains all the source codes (above the core codes)\\
+  $\rightarrow$/geneticalg.* & is the code that defines both solution
+  representation than the {\tmstrong{GA}}\\
+  $\rightarrow$/main.cpp & main file\\
+  bin/ & contains all the binary\\
+  $\rightarrow$/ga & run the {\tmstrong{GA}}\\
+  $\rightarrow$/ga\_runner.sh & runs the {\tmstrong{GA}} 100 times\\
+  bin/results & contains the csv generated and other output files
+\end{tabular}
+
+The codes and the reports can also be found on my github repository:
+\href{https://github.com/Mandarancio/Metaheuristic}{Metaheuristic} (branch
+eigen3).
+
+\
+
+\end{document}

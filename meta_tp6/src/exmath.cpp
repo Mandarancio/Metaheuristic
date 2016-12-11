@@ -101,6 +101,7 @@ std::vector<double> math::mul(double a, std::vector<double> x) {
 
 double math::r() { return double(rand()) / RAND_MAX; }
 
+int math::rint(int min, int max) { return min + rand() % (max - min); }
 double math::sinc(double x) { return x == 0 ? 1 : sin(x) / (x); }
 double math::sigmoid(double x) { return 1.0 / (1.0 + exp(-x)); }
 

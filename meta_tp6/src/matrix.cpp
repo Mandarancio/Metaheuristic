@@ -31,6 +31,14 @@ Matrix<Numeric>::Matrix(uint32_t n, uint32_t m, std::vector<Numeric> v)
     : std::vector<Numeric>(v), n_(n), m_(m) //,v_(v)
 {}
 
+template <typename Numeric>
+Matrix<Numeric>::Matrix(Matrix<Numeric> *a)
+    : std::vector<Numeric>(a->rows() * a->cols()) {
+  n_ = a->rows();
+  m_ = a->cols();
+  std::copy(a->begin(), a->begin() + m_ * n_, this->begin());
+}
+
 template <typename Numeric> Matrix<Numeric>::~Matrix() { this->clear(); }
 
 template <typename Numeric>
@@ -86,7 +94,7 @@ template <typename Numeric> uint32_t Matrix<Numeric>::rows() const {
   return n_;
 }
 
-template <typename Numeric> uint32_t Matrix<Numeric>::columns() const {
+template <typename Numeric> uint32_t Matrix<Numeric>::cols() const {
   return m_;
 }
 
@@ -212,14 +220,14 @@ template <typename Numeric>
 Matrix<Numeric> &Matrix<Numeric>::operator=(const Matrix<Numeric> &b) {
   std::vector<Numeric>::clear();
   // std::vector<Numeric> x(b.n_*b.m_);
-  // Numeric * x = new Numeric[b.rows()*b.columns()];
+  // Numeric * x = new Numeric[b.rows()*b.cols()];
   this->m_ = b.m_;
   this->n_ = b.n_;
-  for (unsigned int i = 0; i < b.rows() * b.columns(); i++) {
+  for (unsigned int i = 0; i < b.rows() * b.cols(); i++) {
     std::vector<Numeric>::push_back(b[i]);
   }
 
-  // Matrix<Numeric> * a=new Matrix<Numeric>(b.rows(),b.columns(),x);
+  // Matrix<Numeric> * a=new Matrix<Numeric>(b.rows(),b.cols(),x);
   return *this;
 }
 
@@ -253,7 +261,7 @@ Vector<Numeric> Vector<Numeric>::subvector(uint32_t n, uint32_t m) {
 }
 
 template <typename Numeric> Matrix<Numeric> Vector<Numeric>::t() {
-  return Matrix<Numeric>(this->columns(), this->rows(), (*this));
+  return Matrix<Numeric>(this->cols(), this->rows(), (*this));
 }
 
 template <typename Numeric> Numeric Vector<Numeric>::at(uint32_t i) const {
@@ -340,10 +348,10 @@ Vector<Numeric> Vector<Numeric>::operator*(const Matrix<Numeric> &b) const {
     throw ERROR;
   }
   std::vector<Numeric> x;
-  for (uint32_t i = 0; i < b.columns(); i++) {
+  for (uint32_t i = 0; i < b.cols(); i++) {
     Numeric v = 0;
     for (uint32_t j = 0; j < b.rows(); j++) {
-      v += (*this)[j] * b[j * b.columns() + i];
+      v += (*this)[j] * b[j * b.cols() + i];
     }
     x.push_back(v);
   }

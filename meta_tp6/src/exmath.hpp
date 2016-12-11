@@ -20,6 +20,7 @@ std::vector<double> sum(std::vector<double> x, std::vector<double> y);
 std::vector<double> sub(std::vector<double> x, std::vector<double> y);
 std::vector<double> mul(double a, std::vector<double> x);
 double r();
+int rint(int min, int max);
 double pow2(double x);
 eig::MatrixXd r(uint32_t n, uint32_t m, double scale = 1);
 eig::VectorXd r(uint32_t n, double scale = 1);
