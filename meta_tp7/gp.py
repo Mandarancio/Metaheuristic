@@ -2,6 +2,7 @@ import random
 import sys
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 def printProg(prog):
     s = prog[0].__name__
@@ -134,9 +135,9 @@ def computeFitness(prog, cpu, dataSet):
         ff, ee = execute(prog, cpu, data)
         err += ee
         f += int(r == ff)
-    if f == len(dataSet):
-        return 0
-    return (f-len(dataSet))-err
+    if (err>0):
+        return (f-len(dataSet))*2
+    return (f-len(dataSet))#*(1+err)
 
 
 # Compute the fitness of all programs
@@ -168,7 +169,7 @@ def worst(fitness):
 
 
 # Selection using 2-tournament.
-def selection(Population, cpu, dataSet, listOfFitness):
+def selection(Population, listOfFitness):
     newPopulation = []
     n = len(Population)
     for i in range(n):
@@ -260,7 +261,7 @@ def run(pm=0.1, pc=0.6, pop=100, gmax=500, l=10):
         ind = best(fitness)
         f = fitness[ind][1]
         best_individual = population[ind][:]
-        population = selection(population, cpu, dataSet, fitness)
+        population = selection(population, fitness)
         population = crossover(population, p_c)
         population = mutation(population, p_m, terminalSet, functionSet)
         fitness = computeAllFitness(population, cpu, dataSet)
@@ -276,22 +277,25 @@ def run(pm=0.1, pc=0.6, pop=100, gmax=500, l=10):
 fs = []
 bf = -1000
 bi = []
-gmax = 30
-pop = 30
+gmax = 100
+pop = 100
+millis = int(round(time.time() * 1000))
 for i in range(0, 100):
     sys.stdout.write("\r["+str(i+1)+"/100]")
     sys.stdout.flush()
-    f, ind = run(gmax=gmax, pop=pop, pm=0., pc=0.7, l=12)
+    f, ind = run(gmax=gmax, pop=pop, pm=0.5, pc=0.2, l=10)
     if f > bf:
         bf = f
         bi = ind
     fs.append(f)
 print()
 plt.plot(fs)
+millis = int(round(time.time() * 1000))-millis
 
 print("N eval: "+str(gmax*pop))
 print("Best Fitness: "+str(bf))
 print("Mean: "+str(np.mean(fs)))
 print("Std: "+str(np.std(fs)))
+print("Time: "+str(millis/100))
 printProg(bi)
 plt.show()
