@@ -283,7 +283,7 @@ millis = int(round(time.time() * 1000))
 for i in range(0, 100):
     sys.stdout.write("\r["+str(i+1)+"/100]")
     sys.stdout.flush()
-    f, ind = run(gmax=gmax, pop=pop, pm=0.5, pc=0.2, l=10)
+    f, ind = run(gmax=gmax, pop=pop, pm=0.08, pc=0.5, l=10)
     if f > bf:
         bf = f
         bi = ind
